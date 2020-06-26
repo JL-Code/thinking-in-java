@@ -10,7 +10,20 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>design-pattern</module>
+        <module>basic</module>
     </modules>
+    <properties>
+        <junit.jupiter.version>5.6.2</junit.jupiter.version>
+    </properties>
 
-
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter</artifactId>
+                <version>${junit.jupiter.version}</version>
+                <scope>test</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 </project>
