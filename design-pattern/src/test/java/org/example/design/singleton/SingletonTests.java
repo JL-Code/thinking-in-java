@@ -18,39 +18,13 @@ import static org.junit.jupiter.api.Assertions.*;
 class SingletonTests {
 
     @Test
-    @DisplayName("单线程下懒汉单例模式")
-    void getInstance() {
-        int counter = 50;
-        int actual = 0;
-        for (int i = 0; i < counter; i++) {
-//            Thread thread1 = new Thread(new Runnable() {
-//                public void run() {
-//                    Singleton.getInstance();
-//                }
-//            });
-//            Thread thread2 = new Thread(new Runnable() {
-//                public void run() {
-            Singleton.getInstance();
-//                }
-//            });
-//            thread1.start();
-//            thread2.start();
-        }
-
-        actual = Singleton.getInstance().getCounter();
-        System.out.println("counter:" + counter);
-        System.out.println("actual:" + actual);
-        Assertions.assertEquals(counter + 1, actual);
-
-    }
-
-    @Test
-    @DisplayName("单例模式多线程测试")
+    @DisplayName("懒汉模式多线程测试")
     void testMultithreading() throws InterruptedException {
         Runnable task = new Runnable() {
             public void run() {
                 for (int i = 0; i < 10; i++) {
-                    System.out.println("counter：" + Singleton.getInstance().getCounter());
+                    LazySingleton instance = LazySingleton.getInstance();
+                    System.out.println("instance == null:" + instance == null);
                     try {
                         Thread.sleep(100);
                     } catch (InterruptedException e) {
@@ -63,6 +37,41 @@ class SingletonTests {
         startTaskAllInOnce(5, task);
     }
 
+    @Test
+    @DisplayName("饿汉模式多线程测试")
+    void testMultithreadingByHungrySingleTon() throws InterruptedException {
+        Runnable task = () -> {
+            for (int i = 0; i < 10; i++) {
+                HungrySingleTon instance = HungrySingleTon.getInstance();
+                System.out.println("instance == null:" + instance == null);
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        startTaskAllInOnce(5, task);
+    }
+
+    @Test
+    @DisplayName("懒汉模式之静态内部类实现多线程测试")
+    void testMultithreadingByLazySingleTonByStaticInnerClass() throws InterruptedException {
+        Runnable task = () -> {
+            for (int i = 0; i < 10; i++) {
+                LazySingleTonByStaticInnerClass instance = LazySingleTonByStaticInnerClass.getInstance();
+                System.out.println("instance == null:" + instance == null);
+//                LazySingleTonByStaticInnerClass.getTest();
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        startTaskAllInOnce(5, task);
+    }
 
     public long startTaskAllInOnce(int threadNums, final Runnable task) throws InterruptedException {
         final CountDownLatch startGate = new CountDownLatch(1);
