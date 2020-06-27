@@ -13,16 +13,25 @@ public class MethodReference {
     public static void main(String[] args) {
         // 很奇怪 IAction 的方法签名虽然和String.valueOf 签名相同，但是一个有返回值一个没有返回值为什么表达式也能成立。
         IAction<String> action = String::valueOf;
+        // lambda 表达式
+        IAction<String> action2 = m -> {
+            System.out.println("action2：" + m);
+        };
+        // 传统的面向对象结构化实现（先定义一个Action实现IAction接口）
+        IAction<String> action3 = new Action<>();
+        action3.execute("33");
+        action2.execute("22");
         // String::valueOf 静态方法引用
         IFunc<Integer, String> func = String::valueOf;
         // 类型任意对象的实例方法引用（此种方法引用方式没有与具体的实例耦合），注：函数式接口的第一个参数必须是该类型对象，才能完成引用。
         IFunc3<String, Integer> func3 = String::compareTo;
-        IFunc3<Person, Integer> func33 = Person::compareToByName;
+        IFuncClassAnyObjectReference<Person, Integer> func33 = Person::compareToByName;
         // 特定对象("abc"字符串对象)的实例方法（toUpperCase 方法）引用，该方法引用与 “abc” 字符串对象严重耦合。
         IFunc2<String> func2 = "abc"::toUpperCase;
 
         // Person::new 构造方法引用
         IFunc<String, Person> func4 = Person::new;
+
 
         action.execute("action");
         String str = func.execute(100);
@@ -76,6 +85,13 @@ class Person {
 
 interface IAction<T> {
     void execute(T t);
+}
+
+class Action<T> implements IAction<T>{
+    @Override
+    public void execute(T t) {
+        System.out.println(t);
+    }
 }
 
 interface IFunc<M, N> {
