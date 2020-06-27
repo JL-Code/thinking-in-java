@@ -1,73 +1,13 @@
-# 函数式编程
+package org.example.basic.functional;
 
-## Lambda 表达式
 
-> 简化代码，避免面向对象结构化的代码。
-
-### 要求
-
-1. Lambda 的作用对象必须是 interface 。
-2. SAM （Single Abstract Method）单一的**抽象方法**。
-
-Lambda 形式：
-
-```java
-
-```
-
-### 代码示例
-
-```java
-public interface IMessage {
-    void send(String msg);
-    void close();
-}
-```
-
-当 IMessage 中存在多个方法时编译时就会出现👇的错误❌。
-
-```text
-Error:(27, 31) java: 不兼容的类型: org.example.basic.functional.IMessage 不是函数接口
-    在 接口 org.example.basic.functional.IMessage 中找到多个非覆盖抽象方法
-```
-
-## 函数式接口
-
-> 函数式接口有且只有一个抽象方法，
-@FunctionalInterface 显式声明接口为函数式接口。
-
-```java
-@FunctionalInterface
-public interface IFunctionalMessage {
-    void send(String message);
-}
-```
-
-## 方法引用
-
-> 方法引用是作为 Lambda 的补充使用的。
-
-### 方法引用的通用特性
-
-> 方法引用所使用方法的入参和返回值与lambda表达式实现的函数式接口的入参和返回值一致；
-
-### 引用静态方法：ClassName::MethodName
-
-`IFunc<Integer, String> func = String::valueOf;`
-
-### 类的任意对象的实例方法引用 ClassName :: instanceMethodName
-
-> 特有特性：Lambda 表达式的第一个入参为实例方法的调用者，后面的入参与实例方法的入参一致。
-
-### 特定对象的实例方法引用 object :: instanceMethodName
-
-`IFunc2 func2 = "abc"::toUpperCase;`
-
-### 引用构造方法，ClassName::new
-
-`IFunc<String, Person> func4 = Person::new;`
-
-```java
+/**
+ * <p>描述: [方法引用] </p>
+ * <p>创建时间: 2020/6/27 </p>
+ *
+ * @author <a href="mailto:jiangy@highzap.com" rel="nofollow">蒋勇</a>
+ * @version v1.0
+ */
 public class MethodReference {
 
     public static void main(String[] args) {
@@ -153,10 +93,3 @@ interface IFunc3<M, N> {
 interface IFuncClassAnyObjectReference<M, N> {
     N execute(M self, M m);
 }
-```
-
-## 内置函数式接口
-
-## 参考文档
-
-- [【java8新特性】方法引用](https://www.jianshu.com/p/62465b26818f)
