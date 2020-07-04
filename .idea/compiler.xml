@@ -6,8 +6,10 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="design-pattern" />
+        <module name="io" />
         <module name="basic" />
+        <module name="spring-annotation" />
+        <module name="design-pattern" />
       </profile>
     </annotationProcessing>
   </component>
