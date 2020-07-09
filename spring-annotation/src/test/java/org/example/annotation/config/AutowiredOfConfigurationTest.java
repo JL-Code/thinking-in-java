@@ -1,3 +1,15 @@
+package org.example.annotation.config;
+
+import org.example.annotation.dao.HelloDao;
+import org.example.annotation.service.HelloService;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+import java.util.Arrays;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -9,4 +21,21 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class AutowiredOfConfigurationTest {
 
+    ApplicationContext context =
+            new AnnotationConfigApplicationContext(AutowiredOfConfiguration.class);
+
+    @BeforeEach
+    public void beforeEach() {
+        System.out.println("当前 ApplicationContext 中存在的 Bean：");
+        String[] names = context.getBeanDefinitionNames();
+        Arrays.stream(names).forEach(System.out::println);
+        System.out.println("=========================↑↑↑↑↑↑↑=========================");
+    }
+
+    @Test
+    public void testMethodName() {
+        HelloService service = context.getBean(HelloService.class);
+        System.out.println(service);
+        Assertions.assertNotNull(service.getHelloDao());
+    }
 }

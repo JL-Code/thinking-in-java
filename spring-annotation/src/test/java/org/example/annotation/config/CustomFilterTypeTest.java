@@ -1,3 +1,11 @@
+package org.example.annotation.config;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+import java.util.Arrays;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -8,5 +16,11 @@ import static org.junit.jupiter.api.Assertions.*;
  * @version v1.0
  */
 class CustomFilterTypeTest {
-
+    @Test
+    public void testMethodName() {
+        ApplicationContext context = new AnnotationConfigApplicationContext(CustomFilterComponentScanConfiguration.class);
+        // 查看当前 context 中存在的 Bean。
+        String[] names = context.getBeanDefinitionNames();
+        Arrays.stream(names).forEach(System.out::println);
+    }
 }

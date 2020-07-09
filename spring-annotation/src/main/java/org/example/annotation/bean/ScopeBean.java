@@ -1,5 +1,8 @@
 package org.example.annotation.bean;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+
 /**
  * <p>描述: [类型描述] </p>
  * <p>创建时间: 2020/7/5 </p>
@@ -8,4 +11,18 @@ package org.example.annotation.bean;
  * @version v1.0
  */
 public class ScopeBean {
+
+    public ScopeBean() {
+        System.out.println("scopebean construct...");
+    }
+
+    @PostConstruct
+    public void init() {
+        System.out.println("scopebean init...");
+    }
+
+    @PreDestroy
+    public void destory() {
+        System.out.println("scopebean destory...");
+    }
 }

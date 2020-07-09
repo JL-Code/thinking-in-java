@@ -19,9 +19,18 @@ import org.springframework.stereotype.Service;
         // 设置扫描基准范围
         value = "org.example.annotation",
         // 关闭默认的过滤器
-        // useDefaultFilters = true,
+        useDefaultFilters = false,
         // 排除包含 @Controller 注解的类。
         // FilterType：ANNOTATION、ASSIGNABLE_TYPE、ASPECTJ、REGEX、CUSTOM
+        includeFilters = {
+//                @ComponentScan.Filter(
+//                        // 按照给定类型过滤
+//                        type = FilterType.CUSTOM,
+//                        // CustomFilterType 是 org.springframework.core.type.filter.TypeFilter 的实现类。
+//                        value = CustomFilterType.class
+//
+//                )
+        },
         excludeFilters = {
                 @ComponentScan.Filter(
                         // 注解过滤
@@ -29,7 +38,7 @@ import org.springframework.stereotype.Service;
                         value = Controller.class
                 ),
                 @ComponentScan.Filter(
-                        // 自定类过滤
+                        // 按照给定类型过滤
                         type = FilterType.ASSIGNABLE_TYPE,
                         value = HelloService.class
                 )

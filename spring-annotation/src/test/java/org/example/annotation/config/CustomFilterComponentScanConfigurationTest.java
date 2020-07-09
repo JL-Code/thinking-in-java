@@ -42,4 +42,6 @@ class CustomFilterComponentScanConfigurationTest {
         Assertions.assertNull(controller);
         Assertions.assertNull(service);
     }
+
+
 }

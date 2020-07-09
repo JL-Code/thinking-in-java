@@ -73,7 +73,7 @@ class SingletonTests {
         startTaskAllInOnce(5, task);
     }
 
-    public long startTaskAllInOnce(int threadNums, final Runnable task) throws InterruptedException {
+    private long startTaskAllInOnce(int threadNums, final Runnable task) throws InterruptedException {
         final CountDownLatch startGate = new CountDownLatch(1);
         final CountDownLatch endGate = new CountDownLatch(threadNums);
         for (int i = 0; i < threadNums; i++) {

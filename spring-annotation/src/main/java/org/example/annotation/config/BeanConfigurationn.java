@@ -1,9 +1,8 @@
 package org.example.annotation.config;
 
 import org.example.annotation.bean.HelloBean;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
+import org.example.annotation.bean.ScopeBean;
+import org.springframework.context.annotation.*;
 
 /**
  * <p>描述: [类型描述] </p>
@@ -13,17 +12,39 @@ import org.springframework.context.annotation.Configuration;
  * @version v1.0
  */
 @Configuration
-// @ComponentScan 默认扫描带有 @Component、@Service、@Repository、@Controller 注解的类。扫描范围为：
-// @ComponentScan 所在包及子包。
-@ComponentScan
+// @ComponentScan 默认扫描带有 @Component、@Service、@Repository、@Controller 注解的类。
+// 扫描范围为: @ComponentScan 所注释的类的当前包及其子包。
+@ComponentScan(value = "org.example.annotation")
 public class BeanConfigurationn {
 
     /**
-     * @Bean 默认规定方法名为 Bean ID，方法返回类型为 Bean 类型。
-     * @return
+     * @return {@link HelloBean}
+     * @Bean 注解默认规定方法名为 Bean ID，方法返回类型为 Bean 类型。
+     * 默认为单例模式，随着 ApplicationContext 创建而创建，但可以通过 @Lazy 注解改变这种行为，
+     * 将 Bean 的实例化延迟到第一次调用时。
      */
     @Bean
     public HelloBean getHelloBean() {
         return new HelloBean();
+    }
+
+    /**
+     * 默认单例的Bean 是在创建 ApplicationContext 时创建，可以通过 @Lazy 注解改变这种行为，
+     * 将 Bean 的实例化延迟到第一次调用时。
+     *
+     * @return
+     */
+    @Lazy
+    public HelloBean getLazyHelloBean() {
+        return new HelloBean();
+    }
+
+    /**
+     * Scope: singleton（默认）、prototype、request、session
+     */
+    @Bean
+    @Scope(value = "prototype")
+    public ScopeBean getScopeBean() {
+        return new ScopeBean();
     }
 }

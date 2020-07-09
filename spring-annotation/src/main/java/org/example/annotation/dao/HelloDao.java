@@ -11,4 +11,21 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public class HelloDao {
+
+    public HelloDao() {
+        this.label = "label1";
+    }
+
+    public HelloDao(String label) {
+        this.label = label;
+    }
+
+    private String label;
+
+    @Override
+    public String toString() {
+        return "HelloDao{" +
+                "label='" + label + '\'' +
+                '}';
+    }
 }
