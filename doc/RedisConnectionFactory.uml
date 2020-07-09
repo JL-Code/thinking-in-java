@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>org.springframework.data.redis.connection.RedisConnectionFactory</OriginalElement>
+  <nodes>
+    <node x="106.24999999999997" y="0.0">java.lang.FunctionalInterface</node>
+    <node x="50.24999999999997" y="107.0">org.springframework.dao.support.PersistenceExceptionTranslator</node>
+    <node x="313.0" y="321.0">org.springframework.data.redis.connection.jedis.JedisConnectionFactory</node>
+    <node x="244.75" y="214.0">org.springframework.data.redis.connection.RedisConnectionFactory</node>
+    <node x="0.0" y="321.0">org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="org.springframework.dao.support.PersistenceExceptionTranslator" target="java.lang.FunctionalInterface">
+      <point x="0.0" y="-28.5" />
+      <point x="0.0" y="28.5" />
+    </edge>
+    <edge source="org.springframework.data.redis.connection.jedis.JedisConnectionFactory" target="org.springframework.data.redis.connection.RedisConnectionFactory">
+      <point x="0.0" y="-28.5" />
+      <point x="68.25" y="28.5" />
+    </edge>
+    <edge source="org.springframework.data.redis.connection.RedisConnectionFactory" target="org.springframework.dao.support.PersistenceExceptionTranslator">
+      <point x="0.0" y="-28.5" />
+      <point x="381.25" y="189.0" />
+      <point x="315.75" y="189.0" />
+      <point x="88.5" y="28.5" />
+    </edge>
+    <edge source="org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory" target="org.springframework.data.redis.connection.RedisConnectionFactory">
+      <point x="73.25" y="-28.5" />
+      <point x="219.75" y="296.0" />
+      <point x="313.0" y="296.0" />
+      <point x="-68.25" y="28.5" />
+    </edge>
+    <edge source="org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory" target="org.springframework.dao.support.PersistenceExceptionTranslator">
+      <point x="-73.25" y="-28.5" />
+      <point x="73.25" y="189.0" />
+      <point x="138.74999999999997" y="189.0" />
+      <point x="-88.5" y="28.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="177.0" y="135.5" />
+  <SelectedNodes>
+    <node>org.springframework.data.redis.connection.jedis.JedisConnectionFactory</node>
+  </SelectedNodes>
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
