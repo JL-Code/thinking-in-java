@@ -1,44 +1,26 @@
-# Spring Annotation
+# 1. Spring Annotation
 
-> Spring 注解驱动核心
+## 1.1. 产生背景
 
-## 产生背景
-
-## Bean 注册
-
-> 默认 `@Configuration` 已经配置好。
-
-1. `@Component` + `@ComponentScan` 多用于自有项目中 `Bean` 注册。该方案需要显式的为 `Bean` 标注 `@Component` 注解才能被 `@ComponentScan` 扫描到，缺点是在三方库中无法显式标注注解导致无法注册 `Bean`，优点在于在自有项目中配置简单便捷。
-2. `@Bean` 多用于第三方库中的 `Bean` 注册（解决第一种方式带来的问题）。
-3. `@Import`
-4. @
-
-### @Bean
+## 1.2. Bean
 
 > `Bean` 的定义：`Bean` 是一个符合规范的 Java 公共类，规范包括以下几点：
 >
 >  1. Bean 应该默认拥有无参构造函数。
 >  2. Bean 应该实现 `java.io.serializable`
 >  3. Bean 应该提供 `getter`、`setter` 方法用于操作内部状态。
->
 > `@Bean` 用于将 `Bean` 注册到 `ApplicationContext`，组件 `ID` 默认为小驼峰类名或方法名。
 
-```java
-class Configration{
-     /**
-     * @Bean 注解默认规定方法名为 Bean ID，方法返回类型为 Bean 类型。
-     * 默认为单例模式，随着 ApplicationContext 创建而创建，
-     但可以通过 @Lazy 注解改变这种行为，
-     * 将 Bean 的实例化延迟到第一次调用时。
-     */
-    @Bean
-    public HelloBean getHelloBean() {
-        return new HelloBean();
-    }
-}
-```
+## 1.3. Bean 注册
 
-### @ComponentScan
+**Bean 的注册方式：**
+
+1. `@Component` + `@ComponentScan` 多用于自有项目中 `Bean` 注册。该方案需要显式的为 `Bean` 标注 `@Component` 注解才能被 `@ComponentScan` 扫描到，缺点是在三方库中无法显式标注注解导致无法注册 `Bean`，优点在于在自有项目中配置简单便捷。
+2. `@Bean` 多用于第三方库中的 `Bean` 注册（解决第一种方式带来的问题）。
+3. `@Import`
+4. 使用 Spring 提供的 FactoryBean 🏭 注册 Bean 组件。
+
+### 1.3.1. @Component + @ComponentScan 组合扫描注册 Bean
 
 `@ComponentScan` 默认会去扫描带有 `@Component`、`@Repository`、
 `@Service`、`@Controller` 注解的类。扫描范围为: `@ComponentScan` 所注释的类的当前包及其子包。
@@ -56,7 +38,7 @@ public @interface ComponentScan{
 }
 ```
 
-#### exclude package
+#### 1.3.1.1. exclude package
 
 > 排除 `@ComponentScan` 中的一些类，使其不被加入到 `IOC` 容器中。当前支持的 FilterType：ANNOTATION、ASSIGNABLE_TYPE、ASPECTJ、REGEX、CUSTOM。
 
@@ -111,11 +93,137 @@ public class CustomFilterType implements TypeFilter {
 }
 ```
 
-#### include package
+#### 1.3.1.2. include package
 
 同 **exclude package** 刚好相反。
 
-### @Scope
+### 1.3.2. 通过 @Bean 注解注册 Bean
+
+```java
+class Configration{
+     /**
+     * @Bean 注解默认规定方法名为 Bean ID，方法返回类型为 Bean 类型。
+     * 默认为单例模式，随着 ApplicationContext 创建而创建，
+     但可以通过 @Lazy 注解改变这种行为，
+     * 将 Bean 的实例化延迟到第一次调用时。
+     */
+    @Bean
+    public HelloBean getHelloBean() {
+        return new HelloBean();
+    }
+}
+```
+
+### 1.3.3. @Lazy
+
+> 指示是否要延迟初始化 bean。可以用于直接或间接用 `@Component` 注释的任何类，或用 `@Bean` 注释的方法。
+
+[未完待续...]
+
+### 1.3.4. @Import
+
+> 用于注册不能通过 `@Component` 等注解注册的 `Bean` （例如：第三方依赖库）。
+
+@Import 注册的 Bean， ID 是 Bean 的类全路径（例如：org.example.annotation.bean.LifeCycleTestOfBean）。
+
+@Import 注册的 Bean，无法进一步自定义配置，比如手动指定初始化、销毁等自定义 Bean 生命周期方法。
+
+@Import 源码：👇
+
+```java
+@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.RUNTIME)
+...
+public @interface Import {
+    Class<?>[] value();
+}
+```
+
+
+
+### 1.3.5. Spring FactoryBean 方式注册 Bean
+
+> Spring 中有两种 `Bean`，一种是普通 Bean，另一种则是 `FactoryBean` 。FactoryBean 跟普通 Bean不同，其返回的对象不是指定类的一个实例，而是该 FactoryBean 的 getObject 方法所返回的对象。
+
+
+
+FactoryBean 接口定义：👇
+
+```java
+public interface FactoryBean<T>{
+  T getObject() throws Exception;
+  Class<?> getObjectType();
+  boolean isSingleton();
+}
+```
+
+要想使用 FactoryBean 则必须实现这个 FactoryBean 接口。
+
+#### 1.3.5.1 应用场景
+
+MyBatis 的 SqlSessionFactoryBean 提供 SqlSessionFactory。
+
+#### 1.3.5.2 应用案例
+
+复杂 Bean 的创建时，可使用 FactoryBean 。【Get 不到点。。。😓】
+
+#### 1.3.5.3 参考文档
+
+1. [Spring FactoryBean应用](https://www.jianshu.com/p/6f0a59623090)
+
+## 1.4. Bean LifeCycle （生命周期）
+
+### @Bean 提供 initMethod、destroyMethod
+
+`@Bean` 注解提供 `initMethod`、`destroyMethod` 属性来显式指定 `Bean` **初始化方法**和**销毁方法**。
+
+代码示例：👇
+
+```java
+@Configuration
+//@Import({LifeCycleTestOfBean.class}) @Import 导入的Bean，无法进一步自定义配置，比如手动指定初始化、销毁等自定义 Bean 生命周期方法
+public class LifeCycleTestBeanConfiguration {
+    /**
+     * 容器会自动发现并注册 Bean 中的 无参公共 'close' or 'shutdown' 方法作为销毁方法. 若要禁止容器的这种行为
+     * 可以通过设置显式指定 destroyMethod=“” 。
+     */
+    @Bean(initMethod = "init", destroyMethod = "close")
+    public LifeCycleTestOfBean lifeCycleTestOfBean() {
+        return new LifeCycleTestOfBean();
+    }
+}
+
+public class LifeCycleTestOfBean {
+    /**
+     * 对象创建：
+     * 单实例：容器启动后创建 Bean 对象
+     * 多实例：每次获取 Bean 时创建对象。
+     */
+    public LifeCycleTestOfBean() {
+        System.out.println("LifeCycleTestOfBean ...");
+    }
+    /**
+     * 调用时机：对象创建完成，并且属性赋值完成后，调用 init-method 初始化方法。
+     */
+    public void init() {
+        System.out.println("bean init ...");
+    }
+    /**
+     * 容器会自动发现并注册 Bean 中的 无参公共 'close' or 'shutdown' 方法作为销毁方法. 若要禁止容器的这种行为
+     * 可以通过设置显式指定 destroyMethod=“” 。
+     * 调用时机：
+     * 单实例：容器关闭的时候调用。
+     * 多实例：容器不管理注销方法
+     */
+    public void close() {
+        System.out.println("bean destroy ...");
+    }
+}
+```
+
+
+
+### 1.4.1. @Scope
 
 指定 `Bean` 的生命周期可作用于拥有 `@Component`、`@Bean` 注释的类或方法上，`Scope` 共拥有四种选项分别为：
 
@@ -177,39 +285,16 @@ class DifferentScopeLifecycleOfBeanConfigurationTest {
 }
 ```
 
-### @Lazy
 
-> 指示是否要延迟初始化 bean。可以用于直接或间接用 `@Component` 注释的任何类，或用 `@Bean` 注释的方法。
 
-[未完待续...]
+## @Conditional
 
-### @Component
+## @Configuration
 
-### @Import
+## 1.5. 属性赋值
 
-> 用于注册不能通过 `@Component` 等注解的 Bean （例如：第三方依赖库）。
-
-@Import 源码：👇
-
-```java
-@Target(ElementType.TYPE)
-@Retention(RetentionPolicy.RUNTIME)
-...
-public @interface Import {
-    Class<?>[] value();
-}
-```
-
-## Bean LifeCycle （生命周期）
-
-### @Conditional
-
-### @Configuration
-
-## 属性赋值
-
-### @PropertySource
+### 1.5.1. @PropertySource
 
 > 加载外部配置文件数据。
 
-## AOP
+## 1.6. AOP
