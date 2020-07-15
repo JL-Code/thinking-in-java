@@ -173,7 +173,9 @@ MyBatis 的 SqlSessionFactoryBean 提供 SqlSessionFactory。
 
 ## 1.4. Bean LifeCycle （生命周期）
 
-### @Bean 提供 initMethod、destroyMethod
+
+
+### @Bean 提供 initMethod、destroyMethod 属性
 
 `@Bean` 注解提供 `initMethod`、`destroyMethod` 属性来显式指定 `Bean` **初始化方法**和**销毁方法**。
 
@@ -221,9 +223,103 @@ public class LifeCycleTestOfBean {
 }
 ```
 
+### Spring InitializingBean 、DisposableBean
+
+> InitializingBean、DisposableBean 由 org.springframework.beans.factory 包提供，Spring 会负责调用。
+
+```java
+public interface InitializingBean {
+
+	/**
+	 * Invoked by a BeanFactory after it has set all bean properties supplied
+	 * (and satisfied BeanFactoryAware and ApplicationContextAware).
+	 * <p>This method allows the bean instance to perform initialization only
+	 * possible when all bean properties have been set and to throw an
+	 * exception in the event of misconfiguration.
+	 * @throws Exception in the event of misconfiguration (such
+	 * as failure to set an essential property) or if initialization fails.
+	 */
+	void afterPropertiesSet() throws Exception;
+}
+
+public interface DisposableBean {
+
+	/**
+	 * Invoked by a BeanFactory on destruction of a singleton.
+	 * @throws Exception in case of shutdown errors.
+	 * Exceptions will get logged but not rethrown to allow
+	 * other beans to release their resources too.
+	 */
+	void destroy() throws Exception;
+}
+```
 
 
-### 1.4.1. @Scope
+
+### JSR250 @PostConstruct、@PreDestroy
+
+```java
+public class LifeCycleOfJSR250Bean {
+    @PostConstruct
+    public void postConstruct() {
+        System.out.println("LifeCycleOfJSR250Bean PostConstruct ...");
+    }
+    @PreDestroy
+    public void preDestroy() {
+        System.out.println("LifeCycleOfJSR250Bean PreDestroy ...");
+    }
+}
+```
+
+
+
+### Spring BeanPostProcessor
+
+> BeanPostProcessor 接口提供了postProcessBeforeInitialization、postProcessAfterInitialization  函数。
+
+postProcessBeforeInitialization
+
+### 总结
+
+AbstractAutowireCapableBeanFactory  initializeBean 方法代码：
+
+```java
+protected Object initializeBean(final String beanName, final Object bean, RootBeanDefinition mbd) {
+   if (System.getSecurityManager() != null) {
+      AccessController.doPrivileged(new PrivilegedAction<Object>() {
+         @Override
+         public Object run() {
+            invokeAwareMethods(beanName, bean);
+            return null;
+         }
+      }, getAccessControlContext());
+   }
+   else {
+      invokeAwareMethods(beanName, bean);
+   }
+
+   Object wrappedBean = bean;
+   if (mbd == null || !mbd.isSynthetic()) {
+      wrappedBean = applyBeanPostProcessorsBeforeInitialization(wrappedBean, beanName);
+   }
+
+   try {
+      invokeInitMethods(beanName, wrappedBean, mbd);
+   }
+   catch (Throwable ex) {
+      throw new BeanCreationException(
+            (mbd != null ? mbd.getResourceDescription() : null),
+            beanName, "Invocation of init method failed", ex);
+   }
+
+   if (mbd == null || !mbd.isSynthetic()) {
+      wrappedBean = applyBeanPostProcessorsAfterInitialization(wrappedBean, beanName);
+   }
+   return wrappedBean;
+}
+```
+
+### 1.4.1. @Scope 指定 Bean 的作用域
 
 指定 `Bean` 的生命周期可作用于拥有 `@Component`、`@Bean` 注释的类或方法上，`Scope` 共拥有四种选项分别为：
 

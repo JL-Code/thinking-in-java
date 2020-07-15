@@ -1,6 +1,7 @@
 package org.example.annotation.config;
 
 import org.example.annotation.bean.HelloBean;
+import org.example.annotation.bean.ScopeBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
@@ -22,7 +23,7 @@ public class DifferentScopeLifecycleOfBeanConfiguration {
 
     @Bean
     @Scope("prototype")
-    public HelloBean specifiedPrototype() {
-        return new HelloBean();
+    public ScopeBean specifiedPrototype() {
+        return new ScopeBean();
     }
 }

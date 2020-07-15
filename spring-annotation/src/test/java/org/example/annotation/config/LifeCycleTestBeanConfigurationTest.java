@@ -1,5 +1,6 @@
 package org.example.annotation.config;
 
+import org.example.annotation.bean.LifeCycleTestOfBean;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.ApplicationContext;
@@ -21,14 +22,15 @@ class LifeCycleTestBeanConfigurationTest {
 
     @BeforeEach
     public void beforeEach() {
-        System.out.println("当前 ApplicationContext 中存在的 Bean：");
+        System.out.println("当前 ApplicationContext 中存在的 Bean：👇");
         String[] names = context.getBeanDefinitionNames();
         Arrays.stream(names).forEach(System.out::println);
-
+        System.out.println("当前 ApplicationContext 中存在的 Bean：👆");
     }
 
     @Test
-    public void testMethodName() {
+    public void testLifeCycleOfBean() {
+        LifeCycleTestOfBean bean = context.getBean(LifeCycleTestOfBean.class);
         // 关闭容器
         context.close();
     }

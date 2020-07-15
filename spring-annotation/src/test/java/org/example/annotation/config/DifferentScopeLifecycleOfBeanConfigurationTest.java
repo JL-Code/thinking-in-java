@@ -1,6 +1,7 @@
 package org.example.annotation.config;
 
 import org.example.annotation.bean.HelloBean;
+import org.example.annotation.bean.ScopeBean;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -42,10 +43,9 @@ class DifferentScopeLifecycleOfBeanConfigurationTest {
     @Test
     @DisplayName("测试 @Scope 作用域 prototype, 期望每次获取到的 Bean 都不是同一个实例")
     public void testPrototypeForSpecifiedScope() {
-        HelloBean singleton1 = (HelloBean) context.getBean("specifiedPrototype");
-        HelloBean singleton2 = (HelloBean) context.getBean("specifiedPrototype");
+        ScopeBean scopeBean1 = (ScopeBean) context.getBean("specifiedPrototype");
+        ScopeBean scopeBean2 = (ScopeBean) context.getBean("specifiedPrototype");
 
-        Assertions.assertNotNull(singleton1);
-        Assertions.assertNotEquals(singleton1, singleton2);
+        Assertions.assertNotEquals(scopeBean1, scopeBean2);
     }
 }
