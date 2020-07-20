@@ -7,9 +7,9 @@ class OuterTest {
 
     @Test
     public void testLocalInnerClass() {
-
         Outer outer = new Outer();
-        outer.getAddress().getProvince();
+        IAddress address = outer.getAddress();
+        System.out.println(address.getProvince());
     }
 
 }

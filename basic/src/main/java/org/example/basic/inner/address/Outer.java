@@ -10,12 +10,13 @@ package org.example.basic.inner.address;
 public class Outer {
     private String outerClassName = "outer";
     private static String outerStaticParam = "静态参数";
+
     public IAddress getAddress() {
         // 局部内部类（ getAddress 方法内）
         IAddress address = new IAddress() {
-            private String province;
-            private String city;
-            private String county;
+            private String province = "重庆市";
+            private String city = "重庆市";
+            private String county = "南岸区";
             public String getProvince() {
                 return province;
             }
