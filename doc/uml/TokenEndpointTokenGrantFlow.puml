@@ -1,13 +1,12 @@
 @startuml
 actor User
-entity TokenEndpoint
-'entity AbstractEndpoint
-entity TokenGranter
-entity AuthorizationServerEndpointsConfigurer
-entity CompositeTokenGranter
-entity AbstractTokenGranter
-entity AuthorizationServerTokenServices
-entity TokenStore
+participant TokenEndpoint
+participant AuthorizationServerEndpointsConfigurer
+participant "tokenGranter:TokenGranter" as TokenGranter
+participant CompositeTokenGranter
+participant AbstractTokenGranter
+participant AuthorizationServerTokenServices
+participant TokenStore
 
 '/oauth/token,post
 User-> TokenEndpoint: postAccessToken()
@@ -29,45 +28,70 @@ TokenGranter-> TokenGranter:grant(grantType, TokenRequest)
 '				}
 
 'grant(grantType, TokenRequest)
-AuthorizationServerEndpointsConfigurer-> AuthorizationServerEndpointsConfigurer:getDefaultTokenGranters
+TokenGranter-> AuthorizationServerEndpointsConfigurer:getDefaultTokenGranters
 activate AuthorizationServerEndpointsConfigurer
 
-AuthorizationServerEndpointsConfigurer<--AuthorizationServerEndpointsConfigurer:List<TokenGranter>
+TokenGranter<--AuthorizationServerEndpointsConfigurer:List<TokenGranter>
 
-AuthorizationServerEndpointsConfigurer-> CompositeTokenGranter: <<create>> (List<TokenGranter>)
+TokenGranter-> CompositeTokenGranter: <<create>> (List<TokenGranter>)
 activate CompositeTokenGranter
 
-AuthorizationServerEndpointsConfigurer<-- CompositeTokenGranter:CompositeTokenGranter
+TokenGranter<-- CompositeTokenGranter:CompositeTokenGranter
 deactivate CompositeTokenGranter
 
-AuthorizationServerEndpointsConfigurer->CompositeTokenGranter:grant(grantType,TokenRequest)
+TokenGranter->CompositeTokenGranter:grant(grantType,TokenRequest)
+activate CompositeTokenGranter
 
-'迭代 TokenGranters 集合调用 grant(grantType,TokenRequest)
+'CompositeTokenGranter: 迭代 TokenGranters 集合调用 grant(grantType,TokenRequest)
 loop TokenGranter granter : tokenGranters
 CompositeTokenGranter->AbstractTokenGranter: 迭代TokenGranters集合调用 grant(grantType,TokenRequest)
 end
 
 AbstractTokenGranter->AbstractTokenGranter:grant(grantType,TokenRequest)
+activate AbstractTokenGranter
 
 AbstractTokenGranter->AbstractTokenGranter:getAccessToken(ClientDetails,TokenRequest)
+activate AbstractTokenGranter
 
 AbstractTokenGranter->AuthorizationServerTokenServices:createAccessToken(OAuth2Authentication)
+activate AuthorizationServerTokenServices
 
 AuthorizationServerTokenServices->TokenStore:getAccessToken(OAuth2Authentication)
+activate TokenStore
 
-AuthorizationServerTokenServices<--TokenStore:OAuth2AccessToken
+AuthorizationServerTokenServices<--TokenStore:OAuth2AccessToken existingAccessToken
+deactivate TokenStore
+
+AuthorizationServerTokenServices->AuthorizationServerTokenServices:createAccessToken(OAuth2Authentication)
+activate AuthorizationServerTokenServices
 
 AuthorizationServerTokenServices->AuthorizationServerTokenServices:createAccessToken(OAuth2Authentication,OAuth2RefreshToken)
+activate AuthorizationServerTokenServices
+
+AuthorizationServerTokenServices<--AuthorizationServerTokenServices:OAuth2AccessToken accessToken
+deactivate AuthorizationServerTokenServices
+deactivate AuthorizationServerTokenServices
+
+
 
 'tokenStore.storeAccessToken(accessToken, authentication);
 AuthorizationServerTokenServices->TokenStore:storeAccessToken(OAuth2AccessToken,OAuth2Authentication)
+deactivate AuthorizationServerTokenServices
 
 'AbstractTokenGranter：tokenServices.createAccessToken(getOAuth2Authentication(client, tokenRequest));
-AbstractTokenGranter<--AuthorizationServerTokenServices:OAuth2AccessToken
+AbstractTokenGranter<--AuthorizationServerTokenServices:OAuth2AccessToken accessToken
+deactivate AbstractTokenGranter
 
-CompositeTokenGranter<--AbstractTokenGranter:OAuth2AccessToken
-TokenGranter<--CompositeTokenGranter:OAuth2AccessToken
+CompositeTokenGranter<--AbstractTokenGranter:getAccessToken(client, tokenRequest):OAuth2AccessToken
+deactivate AbstractTokenGranter
+
+TokenGranter<--CompositeTokenGranter: granter.grant(grantType, tokenRequest):OAuth2AccessToken
+deactivate CompositeTokenGranter
+
 TokenEndpoint<--TokenGranter:OAuth2AccessToken
+deactivate TokenGranter
+
 User<--TokenEndpoint:OAuth2AccessToken
+deactivate TokenEndpoint
 
 @enduml
