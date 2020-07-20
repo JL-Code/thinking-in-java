@@ -45,46 +45,48 @@ activate CompositeTokenGranter
 
 'CompositeTokenGranter: 迭代 TokenGranters 集合调用 grant(grantType,TokenRequest)
 loop TokenGranter granter : tokenGranters
-CompositeTokenGranter->AbstractTokenGranter: 迭代TokenGranters集合调用 grant(grantType,TokenRequest)
+    alt "tokenGranter.grant(grantType, tokenRequest)!=null"
+
+        CompositeTokenGranter->AbstractTokenGranter: 迭代TokenGranters集合调用 grant(grantType,TokenRequest)
+
+        AbstractTokenGranter->AbstractTokenGranter:grant(grantType,TokenRequest)
+        activate AbstractTokenGranter
+
+        AbstractTokenGranter->AbstractTokenGranter:getAccessToken(ClientDetails,TokenRequest)
+        activate AbstractTokenGranter
+
+        AbstractTokenGranter->AuthorizationServerTokenServices:createAccessToken(OAuth2Authentication)
+        activate AuthorizationServerTokenServices
+
+        AuthorizationServerTokenServices->TokenStore:getAccessToken(OAuth2Authentication)
+        activate TokenStore
+
+        AuthorizationServerTokenServices<--TokenStore:OAuth2AccessToken existingAccessToken
+        deactivate TokenStore
+
+        AuthorizationServerTokenServices->AuthorizationServerTokenServices:createAccessToken(OAuth2Authentication)
+        activate AuthorizationServerTokenServices
+
+        AuthorizationServerTokenServices->AuthorizationServerTokenServices:createAccessToken(OAuth2Authentication,OAuth2RefreshToken)
+        activate AuthorizationServerTokenServices
+
+        AuthorizationServerTokenServices<--AuthorizationServerTokenServices:OAuth2AccessToken accessToken
+        deactivate AuthorizationServerTokenServices
+
+        'tokenStore.storeAccessToken(accessToken, authentication);
+        AuthorizationServerTokenServices->TokenStore:storeAccessToken(OAuth2AccessToken,OAuth2Authentication)
+        deactivate AuthorizationServerTokenServices
+
+        'AbstractTokenGranter：tokenServices.createAccessToken(getOAuth2Authentication(client, tokenRequest));
+        AbstractTokenGranter<--AuthorizationServerTokenServices:OAuth2AccessToken accessToken
+        deactivate AbstractTokenGranter
+        deactivate AuthorizationServerTokenServices
+
+        CompositeTokenGranter<--AbstractTokenGranter:getAccessToken(client, tokenRequest):OAuth2AccessToken
+        deactivate AbstractTokenGranter
+    end
 end
 
-AbstractTokenGranter->AbstractTokenGranter:grant(grantType,TokenRequest)
-activate AbstractTokenGranter
-
-AbstractTokenGranter->AbstractTokenGranter:getAccessToken(ClientDetails,TokenRequest)
-activate AbstractTokenGranter
-
-AbstractTokenGranter->AuthorizationServerTokenServices:createAccessToken(OAuth2Authentication)
-activate AuthorizationServerTokenServices
-
-AuthorizationServerTokenServices->TokenStore:getAccessToken(OAuth2Authentication)
-activate TokenStore
-
-AuthorizationServerTokenServices<--TokenStore:OAuth2AccessToken existingAccessToken
-deactivate TokenStore
-
-AuthorizationServerTokenServices->AuthorizationServerTokenServices:createAccessToken(OAuth2Authentication)
-activate AuthorizationServerTokenServices
-
-AuthorizationServerTokenServices->AuthorizationServerTokenServices:createAccessToken(OAuth2Authentication,OAuth2RefreshToken)
-activate AuthorizationServerTokenServices
-
-AuthorizationServerTokenServices<--AuthorizationServerTokenServices:OAuth2AccessToken accessToken
-deactivate AuthorizationServerTokenServices
-deactivate AuthorizationServerTokenServices
-
-
-
-'tokenStore.storeAccessToken(accessToken, authentication);
-AuthorizationServerTokenServices->TokenStore:storeAccessToken(OAuth2AccessToken,OAuth2Authentication)
-deactivate AuthorizationServerTokenServices
-
-'AbstractTokenGranter：tokenServices.createAccessToken(getOAuth2Authentication(client, tokenRequest));
-AbstractTokenGranter<--AuthorizationServerTokenServices:OAuth2AccessToken accessToken
-deactivate AbstractTokenGranter
-
-CompositeTokenGranter<--AbstractTokenGranter:getAccessToken(client, tokenRequest):OAuth2AccessToken
-deactivate AbstractTokenGranter
 
 TokenGranter<--CompositeTokenGranter: granter.grant(grantType, tokenRequest):OAuth2AccessToken
 deactivate CompositeTokenGranter
