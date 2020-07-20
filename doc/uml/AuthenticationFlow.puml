@@ -1,0 +1,39 @@
+@startuml
+'class ProviderManager
+'interface AuthenticationProvider
+'abstract class AbstractUserDetailsAuthenticationProvider
+'interface UserDetailsService
+'class DaoAuthenticationProvider
+'AbstractAuthenticationProcessingFilter.doFilter -> AbstractAuthenticationProcessingFilter.attemptAuthentication->AbstractAuthenticationProcessingFilter.getAuthenticationManager().authenticate(authRequest)
+' 此处是循环调用 provider.authenticate(authentication)
+AbstractAuthenticationProcessingFilter->AbstractAuthenticationProcessingFilter: doFilter(request,response,chain)
+activate AbstractAuthenticationProcessingFilter
+
+AbstractAuthenticationProcessingFilter->AbstractAuthenticationProcessingFilter: attemptAuthentication(request,response)
+activate AbstractAuthenticationProcessingFilter
+
+AbstractAuthenticationProcessingFilter->ProviderManager: this.getAuthenticationManager().authenticate(authRequest)
+
+ProviderManager -> AuthenticationProvider: 循环调用 provider.authenticate(authentication)
+
+AuthenticationProvider->AbstractUserDetailsAuthenticationProvider:authenticate(authentication)
+
+AbstractUserDetailsAuthenticationProvider->DaoAuthenticationProvider:retrieveUser(username,authentication)
+
+DaoAuthenticationProvider->UserDetailsService:loadUserByUsername(username)
+
+DaoAuthenticationProvider <-- UserDetailsService: UserDetails
+AbstractUserDetailsAuthenticationProvider <-- DaoAuthenticationProvider: UserDetails
+
+AbstractUserDetailsAuthenticationProvider -> AbstractUserDetailsAuthenticationProvider: createSuccessAuthentication(principal,authentication,user)
+
+AuthenticationProvider <-- AbstractUserDetailsAuthenticationProvider: authentication
+
+ProviderManager<--AuthenticationProvider: authenticate
+
+AbstractAuthenticationProcessingFilter <-- ProviderManager: authenticate
+
+deactivate AbstractAuthenticationProcessingFilter
+deactivate AbstractAuthenticationProcessingFilter
+
+@enduml
