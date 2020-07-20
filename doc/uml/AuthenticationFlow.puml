@@ -10,29 +10,41 @@ AbstractAuthenticationProcessingFilter->AbstractAuthenticationProcessingFilter: 
 activate AbstractAuthenticationProcessingFilter
 
 AbstractAuthenticationProcessingFilter->AbstractAuthenticationProcessingFilter: attemptAuthentication(request,response)
-activate AbstractAuthenticationProcessingFilter
+activate AbstractAuthenticationProcessingFilter #FFBBBB
 
 AbstractAuthenticationProcessingFilter->ProviderManager: this.getAuthenticationManager().authenticate(authRequest)
+activate ProviderManager
 
 ProviderManager -> AuthenticationProvider: 循环调用 provider.authenticate(authentication)
+activate AuthenticationProvider
 
 AuthenticationProvider->AbstractUserDetailsAuthenticationProvider:authenticate(authentication)
+activate AbstractUserDetailsAuthenticationProvider
 
 AbstractUserDetailsAuthenticationProvider->DaoAuthenticationProvider:retrieveUser(username,authentication)
+activate DaoAuthenticationProvider
 
 DaoAuthenticationProvider->UserDetailsService:loadUserByUsername(username)
+activate UserDetailsService
 
 DaoAuthenticationProvider <-- UserDetailsService: UserDetails
+deactivate UserDetailsService
+
 AbstractUserDetailsAuthenticationProvider <-- DaoAuthenticationProvider: UserDetails
+deactivate DaoAuthenticationProvider
 
 AbstractUserDetailsAuthenticationProvider -> AbstractUserDetailsAuthenticationProvider: createSuccessAuthentication(principal,authentication,user)
+activate AbstractUserDetailsAuthenticationProvider #FFBBBB
+deactivate AbstractUserDetailsAuthenticationProvider
 
 AuthenticationProvider <-- AbstractUserDetailsAuthenticationProvider: authentication
+deactivate AbstractUserDetailsAuthenticationProvider
 
-ProviderManager<--AuthenticationProvider: authenticate
+ProviderManager <-- AuthenticationProvider: authenticate
+deactivate AuthenticationProvider
 
 AbstractAuthenticationProcessingFilter <-- ProviderManager: authenticate
-
+deactivate ProviderManager
 deactivate AbstractAuthenticationProcessingFilter
 deactivate AbstractAuthenticationProcessingFilter
 
