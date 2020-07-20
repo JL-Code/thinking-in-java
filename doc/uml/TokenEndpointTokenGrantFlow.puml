@@ -32,6 +32,7 @@ TokenGranter-> AuthorizationServerEndpointsConfigurer:getDefaultTokenGranters
 activate AuthorizationServerEndpointsConfigurer
 
 TokenGranter<--AuthorizationServerEndpointsConfigurer:List<TokenGranter>
+deactivate AuthorizationServerEndpointsConfigurer
 
 TokenGranter-> CompositeTokenGranter: <<create>> (List<TokenGranter>)
 activate CompositeTokenGranter
