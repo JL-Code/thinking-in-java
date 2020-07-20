@@ -19,7 +19,28 @@ TokenEndpoint->TokenGranter: getTokenGranter().grant(grantType,tokenRequest)
 activate TokenGranter
 
 TokenGranter-> TokenGranter:grant(grantType, TokenRequest)
-TokenGranter-> CompositeTokenGranter:grant(grantType, TokenRequest)
+'AuthorizationServerEndpointsConfigurer：
+'@Override
+'				public OAuth2AccessToken grant(String grantType, TokenRequest tokenRequest) {
+'					if (delegate == null) {
+'						delegate = new CompositeTokenGranter(getDefaultTokenGranters());
+'					}
+'					return delegate.grant(grantType, tokenRequest);
+'				}
+
+'grant(grantType, TokenRequest)
+AuthorizationServerEndpointsConfigurer-> AuthorizationServerEndpointsConfigurer:getDefaultTokenGranters
+activate AuthorizationServerEndpointsConfigurer
+
+AuthorizationServerEndpointsConfigurer<--AuthorizationServerEndpointsConfigurer:List<TokenGranter>
+
+AuthorizationServerEndpointsConfigurer-> CompositeTokenGranter: <<create>> (List<TokenGranter>)
+activate CompositeTokenGranter
+
+AuthorizationServerEndpointsConfigurer<-- CompositeTokenGranter:CompositeTokenGranter
+deactivate CompositeTokenGranter
+
+AuthorizationServerEndpointsConfigurer->CompositeTokenGranter:grant(grantType,TokenRequest)
 
 '迭代 TokenGranters 集合调用 grant(grantType,TokenRequest)
 loop TokenGranter granter : tokenGranters
@@ -33,6 +54,7 @@ AbstractTokenGranter->AbstractTokenGranter:getAccessToken(ClientDetails,TokenReq
 AbstractTokenGranter->AuthorizationServerTokenServices:createAccessToken(OAuth2Authentication)
 
 AuthorizationServerTokenServices->TokenStore:getAccessToken(OAuth2Authentication)
+
 AuthorizationServerTokenServices<--TokenStore:OAuth2AccessToken
 
 AuthorizationServerTokenServices->AuthorizationServerTokenServices:createAccessToken(OAuth2Authentication,OAuth2RefreshToken)
@@ -42,5 +64,10 @@ AuthorizationServerTokenServices->TokenStore:storeAccessToken(OAuth2AccessToken,
 
 'AbstractTokenGranter：tokenServices.createAccessToken(getOAuth2Authentication(client, tokenRequest));
 AbstractTokenGranter<--AuthorizationServerTokenServices:OAuth2AccessToken
+
+CompositeTokenGranter<--AbstractTokenGranter:OAuth2AccessToken
+TokenGranter<--CompositeTokenGranter:OAuth2AccessToken
+TokenEndpoint<--TokenGranter:OAuth2AccessToken
+User<--TokenEndpoint:OAuth2AccessToken
 
 @enduml
