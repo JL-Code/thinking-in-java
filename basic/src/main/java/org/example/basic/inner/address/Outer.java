@@ -8,18 +8,14 @@ package org.example.basic.inner.address;
  * @version v1.0
  */
 public class Outer {
+    private String outerClassName = "outer";
+    private static String outerStaticParam = "静态参数";
     public IAddress getAddress() {
-
         // 局部内部类（ getAddress 方法内）
-        class Address implements IAddress {
+        IAddress address = new IAddress() {
             private String province;
             private String city;
             private String county;
-            public Address(String province, String city, String county) {
-                this.province = province;
-                this.city = city;
-                this.county = county;
-            }
             public String getProvince() {
                 return province;
             }
@@ -29,35 +25,12 @@ public class Outer {
             public String getCounty() {
                 return county;
             }
-        }
-        return new Address("北京", "北京", "丰台区");
-
-    }
-
-    public IAddress getAddress(boolean _default) {
-        if (_default) {
-            class Address1 implements IAddress {
-                private String province;
-                private String city;
-                private String county;
-                public Address1(String province, String city, String county) {
-                    this.province = province;
-                    this.city = city;
-                    this.county = county;
-                }
-                public String getProvince() {
-                    return province;
-                }
-                public String getCity() {
-                    return city;
-                }
-                public String getCounty() {
-                    return county;
-                }
+            @Override
+            public void testParentVariableAccess() {
+                System.out.println(outerClassName);
+                System.out.println(outerStaticParam);
             }
-            return new Address1("重庆","重庆","南岸区");
-        }
-        return null;
+        };
+        return address;
     }
-
 }
