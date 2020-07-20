@@ -15,7 +15,6 @@ import org.springframework.context.annotation.Import;
  */
 @Configuration
 // @Import 注册 Bean，默认 Bean ID 为全类名。
-// TODO: Import 如何制定 Bean 的 Scope 呢？
 @Import({HelloBean.class, ScopeBean.class})
 public class ViaImportRegisterBeanConfiguration {
 }

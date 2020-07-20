@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import javax.inject.Inject;
+//import javax.inject.Inject;
 
 /**
  * <p>描述: [类型描述] </p>
@@ -32,16 +32,24 @@ public class HelloService {
 
     //    @Resource(name = "appDao")
 //    private AppDao appDao2;
-    @Qualifier("appDao")
-    @Inject
-    private AppDao appDao2;
 
-    @Inject
-    private BookDao bookDao;
-
-    @Qualifier("helloDao2")
-    @Inject
-    private HelloDao helloDao3;
+    /**
+     *         <dependency>
+     *             <groupId>javax.inject</groupId>
+     *             <artifactId>javax.inject</artifactId>
+     *             <version>1</version>
+     *         </dependency>
+     */
+//    @Qualifier("appDao")
+//    @Inject
+//    private AppDao appDao2;
+//
+//    @Inject
+//    private BookDao bookDao;
+//
+//    @Qualifier("helloDao2")
+//    @Inject
+//    private HelloDao helloDao3;
 
     @Qualifier("helloDao4")
     @Autowired(required = false)
@@ -56,9 +64,9 @@ public class HelloService {
         return "HelloService{" +
                 "helloDao2=" + helloDao2 +
                 ", appDao=" + appDao +
-                ", appDao2=" + appDao2 +
-                ", bookDao=" + bookDao +
-                ", helloDao3=" + helloDao3 +
+//                ", appDao2=" + appDao2 +
+//                ", bookDao=" + bookDao +
+//                ", helloDao3=" + helloDao3 +
                 ", helloDao4=" + helloDao4 +
                 '}';
     }

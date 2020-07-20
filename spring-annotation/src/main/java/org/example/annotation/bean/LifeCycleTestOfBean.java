@@ -1,5 +1,8 @@
 package org.example.annotation.bean;
 
+import org.example.annotation.bean.lifecycle.MessageBean;
+import org.springframework.beans.factory.annotation.Autowired;
+
 /**
  * <p>创建时间: 2020/7/12 </p>
  *
@@ -7,6 +10,20 @@ package org.example.annotation.bean;
  * @version v1.0
  */
 public class LifeCycleTestOfBean {
+
+
+    @Autowired
+    private MessageBean messageBean;
+
+    public String getPropName() {
+        return propName;
+    }
+
+    public void setPropName(String propName) {
+        this.propName = propName;
+    }
+
+    private String propName;
 
     /**
      * 对象创建：
