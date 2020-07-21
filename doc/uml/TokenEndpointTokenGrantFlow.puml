@@ -5,11 +5,14 @@ participant AuthorizationServerEndpointsConfigurer
 participant "tokenGranter:TokenGranter" as TokenGranter
 participant CompositeTokenGranter
 participant AbstractTokenGranter
+participant ResourceOwnerPasswordTokenGranter
+participant AuthenticationManager
 participant AuthorizationServerTokenServices
 participant TokenStore
 
-'/oauth/token,post
 User-> TokenEndpoint: postAccessToken()
+' note [left|right] <注释> 添加注释
+note left: /oauth/token [post]
 activate TokenEndpoint
 
 'TokenRequest tokenRequest = getOAuth2RequestFactory().createTokenRequest(parameters, authenticatedClient)
@@ -55,6 +58,31 @@ loop TokenGranter granter : tokenGranters
         AbstractTokenGranter->AbstractTokenGranter:getAccessToken(ClientDetails,TokenRequest)
         activate AbstractTokenGranter
 
+        AbstractTokenGranter->ResourceOwnerPasswordTokenGranter:getOAuth2Authentication(ClientDetails,TokenRequest)
+        activate ResourceOwnerPasswordTokenGranter
+
+'userAuth = authenticationManager.authenticate(userAuth);
+
+        ResourceOwnerPasswordTokenGranter->AuthenticationManager:authenticate(userAuth)
+        note left: Authentication userAuth = new UsernamePasswordAuthenticationToken(username, password)\nauthenticationManager.authenticate(userAuth)
+        activate AuthenticationManager
+        note right: 此处为 ProviderManager 类
+
+        ResourceOwnerPasswordTokenGranter<--AuthenticationManager:Authentication userAuth
+        deactivate AuthenticationManager
+
+        AbstractTokenGranter<--ResourceOwnerPasswordTokenGranter:new OAuth2Authentication(storedOAuth2Request, userAuth)
+        deactivate ResourceOwnerPasswordTokenGranter
+
+'Authentication userAuth = new UsernamePasswordAuthenticationToken(username, password);
+        AbstractTokenGranter-> AuthenticationManager:authenticate(Authentication)
+        activate AuthenticationManager
+        AbstractTokenGranter <-- AuthenticationManager:Authentication userAuth
+        note right: 此处调用 AuthenticationManager的authenticate方法获取用户信息
+        deactivate AuthenticationManager
+'        OAuth2Request storedOAuth2Request = requestFactory.createOAuth2Request(client, tokenRequest);
+'        		return new OAuth2Authentication(storedOAuth2Request, null);
+
         AbstractTokenGranter->AuthorizationServerTokenServices:createAccessToken(OAuth2Authentication)
         activate AuthorizationServerTokenServices
 
@@ -77,7 +105,7 @@ loop TokenGranter granter : tokenGranters
         AuthorizationServerTokenServices->TokenStore:storeAccessToken(OAuth2AccessToken,OAuth2Authentication)
         deactivate AuthorizationServerTokenServices
 
-        'AbstractTokenGranter：tokenServices.createAccessToken(getOAuth2Authentication(client, tokenRequest));
+'AbstractTokenGranter：tokenServices.createAccessToken(getOAuth2Authentication(client, tokenRequest));
         AbstractTokenGranter<--AuthorizationServerTokenServices:OAuth2AccessToken accessToken
         deactivate AbstractTokenGranter
         deactivate AuthorizationServerTokenServices
@@ -86,7 +114,6 @@ loop TokenGranter granter : tokenGranters
         deactivate AbstractTokenGranter
     end
 end
-
 
 TokenGranter<--CompositeTokenGranter: granter.grant(grantType, tokenRequest):OAuth2AccessToken
 deactivate CompositeTokenGranter

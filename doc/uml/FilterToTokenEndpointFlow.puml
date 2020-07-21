@@ -1,0 +1,16 @@
+' ClientCredentialsTokenEndpointFilter -> TokenPoint 流程
+@startuml
+FilterChainProxy->AbstractAuthenticationProcessingFilter:doFilter
+activate AbstractAuthenticationProcessingFilter
+alt "requiresAuthentication(request, response)==true"
+'!requiresAuthentication(request, response)
+AbstractAuthenticationProcessingFilter->AbstractAuthenticationProcessingFilter:requiresAuthentication(request, response)
+end
+'ClientCredentialsTokenEndpointFilter.successfulAuthentication->chain.doFilter(request, response);
+AbstractAuthenticationProcessingFilter->BasicAuthenticationFilter:successfulAuthentication(request,response)
+activate BasicAuthenticationFilter
+'@Override
+'protected void doFilterInternal(HttpServletRequest request,
+'        HttpServletResponse response, FilterChain chain)
+BasicAuthenticationFilter->BasicAuthenticationFilter:doFilterInternal
+@enduml

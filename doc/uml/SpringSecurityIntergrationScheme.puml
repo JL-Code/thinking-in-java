@@ -1,0 +1,39 @@
+@startuml
+
+interface Authentication{
+   + isAuthenticated():boolean
+   + setAuthenticated(boolean isAuthenticated):void
+}
+interface AuthenticationProvider{
+    + Authentication authenticate(Authentication authentication)
+'核心方法，用于确定 authentication 是否由当前 provider 验证。
+    + boolean supports(Class<?> authentication)
+}
+interface UserDetailsService {
+  + loadUserByUsername(String name):UserDetails
+}
+
+class SMSCaptchaAuthentication implements Authentication{
+   + isAuthenticated():boolean
+   + setAuthenticated(boolean isAuthenticated):void
+}
+class SMSCaptchaAuthenticationProvider implements AuthenticationProvider{
+    + Authentication authenticate(Authentication authentication)
+    + boolean supports(Class<?> authentication)
+}
+
+class SMSCaptchaUserDetailsServiceAdapter implements UserDetailsService{
+    - SMSCaptchaUserDetailsService userDetailService
+    + loadUserByUsername(String name):UserDetails
+}
+note "UserDetailsService 适配器类,\n转发loadUserByUsername请求到\nSMSCaptchaUserDetailsService.\nloadUserByPhone" as N1
+N1 .. SMSCaptchaUserDetailsServiceAdapter
+
+class SMSCaptchaUserDetailsService{
+    + loadUserByPhone(String phone):UserDetails
+}
+
+'关系管理
+SMSCaptchaAuthenticationProvider-->UserDetailsService: 关联
+SMSCaptchaUserDetailsServiceAdapter --> SMSCaptchaUserDetailsService: 关联
+@enduml
