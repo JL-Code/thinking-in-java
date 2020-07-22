@@ -114,4 +114,20 @@ public class GenericTests {
 
         private String type = "subsms";
     }
+
+    /**
+     * Determines if the class or interface represented by this Class object is either the same as, or is a superclass or superinterface of, the class or interface represented by the specified Class parameter. It returns true if so; otherwise it returns false. If this Class object represents a primitive type, this method returns true if the specified Class parameter is exactly this Class object; otherwise it returns false.
+     * 确定由该类对象表示的类或接口是否与由指定的类参数表示的类或接口相同，或者是该类或接口的超类或超接口。如果是，则返回true；否则返回false。如果该类对象表示基元类型，则如果指定的类参数正是此类对象，则此方法返回true；否则返回false。
+     * Specifically, this method tests whether the type represented by the specified Class parameter can be converted to the type represented by this Class object via an identity conversion or via a widening reference conversion. See The Java Language Specification, sections 5.1.1 and 5.1.4 , for details.
+     * 具体地说，此方法测试指定的类参数所表示的类型是否可以通过标识转换或扩展引用转换转换转换为此类对象表示的类型。有关详细信息，请参阅Java语言规范第5.1.1和5.1.4节。
+     */
+    @Test
+    public void testIsAssignableFrom() {
+        // 判断 SMS 与 SubSMS 类型是否相同或 SMS 是 SubSMS 的超类或超接口。
+        boolean flag1 = SMS.class.isAssignableFrom(SubSMS.class);
+        boolean flag2 = SubSMS.class.isAssignableFrom(SMS.class);
+
+        Assertions.assertTrue(flag1);
+        Assertions.assertTrue(flag2);
+    }
 }

@@ -1,13 +1,15 @@
-# Spring-Context 自动装配
+# SpringBean 自动装配
 
 > SpringContext 通过依赖注入（DI）的方式，完成对 IOC 容器中的各个组件的依赖关系赋值，可以通过 `@Autowired`、`@Resource`(JSR-250)、`@Inject`（JSR-330） 实现依赖的自动注入。
 
-| Annotation | Package                          | Source       | Description                                                                                                     |
-| ---------- | -------------------------------- | ------------ | --------------------------------------------------------------------------------------------------------------- |
-| @Autowired | javax.annotation                 | Java JSR-250 | 优先 byType 装配，若多个则使用 byName。
-| @Resource  | javax.inject                     | Java JSR-330 | 优先 byName 装配，若多个则报错；可以显式指定 name、type 进行装配。
-| @Inject    | org.springframework.bean.factory | Spring 2.5+  | 项目需显式依赖 `javax.inject:javax.inject:1`。                                                                  |
-| @Qualifier | org.springframework.bean.factory | Spring 2.5+  | 显式通过 `name` 显示装配依赖（`@Autowired` ✅、`@Inject` ✅、`@Resource`❌）                                       |
+
+
+| Annotation | Package                          | Source       | Description                                                  |
+| :--------- | :------------------------------- | :----------- | :----------------------------------------------------------- |
+| @Autowired | javax.annotation                 | Java JSR-250 | 优先 **byType** 装配，若多个则使用 **byName**。              |
+| @Resource  | javax.inject                     | Java JSR-330 | 优先 **byName** 装配，若多个则报错；可以显式指定 name、type 进行装配。 |
+| @Inject    | org.springframework.bean.factory | Spring 2.5+  | 项目需显式依赖 `javax.inject:javax.inject:1`。               |
+| @Qualifier | org.springframework.bean.factory | Spring 2.5+  | 显式通过 `name` 显示装配依赖（`@Autowired` ✅、`@Inject`✅、`@Resource`❌） |
 | @Primary   | org.springframework.bean.factory | Spring 2.5+  | 存在多个相同类型的 `Bean` 时可以通过 `@Primary` 指定优先装配顺序（`@Autowired` ✅、`@Inject` ✅、`@Resource`❌）。 |
 
 ## `@Autowired`
@@ -86,7 +88,7 @@ public @interface Inject {
 </dependency>
 ```
 
-## Aware
+## xxxAware 类
 
 ## 工作机制
 
