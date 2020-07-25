@@ -16,3 +16,36 @@ A client MAY use the "client_id" request parameter to identify itself when sendi
 
 当向令牌端点发送请求时，客户端可以使用“client_id”请求参数来标识自己。在向令牌终结点发出的“授权代码”“授予类型”请求中，未经身份验证的客户端必须发送其“客户端标识”，以防止自己无意中接受一个针对具有不同“客户端标识”的客户端的代码。这样可以防止客户端替换身份验证码。（它不为受保护的资源提供额外的安全性。）
 
+
+
+## AuthenticationCode Grant
+
+### Access Token Request
+
+```http
+POST /token HTTP/1.1
+Host: server.example.com
+Authorization: Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=authorization_code&code=SplxlOBeZQQYbYS6WxSbIA
+&redirect_uri=https%3A%2F%2Fclient%2Eexample%2Ecom%2Fcb
+```
+
+
+
+## ResourceOwnerPasswordCredentials Grant
+
+### Access Token Request
+
+> czZCaGRSa3F0MzpnWDFmQmF0M2JW 为 client_id 与 client_secret 的 base64 编码。
+
+```http
+POST /token HTTP/1.1
+Host: server.example.com
+Authorization: Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW 
+Content-Type: application/x-www-form-urlencoded 
+
+grant_type=password&username=johndoe&password=A3ddj3w
+```
+

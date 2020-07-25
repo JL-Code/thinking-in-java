@@ -1,0 +1,16 @@
+@startuml
+actor User
+
+User -> FilterChainProxy:request
+FilterChainProxy -> AbstractAuthenticationProcessingFilter:
+AbstractAuthenticationProcessingFilter-> AuthenticationManager:authenticate()
+AuthenticationManager->AuthenticationProvider:authenticate()
+AuthenticationProvider->UserDetailsService:loadUserByUsername()
+
+AuthenticationProvider<--UserDetailsService:UserDetails
+AuthenticationManager<--AuthenticationProvider:Authentication
+AbstractAuthenticationProcessingFilter<--AuthenticationManager:Authentication
+FilterChainProxy <-- AbstractAuthenticationProcessingFilter
+User <-- FilterChainProxy:response
+
+@enduml

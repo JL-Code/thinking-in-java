@@ -1,5 +1,6 @@
 @startuml
 
+' 实体定义
 interface Authentication{
    + isAuthenticated():boolean
    + setAuthenticated(boolean isAuthenticated):void
@@ -32,8 +33,26 @@ N1 .. SMSCaptchaUserDetailsServiceAdapter
 class SMSCaptchaUserDetailsService{
     + loadUserByPhone(String phone):UserDetails
 }
+interface UserDetails{
+    + getUsername():String
+    + getPassword():String
+}
+class StoredUser implements UserDetails{
+
+}
+note "提供必要的信息，以根据\n应用程序的DAO或其他安全数据源来构建\n Authentication" as su
+su .. UserDetails
+
+interface CredentialsContainer {
+	eraseCredentials():void
+}
+note "凭据容器，提供了抹除凭据的方法。" as cc
+cc .. CredentialsContainer
 
 '关系管理
 SMSCaptchaAuthenticationProvider-->UserDetailsService: 关联
 SMSCaptchaUserDetailsServiceAdapter --> SMSCaptchaUserDetailsService: 关联
+UserDetailsService..> UserDetails: 依赖
+
+
 @enduml

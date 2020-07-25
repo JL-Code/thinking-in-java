@@ -1,4 +1,5 @@
 @startuml
+
 actor User
 participant TokenEndpoint
 participant AuthorizationServerEndpointsConfigurer
