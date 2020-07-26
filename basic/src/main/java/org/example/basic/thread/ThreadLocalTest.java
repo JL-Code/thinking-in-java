@@ -1,6 +1,7 @@
 package org.example.basic.thread;
 
 import java.util.concurrent.CountDownLatch;
+import java.util.function.Supplier;
 
 /**
  * <p>创建时间: 2020/7/22 </p>
@@ -9,68 +10,20 @@ import java.util.concurrent.CountDownLatch;
  * http://www.jasongj.com/java/threadlocal/
  * ref: Java并发编程：CountDownLatch、CyclicBarrier和Semaphore
  * https://www.cnblogs.com/dolphin0520/p/3920397.html
+ * ThreadLocal 学习视频：https://www.bilibili.com/video/BV1SD4y1D7r2?from=search&seid=18291778357999069619
  *
  * @author <a href="mailto:jiangy@highzap.com" rel="nofollow">蒋勇</a>
  * @version v1.0
  */
 public class ThreadLocalTest {
 
-
     public static void main(String[] args) throws InterruptedException {
+        ThreadLocal<StringBuilder> stringBuilderThreadLocal = new ThreadLocal<>();
+        stringBuilderThreadLocal.set(new StringBuilder());
 
-        int threads = 3;
-        // 实现类似计数器的功能。比如有一个任务A，它要等待其他4个任务执行完毕之后才能执行，此时就可以利用CountDownLatch来实现这种功能了。
-        CountDownLatch countDownLatch = new CountDownLatch(threads);
-        InnerClass innerClass = new InnerClass();
-        for (int i = 1; i <= threads; i++) {
-            new Thread(() -> {
-                for (int j = 0; j < 4; j++) {
-                    innerClass.add(String.valueOf(j));
-                    innerClass.print();
-                }
-                innerClass.set("hello world");
-                countDownLatch.countDown();
-            }, "thread - " + i).start();
-        }
-        countDownLatch.await();
+        stringBuilderThreadLocal.get().append("1212");
 
-    }
-
-    private static class InnerClass {
-
-        public void add(String newStr) {
-            // 返回此线程局部变量的当前线程副本中的值。
-            StringBuilder str = Counter.counter.get();
-            Counter.counter.set(str.append(newStr));
-        }
-
-        public void print() {
-            System.out.printf("Thread name:%s , ThreadLocal hashcode:%s, Instance hashcode:%s, Value:%s\n",
-                    Thread.currentThread().getName(),
-                    Counter.counter.hashCode(),
-                    Counter.counter.get().hashCode(),
-                    Counter.counter.get().toString());
-        }
-
-        public void set(String words) {
-            Counter.counter.set(new StringBuilder(words));
-            System.out.printf("Set, Thread name:%s , ThreadLocal hashcode:%s,  Instance hashcode:%s, Value:%s\n",
-                    Thread.currentThread().getName(),
-                    Counter.counter.hashCode(),
-                    Counter.counter.get().hashCode(),
-                    Counter.counter.get().toString());
-        }
-    }
-
-    private static class Counter {
-
-        private static ThreadLocal<StringBuilder> counter = new ThreadLocal<StringBuilder>() {
-            @Override
-            protected StringBuilder initialValue() {
-                return new StringBuilder();
-            }
-        };
-
+        stringBuilderThreadLocal.remove();
     }
 
 }

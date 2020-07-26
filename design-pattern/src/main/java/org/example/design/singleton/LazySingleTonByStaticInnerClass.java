@@ -23,6 +23,9 @@ public class LazySingleTonByStaticInnerClass {
     }
 
     private static class LazySingleTonByStaticInnerClassHolder {
+        public LazySingleTonByStaticInnerClassHolder() {
+            System.out.println("LazySingleTonByStaticInnerClassHolder ctor ...");
+        }
         private final static LazySingleTonByStaticInnerClass instance = new LazySingleTonByStaticInnerClass();
     }
 

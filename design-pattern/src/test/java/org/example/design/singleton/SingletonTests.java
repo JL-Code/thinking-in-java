@@ -61,7 +61,7 @@ class SingletonTests {
             for (int i = 0; i < 10; i++) {
                 LazySingleTonByStaticInnerClass instance = LazySingleTonByStaticInnerClass.getInstance();
                 System.out.println("instance == null:" + instance == null);
-//                LazySingleTonByStaticInnerClass.getTest();
+                LazySingleTonByStaticInnerClass.getTest();
                 try {
                     Thread.sleep(100);
                 } catch (InterruptedException e) {

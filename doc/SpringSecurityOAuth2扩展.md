@@ -20,7 +20,83 @@
 
 > ClientCredentialsTokenEndpointFilter 拦截 /oauth/token 请求，提取 client_id、client_secret 构建 UsernamePasswordAuthenticationToken 进行客户端凭据验证，验证通过后才能进入 /oauth/token 进行下一步的令牌颁发流程。
 
+## AbstractAuthenticationProcessingFilter
 
+doFilter 方法：
+
+```java
+public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
+      throws IOException, ServletException {
+
+   HttpServletRequest request = (HttpServletRequest) req;
+   HttpServletResponse response = (HttpServletResponse) res;
+
+   if (!requiresAuthentication(request, response)) {
+      chain.doFilter(request, response);
+
+      return;
+   }
+
+   Authentication authResult;
+
+   try {
+      // attemptAuthentication 由子类 ClientCredentialsTokenEndpointFilter 实现
+      authResult = attemptAuthentication(request, response);
+      if (authResult == null) {
+         // return immediately as subclass has indicated that it hasn't completed
+         // authentication
+         return;
+      }
+      sessionStrategy.onAuthentication(authResult, request, response);
+   }
+   catch (InternalAuthenticationServiceException failed) {
+      logger.error(
+            "An internal error occurred while trying to authenticate the user.",
+            failed);
+      unsuccessfulAuthentication(request, response, failed);
+
+      return;
+   }
+   catch (AuthenticationException failed) {
+      // Authentication failed
+      unsuccessfulAuthentication(request, response, failed);
+
+      return;
+   }
+
+   // Authentication success
+   if (continueChainBeforeSuccessfulAuthentication) {
+      chain.doFilter(request, response);
+   }
+
+   successfulAuthentication(request, response, chain, authResult);
+}
+```
+
+## AuthorizationEndpoint
+
+generateCode 方法：
+
+`String code = authorizationCodeServices.createAuthorizationCode(combinedAuth);` 
+
+```java
+private String generateCode(AuthorizationRequest authorizationRequest, Authentication authentication)
+      throws AuthenticationException {
+
+   try {
+      OAuth2Request storedOAuth2Request = getOAuth2RequestFactory().createOAuth2Request(authorizationRequest);
+      OAuth2Authentication combinedAuth = new OAuth2Authentication(storedOAuth2Request, authentication);
+      String code = authorizationCodeServices.createAuthorizationCode(combinedAuth);
+      return code;
+   }
+   catch (OAuth2Exception e) {
+      if (authorizationRequest.getState() != null) {
+         e.addAdditionalInformation("state", authorizationRequest.getState());
+      }
+      throw e;
+   }
+}
+```
 
 ## TokenEndpoint
 
@@ -324,6 +400,35 @@ protected void additionalAuthenticationChecks(UserDetails userDetails,
 
 
 
+从数据库中查询用户的方法 **retrieveUser**：
+
+```java
+protected final UserDetails retrieveUser(String username,
+      UsernamePasswordAuthenticationToken authentication)
+      throws AuthenticationException {
+   prepareTimingAttackProtection();
+   try {
+      // 获取 UserDetailsService 接口加载用户。
+      UserDetails loadedUser = this.getUserDetailsService().loadUserByUsername(username);
+      if (loadedUser == null) {
+         throw new InternalAuthenticationServiceException(
+               "UserDetailsService returned null, which is an interface contract violation");
+      }
+      return loadedUser;
+   }
+   catch (UsernameNotFoundException ex) {
+      mitigateAgainstTimingAttack(authentication);
+      throw ex;
+   }
+   catch (InternalAuthenticationServiceException ex) {
+      throw ex;
+   }
+   catch (Exception ex) {
+      throw new InternalAuthenticationServiceException(ex.getMessage(), ex);
+   }
+}
+```
+
 
 
 ```java
@@ -337,6 +442,49 @@ public SysUserAuthentication authenticate(IntegrationAuthentication integrationA
     sysUserAuthentication.setPassword(passwordEncoder.encode(password));
   }
   return sysUserAuthentication;
+}
+```
+
+
+
+## FilterSecurityInterceptor
+
+```java
+public void doFilter(ServletRequest request, ServletResponse response,
+   FilterChain chain) throws IOException, ServletException {
+   FilterInvocation fi = new FilterInvocation(request, response, chain);
+   invoke(fi);
+}
+```
+
+
+
+```java
+public void invoke(FilterInvocation fi) throws IOException, ServletException {
+   if ((fi.getRequest() != null)
+         && (fi.getRequest().getAttribute(FILTER_APPLIED) != null)
+         && observeOncePerRequest) {
+      // filter already applied to this request and user wants us to observe
+      // once-per-request handling, so don't re-do security checking
+      fi.getChain().doFilter(fi.getRequest(), fi.getResponse());
+   }
+   else {
+      // first time this request being called, so perform security checking
+      if (fi.getRequest() != null && observeOncePerRequest) {
+         fi.getRequest().setAttribute(FILTER_APPLIED, Boolean.TRUE);
+      }
+
+      InterceptorStatusToken token = super.beforeInvocation(fi);
+
+      try {
+         fi.getChain().doFilter(fi.getRequest(), fi.getResponse());
+      }
+      finally {
+         super.finallyInvocation(token);
+      }
+
+      super.afterInvocation(token, null);
+   }
 }
 ```
 
