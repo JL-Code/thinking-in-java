@@ -11,3 +11,7 @@
 
 > 　注意：编译器会检查 obj 是否能转换成右边的class类型，如果不能转换则直接报错，如果不能确定类型，则通过编译，具体看运行时定。
 
+## 参考文档
+
+* [浅析Java中的final关键字](https://www.cnblogs.com/dolphin0520/p/3736238.html)
+* [深入浅出Java final关键字](https://zhuanlan.zhihu.com/p/33083924)
