@@ -81,7 +81,7 @@ tl.set(new StringBuilder());
 
 ### 内存布局模型
 
-
+![Thread-ThreadLocal-内存布局关系](D:\Workspace\java-example\doc\assets\Thread-ThreadLocal-内存布局关系.png)
 
 ### 内存泄漏隐患
 
