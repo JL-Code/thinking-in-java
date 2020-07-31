@@ -4,6 +4,12 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import javax.crypto.*;
+import java.security.InvalidKeyException;
+import java.security.Key;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+
 /**
  * <p>描述: [类型描述] </p>
  * <p>创建时间: 2020/6/25 </p>
@@ -130,4 +136,31 @@ public class GenericTests {
         Assertions.assertTrue(flag1);
         Assertions.assertTrue(flag2);
     }
+
+    @Test
+    public void testMethodName() throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
+        //Creating a KeyGenerator object
+        KeyGenerator keyGen = KeyGenerator.getInstance("DES");
+
+        //Creating a SecureRandom object
+        SecureRandom secRandom = new SecureRandom();
+
+        //Initializing the KeyGenerator
+        keyGen.init(secRandom);
+
+        //Creating/Generating a key
+        Key key = keyGen.generateKey();
+
+        System.out.println(key);
+        Cipher cipher = Cipher.getInstance("DES/ECB/PKCS5Padding");
+        cipher.init(cipher.ENCRYPT_MODE, key);
+
+        String msg = new String("Hi how are you");
+        byte[] bytes = cipher.doFinal(msg.getBytes());
+
+        System.out.println(new String(bytes));
+
+    }
+
+
 }

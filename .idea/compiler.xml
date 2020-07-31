@@ -10,9 +10,9 @@
         <module name="spring-annotation" />
         <module name="spring" />
         <module name="tomcat" />
-        <module name="io" />
-        <module name="basic" />
         <module name="spring-data-redis" />
+        <module name="basic" />
+        <module name="io" />
       </profile>
     </annotationProcessing>
   </component>
