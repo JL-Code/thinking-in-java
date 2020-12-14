@@ -11,6 +11,16 @@
 
 > 　注意：编译器会检查 obj 是否能转换成右边的class类型，如果不能转换则直接报错，如果不能确定类型，则通过编译，具体看运行时定。
 
+### Java isAssignableFrom()
+
+`class1.isAssignableFrom(class2)`  判定此 `Class1` 对象所表示的类或接口与指定的 `Class2` 参数所表示的类或接口是否相同，或是否是其超类或超接口。如果是则返回 `true`；否则返回 `false`。如果该 `Class` 表示一个基本类型，且指定的 `Class` 参数正是该 `Class` 对象，则该方法返回 `true`；否则返回 `false`。 
+
+> Class1.getClass().equals(Class2.class); 方式判断类型相同
+
+## synchronized
+
+## volatile
+
 ## 参考文档
 
 * [浅析Java中的final关键字](https://www.cnblogs.com/dolphin0520/p/3736238.html)

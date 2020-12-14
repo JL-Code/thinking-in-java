@@ -9,6 +9,7 @@
 >  1. Bean 应该默认拥有无参构造函数。
 >  2. Bean 应该实现 `java.io.serializable`
 >  3. Bean 应该提供 `getter`、`setter` 方法用于操作内部状态。
+> 
 > `@Bean` 用于将 `Bean` 注册到 `ApplicationContext`，组件 `ID` 默认为小驼峰类名或方法名。
 
 ## 1.3. Bean 注册
@@ -143,7 +144,7 @@ public @interface Import {
 
 ### 1.3.5. Spring FactoryBean 方式注册 Bean
 
-> Spring 中有两种 `Bean`，一种是普通 Bean，另一种则是 `FactoryBean` 。FactoryBean 跟普通 Bean不同，其返回的对象不是指定类的一个实例，而是该 FactoryBean 的 getObject 方法所返回的对象。
+> **Spring** 中有两种  **Bean** ，一种是普通 **Bean**，另一种则是 **FactoryBean** 。**FactoryBean** 跟普通 **Bean**不同，其返回的对象不是指定的 **FactoryBean** 实例，而是调用 **FactoryBean** 的 **getObject** 方法所返回的类对象。
 
 
 

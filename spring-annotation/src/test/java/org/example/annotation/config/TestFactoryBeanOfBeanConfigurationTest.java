@@ -34,14 +34,14 @@ class TestFactoryBeanOfBeanConfigurationTest {
     @Test
     @DisplayName("注册的Bean名称是productFactoryBean，实际获取到的Bean类型为Product")
     public void testProductFactoryBean() {
-//        Object product = context.getBean("productFactoryBean");
-//        Product product1 = context.getBean(Product.class);
-//
-//        System.out.println(product);
-//        System.out.println(product1);
-//
-//        Assertions.assertEquals(product.getClass(), Product.class);
-//        Assertions.assertEquals(product1.getClass(), Product.class);
+        Object product = context.getBean("productFactoryBean");
+        Product product1 = context.getBean(Product.class);
+
+        System.out.println(product);
+        System.out.println(product1);
+
+        Assertions.assertEquals(product.getClass(), Product.class);
+        Assertions.assertEquals(product1.getClass(), Product.class);
     }
 
     @Test

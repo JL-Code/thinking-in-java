@@ -445,7 +445,14 @@ public SysUserAuthentication authenticate(IntegrationAuthentication integrationA
 }
 ```
 
+## DefaultTokenServices
 
+默认令牌生成服务
+
+```java
+private int refreshTokenValiditySeconds = 60 * 60 * 24 * 30; // default 30 days.
+private int accessTokenValiditySeconds = 60 * 60 * 12; // default 12 hours.
+```
 
 ## FilterSecurityInterceptor
 
@@ -489,8 +496,7 @@ public void invoke(FilterInvocation fi) throws IOException, ServletException {
 ```
 
 
-
-## 参考文档
+## 参考来源
 
 * [Spring Security OAuth2 优雅的集成短信验证码登录以及第三方登录](https://segmentfault.com/a/1190000014371789)
 * [谈谈短信验证码机制](https://www.jianshu.com/p/47a6ccf5c269)

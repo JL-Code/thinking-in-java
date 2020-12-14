@@ -11,6 +11,11 @@
 | @Inject    | org.springframework.bean.factory | Spring 2.5+  | 项目需显式依赖 `javax.inject:javax.inject:1`。               |
 | @Qualifier | org.springframework.bean.factory | Spring 2.5+  | 显式通过 `name` 显示装配依赖（`@Autowired` ✅、`@Inject`✅、`@Resource`❌） |
 | @Primary   | org.springframework.bean.factory | Spring 2.5+  | 存在多个相同类型的 `Bean` 时可以通过 `@Primary` 指定优先装配顺序（`@Autowired` ✅、`@Inject` ✅、`@Resource`❌）。 |
+| @Lazy      |                                  |              | 与 @Bean 结合使用，表示 Bean 延迟加载（用到时才加载）。      |
+
+
+
+
 
 ## `@Autowired`
 
@@ -87,6 +92,10 @@ public @interface Inject {
     <version>1</version>
 </dependency>
 ```
+
+## @Lazy
+
+延迟加载
 
 ## xxxAware 类
 

@@ -1,0 +1,40 @@
+# UAA oauth2 client
+highzap:
+  security:
+    oauth2:
+      client:
+        cdb:
+          clientId: 785B30443FD6E2DE160408DDCFCAE6FA
+          clientSecret: 785B30443FD6E2DE160408DDCFCAE6FA
+# 微信配置信息
+wechat:
+  # 企业微信配置
+  corp:
+    corpId: ww13e9492fe4b02153
+    # 企业微信应用配置
+    corpapp:
+      cdb:
+        agentId: 1000002
+        secret: dsq1HWzRkcJ27VxrC8gRsTXu17Kq39LlJIY5kk3w-g4
+        token: xx
+        encodingAESKey: xx
+# 钉钉应用配置
+dingtalk:
+  corpId: ww13e9492fe4b02153
+  # H5 微应用
+  corph5:
+    cdb:
+      agentId: 839623199
+      appKey: dinguwg6g6mthlnl2p52
+      appSecret: tC4M5s6WImzZFUVolwDOVL_fpK9bOgEpAL9-DN23QisVLInPEx8YdejUL4KLC9Sc
+  # 小程序
+  corpeapp:
+    cdb:
+      agentId: 841699991
+      appKey: dingapfeqfjbyjq4joiv
+      appSecret: rudlSmgPuDqKYGxxSzL2M1a0Z47YzSlbB8eiGICyRfmrhTLqaURnnGmnZxzd_doC
+  # 扫码登录应用
+  loginman:
+    cdb:
+      appId: dingoakmulh1ut9nyk6kx4
+      appSecret: U0U-9P9FA1iXl-OljiVJkd_MKxnOLiF6LZ03KGccxdmrwGDevS-hKB3NrEfwgujr
