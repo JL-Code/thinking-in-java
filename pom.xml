@@ -18,6 +18,7 @@
         <module>tomcat</module>
         <module>beautiful-restapi</module>
         <module>springboot</module>
+        <module>jackson</module>
     </modules>
     <properties>
         <junit.jupiter.version>5.6.2</junit.jupiter.version>
