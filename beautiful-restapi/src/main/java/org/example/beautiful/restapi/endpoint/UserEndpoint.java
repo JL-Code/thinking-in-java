@@ -18,10 +18,10 @@ public class UserEndpoint {
         this.userService = userService;
     }
 
-    @GetMapping("/{userId}")
-    public User getUser(@PathVariable Integer userId) {
+    @GetMapping("/{id}")
+    public User getUser(@PathVariable Integer id) {
         User user = new User();
-        user.setId(userId);
+        user.setId(id);
         user.setName("mecode");
         user.setEmail("778671998@qq.com");
         return user;
@@ -32,6 +32,17 @@ public class UserEndpoint {
         return userService.addUser(user);
     }
 
+    /**
+     * 自动抛出异常 + 全局异常处理
+     * @param user
+     * @return
+     */
+    @PostMapping("autothrows-exception")
+    public String addUserWithAutoThrowsException(@RequestBody @Valid User user) {
+        return userService.addUser(user);
+    }
+
+
     @PostMapping("binding-result")
     public String addUserByBindingResult(@RequestBody @Valid User user, BindingResult bindingResult) {
         for (ObjectError objectError : bindingResult.getAllErrors()) {
@@ -40,9 +51,9 @@ public class UserEndpoint {
         return userService.addUser(user);
     }
 
-
     @PostMapping("service-valid")
     public String addUserByServiceValid(@RequestBody User user) {
         return userService.addUserRequireValid(user);
     }
+
 }
