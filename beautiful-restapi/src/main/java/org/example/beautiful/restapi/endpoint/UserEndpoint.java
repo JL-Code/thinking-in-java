@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("users")
+@RequestMapping("/users")
 public class UserEndpoint {
 
     private UserService userService;

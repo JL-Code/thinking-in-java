@@ -2,12 +2,19 @@ package org.example.jackson;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.Version;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.fasterxml.jackson.databind.type.CollectionType;
 import org.junit.jupiter.api.Test;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Jackson 框架的高阶应用 https://developer.ibm.com/zh/articles/jackson-advanced-application/
@@ -35,9 +42,9 @@ class ResultTest {
      * 3.泛型反序列化
      * 4.泛型序列化
      * 5.日期格式处理
-     * 自定义序列化器
-     *  Jackson 注解 @JsonProperty @JsonIgnore @JsonIgnoreProperties
      *
+     * 自定义序列化器
+     * Jackson 注解 @JsonProperty @JsonIgnore @JsonIgnoreProperties
      */
 
     @Test
@@ -98,5 +105,42 @@ class ResultTest {
 
     }
 
+    @Test
+    public void testGenericSerialize() throws JsonProcessingException {
+        List<Result> resultList = new ArrayList<>();
+
+        for (int i = 0; i < 5; i++) {
+            Result result = new Result();
+            result.setCode(100 + i);
+            result.setMessage(String.format("result %d", i));
+            result.setErrors(String.format("errors %d", i));
+            resultList.add(result);
+        }
+
+        ObjectMapper mapper = new ObjectMapper();
+        String json = mapper.writeValueAsString(resultList);
+
+        System.out.println(json);
+
+    }
+
+    @Test
+    public void testGenericDserialize() throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        CollectionType javaType = mapper.getTypeFactory()
+                .constructCollectionType(List.class, Result.class);
+
+        String filePath = "/json/result-list.json";
+        InputStream stream1 = this.getClass().getResourceAsStream(filePath);
+        InputStream stream2 = this.getClass().getResourceAsStream(filePath);
+
+        List<Result> list1 = mapper.readValue(stream1, javaType);
+
+        List<Result> list2 = mapper.readValue(stream2, new TypeReference<List<Result>>() {
+        });
+
+        System.out.println(list1);
+        System.out.println(list2);
+    }
 
 }
