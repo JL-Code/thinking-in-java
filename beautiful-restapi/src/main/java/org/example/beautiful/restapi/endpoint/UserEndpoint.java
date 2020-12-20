@@ -20,10 +20,7 @@ public class UserEndpoint {
 
     @GetMapping("/{id}")
     public User getUser(@PathVariable Integer id) {
-        User user = new User();
-        user.setId(id);
-        user.setName("mecode");
-        user.setEmail("778671998@qq.com");
+        User user = userService.getUser(id);
         return user;
     }
 
@@ -34,6 +31,7 @@ public class UserEndpoint {
 
     /**
      * 自动抛出异常 + 全局异常处理
+     *
      * @param user
      * @return
      */

@@ -69,7 +69,7 @@ Content-Language: en
     > 4. 不是所有异常我们都能预先进行捕捉，如果发生了没有捕捉到的异常该怎么办？（如何处理未知异常）
 
     * [x] GOAL#2.1 支持 `@Valid` Exception
-    * [ ] GOAL#2.2 支持 Spring MVC Exceptions
+    * [x] GOAL#2.2 支持 Spring MVC Exceptions
     * [ ] GOAL#2.3 支持 Spring Security Exceptions
 
     
@@ -98,13 +98,10 @@ Content-Language: en
     * [ ] GOAL#6.1 HTTP Status Code
 
 
-## 示例
-1. 应用各层参数校验重复繁琐问题举例
 
+## 问题
 
-借助 `javax.validation.Valid` 注解实现
-
-## 特征（Features）
+`@ExceptionHandler` 的工作机制
 
 ## 信息参考
 

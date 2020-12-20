@@ -5,4 +5,14 @@ public class DefaultNotifier implements Notifier {
     public void send(String message) {
         System.out.println("DefaultNotifier:" + message);
     }
+
+    @Override
+    public Notifier getDecoreatee() {
+        return null;
+    }
+
+    @Override
+    public void setDecoreatee(Notifier decoreatee) {
+
+    }
 }
