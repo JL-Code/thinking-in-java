@@ -1,4 +1,4 @@
-#  Beautiful REST API
+#   Beautiful REST API
 
 应用程序和 API 之间的交互中实际上只有3个结果：
   1. 一切正常
@@ -93,6 +93,9 @@ Content-Language: en
 
 * GOAL#3 通过自定义异常增加全局异常处理灵活性(自定义异常能携带更多的错误信息，而传统异常只能传递一个字符串)，并且自定义异常语义更明确，能更好的标识错误。
 * GOAL#4 通过实现 RFC7807 规范（`Problem Detail`）统一 REST API 问题信息格式。
+    * [x] GOAL#4.1 Problem 基本字段支持
+    * [ ] GOAL#4.2 Problem 扩展字段支持
+    * [ ] GOAL#4.3 Problem  Builder 
 * GOAL#5 在表述层统一处理数据响应格式，减少使用 `Problem` 包装类的机会。
 * GOAL#6 使 REST API 符合[理查森成熟度模型](https://martinfowler.com/articles/richardsonMaturityModel.html) 第二等级要求
     * [ ] GOAL#6.1 HTTP Status Code

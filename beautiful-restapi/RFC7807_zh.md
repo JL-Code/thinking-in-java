@@ -89,7 +89,7 @@ Content-Language: en
 
 「问题详情」对象可以具有以下成员：
 
-* `type` (string) - 一个 `URI` 地址 **[RFC3986]** 用于描述**问题类型**信息。该规范鼓励在取消引用（dereferenced）时为人类提供可阅读的文档（例如，使用 `HTML` **[W3C.REC-html5-20141028]**）。当这个成员不存在时，其值为设置为 `about:blank` 以表示不存在更多的问题类型信息。
+* `type` (string) 一个 `URI` 地址 **[RFC3986]** 用于描述**问题类型**信息。该规范鼓励在取消引用（dereferenced）时为人类提供可阅读的文档（例如，使用 `HTML` **[W3C.REC-html5-20141028]**）。当这个成员不存在时，其值为设置为 `about:blank` 以表示不存在更多的问题类型信息。
 * `title` (string) 该问题类型的简短摘要描述。「它不应该随着问题的发生而改变，本地化除外」。(例如：主动的使用内容协商; 参见 **[RFC7231]**, 3.4 章节)
 * `status`(number) 这个是 HTTP 状态码 （**[RFC7231]** 第六章节）<span style="background:yellow">由发生该问题的原始服务器生成</span>。
 * `detail` (string) 针对发生该问题的具体解释（说明为什么会发生这个问题）。

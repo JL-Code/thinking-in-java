@@ -15,15 +15,15 @@ public class BusinessException extends RuntimeException {
     }
 
     public BusinessException() {
-        super();
+        this("");
     }
 
-    public BusinessException(@NotNull String title) {
-        super(title);
+    public BusinessException(@NotNull String message) {
+        this(message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    public BusinessException(@NotNull String title, HttpStatus status) {
-        super(title);
+    public BusinessException(@NotNull String message, HttpStatus status) {
+        super(message);
         this.status = status;
     }
 }
