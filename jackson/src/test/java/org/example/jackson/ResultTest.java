@@ -59,8 +59,11 @@ class ResultTest {
         ResultSerializer serializer = new ResultSerializer(Result.class);
         ObjectMapper mapper = new ObjectMapper();
 
-        SimpleModule module =
-                new SimpleModule("ResultSerializer", new Version(2, 1, 3, null, null, null));
+//        SimpleModule module =
+//                new SimpleModule("ResultSerializer", new Version(2, 1, 3, null, null, null));
+
+        SimpleModule module = new SimpleModule("ResultSerializer");
+
         module.addSerializer(Result.class, serializer);
 
         mapper.registerModule(module);

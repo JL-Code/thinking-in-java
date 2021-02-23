@@ -19,6 +19,7 @@
         <module>beautiful-restapi</module>
         <module>springboot</module>
         <module>jackson</module>
+        <module>logback</module>
     </modules>
     <properties>
         <junit.jupiter.version>5.6.2</junit.jupiter.version>
@@ -51,7 +52,6 @@
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
                 <version>1.18.12</version>
-                <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>com.alibaba</groupId>

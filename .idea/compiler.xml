@@ -17,6 +17,7 @@
         <module name="spring-annotation" />
         <module name="basic" />
         <module name="springboot" />
+        <module name="logback" />
       </profile>
     </annotationProcessing>
   </component>
