@@ -24,7 +24,7 @@ class UserServiceTest {
 
     @Test
     void listUser() {
-        IPage<User> users = userService.listUser(1, 2, "");
+        IPage<User> users = userService.listUser(1, 2, "75488aad-1692-4f66-a2df-4ae5f5716ae8");
 
         assertEquals(2, users.getTotal());
 
