@@ -13,6 +13,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class MyBatisExampleApplication {
     public static void main(String[] args) {
+        // 使 JDK 动态代理生成的字节码文件保存到磁盘
+        // 参考：https://www.pianshen.com/article/84631659401/
+        System.getProperties().put("jdk.proxy.ProxyGenerator.saveGeneratedFiles", "true");
         SpringApplication.run(MyBatisExampleApplication.class, args);
     }
 }
