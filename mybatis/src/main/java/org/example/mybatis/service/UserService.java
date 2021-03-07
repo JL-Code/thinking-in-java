@@ -3,8 +3,6 @@ package org.example.mybatis.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.example.mybatis.model.User;
 
-import java.util.List;
-
 /**
  * <p>创建时间: 2021/2/26 </p>
  *
