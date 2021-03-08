@@ -6,9 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * <p>创建时间: 2021/2/26 </p>
@@ -24,9 +22,16 @@ class UserServiceTest {
 
     @Test
     void listUser() {
-        IPage<User> users = userService.listUser(1, 2, "75488aad-1692-4f66-a2df-4ae5f5716ae8");
+        String agentId = "013f00be-923d-4a73-8896-43ac0b87d618";
+        IPage<User> users = userService.listUser(1, 2, agentId);
 
-        assertEquals(2, users.getTotal());
+        assertEquals(2, users.getRecords().stream().count());
+    }
 
+    @Test
+    public void testInsertMockUser() {
+        for (int i = 0; i < 10; i++) {
+
+        }
     }
 }
