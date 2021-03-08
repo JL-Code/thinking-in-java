@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -22,7 +24,7 @@ class UserRepositoryTest {
     UserRepository repository;
 
     @Test
-    public void testPagination() {
+    void selectPage() {
         String agentId = "013f00be-923d-4a73-8896-43ac0b87d618";
         Page<User> pagination = new Page<>(1, 2);
         IPage<User> records = repository.selectPage(pagination, agentId);
@@ -30,5 +32,26 @@ class UserRepositoryTest {
         assertNotEquals(0, records.getSize());
         assertEquals(records.getRecords().get(0).getName(), "mecode1");
         assertEquals(records.getRecords().get(1).getName(), "mecode2");
+    }
+
+    @Test
+    void selectUserPage() {
+    }
+
+    @Test
+    void defaultLimitPage() {
+        String agentId = "013f00be-923d-4a73-8896-43ac0b87d618";
+
+        List<User> records = repository.defaultLimitPage(1, 2L, agentId);
+        List<User> records2 = repository.defaultLimitPage(2, 2L, agentId);
+
+        assertNotEquals(0, records.stream().count());
+
+        assertEquals(records.get(0).getName(), "mecode1");
+        assertEquals(records.get(1).getName(), "mecode2");
+
+        assertNotEquals(0, records2.stream().count());
+        assertEquals(records2.get(0).getName(), "mecode3");
+        assertEquals(records2.get(1).getName(), "mecode4");
     }
 }

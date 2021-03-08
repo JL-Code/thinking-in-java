@@ -55,5 +55,13 @@ from cloud_user t1
          right join cloud_invitation_user_agent t2
                     on t1.id = t2.user_id
 where t2.agent_id = '013f00be-923d-4a73-8896-43ac0b87d618'
-LIMIT 0,2
+LIMIT 0,2;
+
+-- LIMIT 分页 + ROW_NUMBER 序列号
+SELECT ROW_NUMBER() OVER( ORDER By t1.name) row_num,t1.name,t1.nick_name,t1.id,t2.create_time FROM cloud_user t1
+RIGHT JOIN cloud_invitation_user_agent t2
+ON t1.id = t2.user_id
+WHERE t2.agent_id = '013f00be-923d-4a73-8896-43ac0b87d618'
+order by t1.name
+limit 0,2;
 
