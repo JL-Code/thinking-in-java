@@ -17,7 +17,7 @@ import java.util.List;
  * @version v1.0
  */
 @Repository
-public interface UserRepository extends BaseMapper<User> {
+public interface  UserRepository extends BaseMapper<User> {
 
     @Select("select t1.nick_name,t1.id,t1.name,t2.agent_id,t2.create_time from cloud_user t1 right join cloud_invitation_user_agent t2 on" +
             " t1.id = t2.user_id where t2.agent_id=#{agentId}")

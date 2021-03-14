@@ -1,6 +1,7 @@
 package org.example.mybatis.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.example.mybatis.model.User;
@@ -23,6 +24,7 @@ public class UserServiceImpl extends ServiceImpl<UserRepository, User> implement
     public IPage<User> listUser(long page, long size, String agentId) {
         Page<User> pagination = new Page<>(page, size);
         List<User> users = this.baseMapper.selectUserPage(pagination, agentId);
+//        this.baseMapper.selectList(Wrappers.<User>lambdaQuery().eq(User::getId, agentId));
         pagination.setRecords(users);
         return pagination;
     }
