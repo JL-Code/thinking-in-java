@@ -27,6 +27,14 @@ public interface  UserRepository extends BaseMapper<User> {
             " t1.id = t2.user_id where t2.agent_id=#{agentId} order by t1.name")
     IPage<User> selectPage(Page<User> pagination, String agentId);
 
+    @Select("select t1.nick_name,t1.id,t1.name,t2.agent_id,t2.create_time from cloud_user t1 right join cloud_invitation_user_agent t2 on" +
+            " t1.id = t2.user_id where t2.agent_id=#{agentId} order by t1.name")
+    List<User> selectList(String agentId);
+
+    @Select("select t1.nick_name,t1.id,t1.name,t2.agent_id,t2.create_time from cloud_user t1 right join cloud_invitation_user_agent t2 on" +
+            " t1.id = t2.user_id where t2.agent_id=#{agentId} order by t1.name")
+    User selectByAgentId(String agentId);
+
     /**
      * LIMIT 分页
      * syntax  LIMIT [offset],row_count  offset 默认值 0

@@ -16,5 +16,7 @@ public class MyBatisExampleApplication {
         // 参考：https://www.pianshen.com/article/84631659401/
         System.getProperties().put("jdk.proxy.ProxyGenerator.saveGeneratedFiles", "true");
         SpringApplication.run(MyBatisExampleApplication.class, args);
+
+
     }
 }

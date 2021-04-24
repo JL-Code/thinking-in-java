@@ -1,9 +1,8 @@
 package org.example.springboot.controller;
 
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * <p>创建时间: 2021/3/14 </p>
@@ -24,11 +23,27 @@ public class MvcBindTestController {
     }
 
     /**
-     * @param appUseagesVO
+     * 通过 @RequestBody
+     *
+     * @param appUseagesVO 包装类
      * @return
      */
     @PostMapping("model-embed-collection2")
     public AppUseagesVO bindCollection2(@RequestBody AppUseagesVO appUseagesVO) {
         return appUseagesVO;
+    }
+
+    /**
+     * 拥有标准的请求头属性
+     *
+     * @param entity {@link HttpEntity}
+     * @return
+     */
+    @GetMapping("/http-entity")
+    public Object getEntity(HttpEntity<AppUseagesVO> entity) {
+        HttpHeaders headers = entity.getHeaders();
+        AppUseagesVO body = entity.getBody();
+
+        return body;
     }
 }

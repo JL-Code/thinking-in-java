@@ -1,6 +1,7 @@
 package org.example.mybatis.repository;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.example.mybatis.model.User;
 import org.junit.jupiter.api.Test;
@@ -32,6 +33,15 @@ class UserRepositoryTest {
         assertNotEquals(0, records.getSize());
         assertEquals(records.getRecords().get(0).getName(), "mecode1");
         assertEquals(records.getRecords().get(1).getName(), "mecode2");
+    }
+
+    @Test
+    public void testMethodName() {
+        String agentId = "12";
+        List<User> users = repository.selectList(agentId);
+        User user = repository.selectByAgentId(agentId);
+        assertNotNull(users);
+        assertNull(user);
     }
 
     @Test

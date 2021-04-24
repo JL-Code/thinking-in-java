@@ -11,4 +11,8 @@ import org.example.mybatis.model.User;
  */
 public interface UserService {
     IPage<User> listUser(long page, long size, String agentId);
+
+    default void unitTest() {
+        System.out.println("单元测试方法");
+    }
 }
