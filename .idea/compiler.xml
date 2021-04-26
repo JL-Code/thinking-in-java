@@ -7,6 +7,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="unit-test" />
         <module name="tomcat" />
         <module name="io" />
         <module name="mybatis" />
@@ -28,6 +29,7 @@
       <module name="jackson" options="-parameters" />
       <module name="mybatis" options="-parameters" />
       <module name="springboot" options="-parameters" />
+      <module name="unit-test" options="-parameters" />
       <module name="wechat" options="-parameters" />
     </option>
   </component>

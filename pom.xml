@@ -22,6 +22,7 @@
         <module>logback</module>
         <module>mybatis</module>
         <module>wechat</module>
+        <module>unit-test</module>
     </modules>
     <properties>
         <junit.jupiter.version>5.6.2</junit.jupiter.version>
