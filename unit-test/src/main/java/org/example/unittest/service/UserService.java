@@ -7,5 +7,5 @@ package org.example.unittest.service;
  * @version v1.0
  */
 public interface UserService {
-    boolean saveUser();
+    boolean save();
 }
