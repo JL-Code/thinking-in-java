@@ -29,7 +29,7 @@
       <module name="jackson" options="-parameters" />
       <module name="mybatis" options="-parameters" />
       <module name="springboot" options="-parameters" />
-      <module name="unit-test" options="-parameters" />
+      <module name="unit-test" options="" />
       <module name="wechat" options="-parameters" />
     </option>
   </component>
