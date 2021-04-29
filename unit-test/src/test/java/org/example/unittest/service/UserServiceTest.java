@@ -8,10 +8,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 /**
  * <p>创建时间: 2021/4/26 </p>
@@ -47,8 +45,11 @@ class UserServiceTest {
 
         doThrow(new Exception()).when(dao).insert();
 
+        doReturn(false).when(dao).insert();
+
         assertThrows(Exception.class, () -> {
             dao.insert();
         });
+
     }
 }

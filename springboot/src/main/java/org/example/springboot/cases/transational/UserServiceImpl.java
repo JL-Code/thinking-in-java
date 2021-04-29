@@ -14,7 +14,6 @@ import org.springframework.transaction.support.DefaultTransactionDefinition;
 public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserService {
 
 
-
     /**
      * TODO: 这是一个糟糕的事务回滚案例，推荐采用支付订单案例
      *
@@ -25,15 +24,22 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserS
     @Override
     public boolean addUser(User user) {
         int insert = this.baseMapper.insert(user);
-        // 当 username = jiangy 时，触发一个异常
+        return insert > 0;
+    }
+
+    @Override
+    public boolean nestedCallTransactionMethod(User user) {
+        boolean result = addUser(user);
+        // 模拟抛出一个异常，期望 addUser 方法回滚。
         if (user.getUsername().equals("jiangy")) {
             throw new RuntimeException("运行异常");
         }
-        return insert > 0;
+        return result;
     }
 
     @Autowired
     private PlatformTransactionManager txManager;
+
     public User commandTransactionCase(User user) {
         // 1、创建事务定义
         TransactionDefinition definition = new DefaultTransactionDefinition();

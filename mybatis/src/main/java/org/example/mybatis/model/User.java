@@ -3,6 +3,8 @@ package org.example.mybatis.model;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
+import java.util.Date;
+
 /**
  * <p>创建时间: 2021/2/26 </p>
  *
@@ -16,4 +18,7 @@ public class User {
     private String name;
     private String nickName;
     private String agentId;
+    private String creator;
+    private String creatorId;
+    private Date createdAt;
 }
