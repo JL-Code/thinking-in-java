@@ -40,7 +40,8 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserS
     @Autowired
     private PlatformTransactionManager txManager;
 
-    public User commandTransactionCase(User user) {
+    @Override
+    public User imperativeTransactionCase(User user) {
         // 1、创建事务定义
         TransactionDefinition definition = new DefaultTransactionDefinition();
         // 2、根据定义开启事务
@@ -55,7 +56,5 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserS
             txManager.rollback(status);
             throw ex;
         }
-
-
     }
 }

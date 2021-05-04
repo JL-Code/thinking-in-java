@@ -20,5 +20,5 @@ public interface UserService {
      * @param user
      * @return
      */
-    User commandTransactionCase(User user);
+    User imperativeTransactionCase(User user);
 }
