@@ -9,7 +9,6 @@
         <outputRelativeToContentRoot value="true" />
         <module name="unit-test" />
         <module name="tomcat" />
-        <module name="io" />
         <module name="mybatis" />
         <module name="wechat" />
         <module name="springboot" />
@@ -23,6 +22,9 @@
         <module name="basic" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="io" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
