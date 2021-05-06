@@ -11,7 +11,6 @@
     <modules>
         <module>design-pattern</module>
         <module>basic</module>
-        <module>io</module>
         <module>spring-annotation</module>
         <module>spring</module>
         <module>spring-data-redis</module>
@@ -23,6 +22,7 @@
         <module>mybatis</module>
         <module>wechat</module>
         <module>unit-test</module>
+        <module>mnc-poc</module>
     </modules>
     <properties>
         <junit.jupiter.version>5.6.2</junit.jupiter.version>

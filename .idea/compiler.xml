@@ -20,6 +20,7 @@
         <module name="beautiful-restapi" />
         <module name="spring-annotation" />
         <module name="basic" />
+        <module name="mnc-poc" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
