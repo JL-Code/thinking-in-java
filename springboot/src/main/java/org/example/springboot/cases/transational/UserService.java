@@ -21,4 +21,12 @@ public interface UserService {
      * @return
      */
     User imperativeTransactionCase(User user);
+
+    /**
+     * 移除用户
+     *
+     * @param userId 用户ID
+     * @return
+     */
+    boolean remove(String userId);
 }

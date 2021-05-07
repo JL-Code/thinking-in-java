@@ -1,5 +1,7 @@
 package org.example.springboot.cases.transational;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.example.springboot.cases.transational.dao.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,5 +58,13 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserS
             txManager.rollback(status);
             throw ex;
         }
+    }
+
+    @Override
+    public boolean remove(String userId) {
+        LambdaQueryWrapper<User> predicate = Wrappers.<User>lambdaQuery().eq(User::getId, userId);
+        User user = super.baseMapper.selectOne(predicate);
+//        User user = super.baseMapper.selectById(userId);
+        return user == null;
     }
 }

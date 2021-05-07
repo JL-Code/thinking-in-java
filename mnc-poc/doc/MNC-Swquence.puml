@@ -13,14 +13,14 @@ alt "provider.supports(notification)==true"
     NotificationDispatcher->ChannelProvider:provider.dispath(notification)
     activate ChannelProvider
     ChannelProvider->"渠道提供者API（SMS API、钉钉 API等）":realNotifyMethod(message) 「调用渠道提供者真实的通知方法」
-    "渠道提供者API（SMS API、钉钉 API等）"->ChannelProvider:notificationResult
-    ChannelProvider->NotificationDispatcher:notificationResult
+    "渠道提供者API（SMS API、钉钉 API等）"-->ChannelProvider:notificationResult
+    ChannelProvider-->NotificationDispatcher:notificationResult
     deactivate ChannelProvider
 end
 
 end
 
-NotificationDispatcher -> caller: notificationResult
+NotificationDispatcher --> caller: notificationResult
 deactivate NotificationDispatcher
 
 @enduml

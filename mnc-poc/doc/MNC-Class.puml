@@ -27,7 +27,7 @@ interface ChannelProvider<T extends Notification> {
     Optional<Object> dispatch(T notification);
 }
 
-NotificationDispatcher --> ChannelProvider : 1:N
+NotificationDispatcher --> ChannelProvider : 关联 1:N
 }
 
 package com.highzap.notification.sms {

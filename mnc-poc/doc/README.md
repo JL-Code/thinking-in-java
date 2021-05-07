@@ -30,9 +30,9 @@ TODO...
 | ----------------------------- | ---- | ------------------------------------------------------------ |
 | Notification                  | 接口 | 通知接口，所有类型的通知都需要实现 `Notification`            |
 | Message                       | 接口 | 消息接口，所有类型的消息都需要实现 `Message`                 |
-| **ChannelProvider**               | 接口 | 渠道提供者，负责和 SMS、钉钉、企业微信、站内消息进行集成，调用第三方SDK 发送真正消息通知。   |
-| NotificationDispatcher        | 接口 | 通知调度器接口，负责将不同的通知调度到对应的 `ChannelProvider` 进行处理。 |
-| DefaultNotificationDispatcher | 类   | 默认的通知调度实现类                                         |
+| **ChannelProvider**               | 接口 | 渠道提供者接口，负责处理 `Notification`、`Message` 。开发者需要实现该 `ChannelProvider` 接口。 |
+| NotificationDispatcher        | 接口 | 通知调度器接口。 |
+| DefaultNotificationDispatcher | 类   | 默认的通知调度实现类。                                        |
 
 
 ### 类图
@@ -222,9 +222,9 @@ class NotificationDispatcherTest {
 }
 ```
 
-## 系统集成
+## 组件调用
 
-系统集成方式有两种：
+调用方式有两种：
 1. Notification SDK
 2. Notification Microservice
 
