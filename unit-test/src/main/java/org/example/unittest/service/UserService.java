@@ -8,4 +8,5 @@ package org.example.unittest.service;
  */
 public interface UserService {
     boolean save();
+    String getUsername();
 }

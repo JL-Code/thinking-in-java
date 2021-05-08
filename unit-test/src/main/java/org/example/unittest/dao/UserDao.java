@@ -7,6 +7,11 @@ package org.example.unittest.dao;
  * @version v1.0
  */
 public class UserDao {
+    public boolean insert(String username) {
+        System.out.println("user insert success:" + username);
+        return true;
+    }
+
     public boolean insert() {
         System.out.println("user insert success");
         return true;

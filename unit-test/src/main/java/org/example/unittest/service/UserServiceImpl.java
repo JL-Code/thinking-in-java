@@ -10,9 +10,20 @@ import org.example.unittest.dao.UserDao;
  */
 public class UserServiceImpl implements UserService {
     private UserDao userDao;
+
+    public UserServiceImpl(UserDao userDao) {
+        this.userDao = userDao;
+    }
+
     @Override
     public boolean save() {
-        boolean result = userDao.insert();
+        String username = getUsername();
+        boolean result = userDao.insert(username);
         return result;
+    }
+
+    @Override
+    public String getUsername() {
+        return "username";
     }
 }

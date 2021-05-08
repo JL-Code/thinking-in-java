@@ -33,7 +33,8 @@ class UserServiceTest {
     @DisplayName("测试新增用户用例")
     void testSaveUser_Guide() {
         // Given
-        when(dao.insert()).thenReturn(true);
+        String username = service.getUsername();
+        when(dao.insert(username)).thenReturn(true);
         // When
         boolean result = service.save();
         // Then
