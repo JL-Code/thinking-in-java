@@ -3,14 +3,20 @@ package org.example.unittest;
 import org.example.unittest.dao.UserDao;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtensionContext;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.ArgumentsProvider;
+import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.MockedConstruction;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -127,6 +133,56 @@ class MockitoTest {
             when(foo.insert()).thenReturn(false);
             assertTrue(new UserDao().insert());
             verify(foo).insert();
+        }
+    }
+
+    //    @ParameterizedTest
+//    @MethodSource("stringIntAndListProvider")
+//    void testWithMultiArgMethodSource(String str, int num, List<String> list) {
+//        assertEquals(3, str.length());
+//        assertTrue(num >=1 && num <=2);
+//        assertEquals(2, list.size());
+//    }
+//
+    static Stream<Arguments> filterKeywordParameterProvider() {
+        return Stream.of(
+                Arguments.of("where userid =[公司01]  and system=[项目01]", "where userid =  and system="),
+                Arguments.of("where userid =[current_user]  and system=[current_system]", "where userid =  and system="),
+                Arguments.of("where userid =[公司_ID]  and system=[项目_ID]", "where userid =  and system=")
+        );
+    }
+
+    @DisplayName("参数化测试")
+    @ParameterizedTest
+    @MethodSource("filterKeywordParameterProvider")
+    public void filterKeyword(String input, String expected) {
+
+        String result = input.replaceAll("\\[(\\S)*\\]", "");
+        assertEquals(expected, result);
+
+    }
+
+    public static List<String> extractStrByRegular(String msg) {
+        List<String> list = new ArrayList<String>();
+        String separatorLeft = "[";
+        String separatorRight = "]";
+
+        // \[(\w)*\]
+        String regStr = String.format("\\%s(\\S)*\\%s", separatorLeft, separatorRight);
+        Pattern pattern = Pattern.compile(regStr);
+
+        Matcher matcher = pattern.matcher(msg);
+        while (matcher.find()) {
+            list.add(matcher.group().substring(1, matcher.group().length() - 1));
+        }
+        return list;
+    }
+
+    static class MyArgumentsProvider implements ArgumentsProvider {
+
+        @Override
+        public Stream< ? extends Arguments > provideArguments(ExtensionContext context) {
+            return Stream.of("foo", "bar").map(Arguments::of);
         }
     }
 }

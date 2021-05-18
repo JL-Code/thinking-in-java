@@ -16,7 +16,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean save() {
+    public boolean save(User user) {
         String username = getUsername();
         boolean result = userDao.insert(username);
         return result;

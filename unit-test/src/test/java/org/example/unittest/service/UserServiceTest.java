@@ -30,13 +30,17 @@ class UserServiceTest {
 //    UserService userService;
 
     @Test
-    @DisplayName("测试新增用户用例")
-    void testSaveUser_Guide() {
+    @DisplayName("当传入一个有效用户时，期望保存成功")
+    void save_effectiveUser_Success() {
         // Given
-        String username = service.getUsername();
-        when(dao.insert(username)).thenReturn(true);
+        User user = new User();
+        user.setId(1L);
+        user.setName("张三");
+        when(dao.insert(user.getName())).thenReturn(true);
+
         // When
-        boolean result = service.save();
+        boolean result = service.save(user);
+
         // Then
         assertTrue(result);
     }

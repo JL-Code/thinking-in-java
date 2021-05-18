@@ -1,5 +1,6 @@
 package org.example.unittest.cases.argumentmatcher;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -18,6 +19,7 @@ import static org.mockito.Mockito.*;
 class ArgumentMatcherCaseTest {
 
     @Test
+    @DisplayName("测试精确参数匹配")
     public void test_ArgumentMatcher_Exact() {
         // given
         Map mockMap = Mockito.mock(Map.class);
