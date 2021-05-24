@@ -69,5 +69,13 @@
             <version>3.4.3</version>
             <scope>compile</scope>
         </dependency>
+
+        <!-- 引入Swagger3依赖 -->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-boot-starter</artifactId>
+            <version>3.0.0</version>
+        </dependency>
+
     </dependencies>
 </project>

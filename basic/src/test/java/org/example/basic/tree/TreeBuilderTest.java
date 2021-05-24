@@ -47,7 +47,8 @@ class TreeBuilderTest {
         dataSource.add(module_a_1_1);
         dataSource.add(module_a_2);
 
-        List<ModuleViewDTO> treeList = TreeUtils.build(dataSource, node -> StringUtils.isEmpty(node.getParentId()),
+        List<ModuleViewDTO> treeList = TreeUtils.build(dataSource,
+                node -> StringUtils.isEmpty(node.getParentId()),
                 (cnode, pnode) -> cnode.getParentId().equals(pnode.getId()));
 
         String json = new ObjectMapper().writeValueAsString(treeList);

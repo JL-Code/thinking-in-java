@@ -69,6 +69,14 @@ public class JDBCHelper {
         return result;
     }
 
+    /**
+     * 获取返回结果集的元数据
+     * 获取数据源的字段（列）
+     *
+     * @param sqlStatement
+     * @return
+     * @throws SQLException
+     */
     public static List<Map<String, Object>> getResultSetMetaData(String sqlStatement) throws SQLException {
         List<Map<String, Object>> result = new ArrayList<>();
         String url = "jdbc:mysql://localhost:3306/highzap_cloud?serverTimezone=GMT%2B8&useSSL=false&useUnicode=true&characterEncoding=utf-8&allowPublicKeyRetrieval=true";
