@@ -3,6 +3,7 @@ package org.example.basic.tree;
 import org.springframework.util.StringUtils;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,10 +23,11 @@ public class SimpleTreeUtils {
         FunctionModule rootNode = modules.stream()
                 .filter(m -> StringUtils.isEmpty(m.getParentId()))
                 .findFirst().get();
+        rootNode.setLevel(0);
 
         lookupChildren(rootNode, modules);
 
-        return Arrays.asList(rootNode);
+        return Collections.singletonList(rootNode);
     }
 
     private static void lookupChildren(FunctionModule node, List<FunctionModule> dataSource) {
@@ -37,6 +39,8 @@ public class SimpleTreeUtils {
 
         // 遍历子节点
         children.forEach(c -> {
+            // c.setLevel(node.getLevel() == null ? 0 : node.getLevel() + 1);
+            c.setLevel(node.getLevel() + 1);
             // 查找出节点的子节点
             List<FunctionModule> collection = dataSource
                     .stream()
@@ -48,7 +52,6 @@ public class SimpleTreeUtils {
                 // 继续调用 lookupChildren 方法查找子节点
                 lookupChildren(c, dataSource);
             }
-
             // 为节点 children 字段赋值
             c.setChildren(collection);
         });

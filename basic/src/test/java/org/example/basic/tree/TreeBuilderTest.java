@@ -2,7 +2,6 @@ package org.example.basic.tree;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sun.deploy.panel.TreeBuilder;
 import org.junit.jupiter.api.Test;
 import org.springframework.util.StringUtils;
 
@@ -49,9 +48,21 @@ class TreeBuilderTest {
 
         List<ModuleViewDTO> treeList = TreeUtils.build(dataSource,
                 node -> StringUtils.isEmpty(node.getParentId()),
-                (cnode, pnode) -> cnode.getParentId().equals(pnode.getId()));
+                (cnode, pnode) -> cnode.getParentId().equals(pnode.getId()), null,
+                (cnode, pnode) -> {
+                    if (pnode.getLevel() == null) {
+                        pnode.setLevel(0);
+                    }
+                    cnode.setLevel(pnode.getLevel() + 1);
+                    System.out.println("cnode:" + cnode.getName());
+                    System.out.println("cnode:" + cnode.getLevel());
+                    System.out.println("pnode:" + pnode.getName());
+                    System.out.println("pnode:" + pnode.getLevel());
+                });
 
         String json = new ObjectMapper().writeValueAsString(treeList);
+
+        System.out.println(new ObjectMapper().writeValueAsString(dataSource));
 
         System.out.println(json);
     }

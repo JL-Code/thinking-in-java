@@ -15,5 +15,6 @@ import java.util.List;
 public abstract class AbstractTreeNode<TKey extends Serializable, T extends AbstractTreeNode> {
     private TKey id;
     private String name;
+    private Integer level;
     private List<T> children;
 }

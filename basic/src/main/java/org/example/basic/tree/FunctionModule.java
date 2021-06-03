@@ -50,9 +50,18 @@ public class FunctionModule {
     }
 
 
+    public Integer getLevel() {
+        return level;
+    }
+
+    public void setLevel(Integer level) {
+        this.level = level;
+    }
+
     private String id;
     private String name;
     private String parentId;
     private Integer type;
+    private Integer level;
     private List<FunctionModule> children;
 }

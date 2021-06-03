@@ -30,7 +30,8 @@ public class Regular {
         // test_proc_modifiedViewName [id] [viewName]
         // call test_proc_modifiedViewName([id],[viewName])
 //        String regStr = String.format("\\%s(\\S)*\\%s", separatorLeft, separatorRight);
-        String regStr = "\\[(\\S[^\\[])+]";
+//        String regStr = "\\[\\S[^\\[]+]";
+        String regStr = "\\[[^\\[]+]";
         Pattern pattern = Pattern.compile(regStr);
 
         Matcher matcher = pattern.matcher(input);

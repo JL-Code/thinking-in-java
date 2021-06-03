@@ -22,6 +22,7 @@ class RegularTest {
     static Stream<Arguments> parameterProvider() {
         return Stream.of(
                 Arguments.of("test_proc_modifiedViewName [id] [viewName]", 2),
+                Arguments.of("select * from sys_user where parameterId = [companyId]", 1),
                 Arguments.of("call test_proc_modifiedViewName([id],[viewName])", 2)
         );
     }
