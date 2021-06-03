@@ -2,7 +2,6 @@ package org.example.springboot.validation;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.hibernate.validator.constraints.Length;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
@@ -38,25 +37,28 @@ public class SpringValidationController {
 
         Map<String, String> erros = new HashMap<>(16);
 
-        List<FieldError> fieldErrors = bindingResult.getFieldErrors();
+        if (bindingResult.hasErrors()) {
+            List<FieldError> fieldErrors = bindingResult.getFieldErrors();
+            fieldErrors.forEach(fieldError -> erros.put(fieldError.getField(), fieldError.getDefaultMessage()));
+            return erros;
+        }
 
-        fieldErrors.forEach(fieldError -> erros.put(fieldError.getField(), fieldError.getDefaultMessage()));
-
-        return erros;
-
+        return uesrVO;
     }
 
     @ApiOperation("Bean Validation 基础验证")
     @PutMapping("/spring/validation/basic")
-    public Object validationPut(@Validated @RequestBody UserVO uesrVO, BindingResult bindingResult) {
+    public Object validationPut(@Validated(UserVO.Update.class) @RequestBody UserVO uesrVO, BindingResult bindingResult) {
 
         Map<String, String> erros = new HashMap<>(16);
 
-        List<FieldError> fieldErrors = bindingResult.getFieldErrors();
+        if (bindingResult.hasErrors()) {
+            List<FieldError> fieldErrors = bindingResult.getFieldErrors();
+            fieldErrors.forEach(fieldError -> erros.put(fieldError.getField(), fieldError.getDefaultMessage()));
+            return erros;
+        }
 
-        fieldErrors.forEach(fieldError -> erros.put(fieldError.getField(), fieldError.getDefaultMessage()));
-
-        return erros;
+        return uesrVO;
 
     }
 

@@ -1,18 +1,20 @@
 # Bean Validation
 
-学习思路:
+## 1. 学习思路
 
 1. 了解 Bean Validation 背景【基本】
 2. 了解 Bean Validation 常用注解 【基本】
 3. 了解 Bean Validation 基本应用场景【基本】
 4. 了解 Bean Validation 的工作原理 【进阶】
-5. 类型转换异常如何处理（如 字符串转数字报错）？
+5. 类型转换异常如何处理（如 字符串转数字报错）
 
-## Bean Validation 2.0 44 个内置注解
+## 2. 背景
 
-![image-20210603003651148](http://image.wlinling.com/20210603003651.png)
+## 3. 解决的问题
 
-## 常用注解
+## 4. 基础使用
+
+**常用注解**
 
 | 注解      | 含义                                                         | 支持的类型                                                   | 示例                                                        | 来源                           |
 | --------- | ------------------------------------------------------------ | ------------------------------------------------------------ | ----------------------------------------------------------- | ------------------------------ |
@@ -29,7 +31,6 @@
 | @Max      | 被注解的元素必须是一个数字，其值必须小于或等于指定的最大值。 | BigDecimal、BigInteger、byte, short, int, long, 以及其 各自包装类 |                                                             | `Bean Validation 2.0 （JSR380` |
 
 
-## 基础验证
 
 PathVariable、RequestParam 参数验证，需要在 Controller 加上 `@Validated` 注解，才能生效，当校验不通过时会抛出 `ConstraintViolationException` 异常。
 
@@ -42,18 +43,63 @@ PathVariable、RequestParam 参数验证，需要在 Controller 加上 `@Validat
 `PathVariable` 参数验证
 
 ```java
-@GetMapping("/spring/validation/{id}")
-public Object methodName(@PathVariable("id") @NotBlank String id) {
-  return id;
+@Validated
+@RestController
+public class SpringValidationController {
+  @GetMapping("/spring/validation/{id}")
+  public Object methodName(@PathVariable("id") @NotBlank String id) {
+    return id;
+  }
 }
 ```
 
 `RequestParam` 参数验证
 
 ```java
-@GetMapping("/spring/validation")
-public Object getFieldError(@Size(min = 6, max = 36, message = "字符串长度必须在[6-36]之间") String fieldName) {
-  return fieldName;
+@Validated
+@RestController
+public class SpringValidationController {
+  @GetMapping("/spring/validation")
+  public Object getFieldError(@Size(min = 6, max = 36, message = "字符串长度必须在[6-36]之间") String fieldName) {
+    return fieldName;
+  }
+}
+```
+
+`RequestBody` 参数验证
+
+> 使用 `@Validated` 标注 `UserVO` 类型参数并紧跟 BindingResult 参数， SpringValidation 验证机制生效。
+>
+> `BindingResult` 类型参数用于接收参数绑定时 Validation 的结果。
+>
+> 1. 通过 `hasErrors ` 方法获取验证结果是否有错误信息。
+> 2. 通过 `getFieldErrors` 方法获取具体的字段错误信息。
+
+```java
+@RestController
+public class SpringValidationController {
+
+    /**
+     * Bean Validation 基础验证
+     *
+     * @param uesrVO
+     * @param bindingResult
+     * @return
+     */
+    @ApiOperation("Bean Validation 基础验证")
+    @PostMapping("/spring/validation/basic")
+    public Object validation(@Validated @RequestBody UserVO uesrVO, BindingResult bindingResult) {
+
+        Map<String, String> erros = new HashMap<>(16);
+
+        if (bindingResult.hasErrors()) {
+            List<FieldError> fieldErrors = bindingResult.getFieldErrors();
+            fieldErrors.forEach(fieldError -> erros.put(fieldError.getField(), fieldError.getDefaultMessage()));
+            return erros;
+        }
+
+        return uesrVO;
+    }
 }
 ```
 
@@ -61,14 +107,13 @@ public Object getFieldError(@Size(min = 6, max = 36, message = "字符串长度�
 
 ## 常见的表单验证场景
 
-1. 必填：@NotBlank
+1. 必填
 2. 必须是数字
-3. 字符长度最小最大限制：@Size
-4. 数字范围限制
-5. 邮箱 @Email
+3. 字符长度限制
+4. 数字大小限制
+5. 邮箱
 7. 手机号
 8. 身份证
-9. 值范围选择
 
 ## 进阶
 

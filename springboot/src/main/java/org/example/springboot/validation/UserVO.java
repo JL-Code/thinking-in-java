@@ -27,11 +27,14 @@ import java.util.List;
  */
 @Data
 public class UserVO {
-    // 被注解的元素必须不能为 null
-    @NotNull(message = "不能为 Null")
+    /**
+     * TODO: 场景1：编辑与新增的入参都使用 UserVO ，在两种情况下验证规则可能会不同，例如：ID 字段在新增时可以不填写，但是在编辑时必须填写。
+     * 解决方案：采用 groups 分组验证策略，将新增与编辑的验证规则隔离开来，让验证规则独立生效互不影响。
+     */
+    @NotBlank(message = "不能为 Null", groups = Update.class)
     private String id;
 
-    @Length(min = 0, max = 50, message = "字符长度在 0-50 之间")
+    @Length(max = 50, message = "字符长度在 0-50 之间")
     private String name;
 
     // 邮箱
@@ -51,14 +54,16 @@ public class UserVO {
     //    @Pattern(regexp = "^[1|2|3]$", message = "只能输入 1、2、3")
     private SexEnum sex;
 
-    //    @Pattern()
     private String phoneNumber;
 
     @Pattern(regexp = "^(\\d{6})(\\d{4})(\\d{2})(\\d{2})(\\d{3})([0-9]|X)$", message = "身份证格式非法")
     private String card;
 
+    @NotNull
     private Boolean enabled;
 
     @Valid
     private List<StationVO> stations;
+
+    public interface Update {  }
 }
