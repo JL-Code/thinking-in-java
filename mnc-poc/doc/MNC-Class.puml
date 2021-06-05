@@ -1,0 +1,39 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+package com.highzap.notification.core{
+
+interface Notification<T extends Message> extends Serializable{
+    T getMessage();
+    String getType();
+}
+
+interface Message extends Serializable{}
+
+interface NotificationDispatcher<T extends Notification> implements ApplicationContextAware{
+    private Collection<ChannelProvider> channels;
+    Optional<Object> dispatch(T notification);
+    void setChannelProviders(Collection<ChannelProvider> providers);
+}
+
+class DefaultNotificationDispatcher implements NotificationDispatcher {
+    private Collection<ChannelProvider> channels;
+    Optional<Object> dispatch(T notification);
+    void setChannelProvider(Collection<ChannelProvider> providers);
+}
+
+interface ChannelProvider<T extends Notification> {
+    boolean supports(T notification);
+    Optional<Object> dispatch(T notification);
+}
+
+NotificationDispatcher --> ChannelProvider : 关联 1:N
+}
+
+package com.highzap.notification.sms {
+    class SmsMessage implements Message {}
+    class SmsNotification implements Notification {}
+    class SmsChannelProvider implements ChannelProvider {}
+}
+
+@enduml

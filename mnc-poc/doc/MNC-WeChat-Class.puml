@@ -1,0 +1,17 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+package com.highzap.notification.wechat {
+
+    class WeChatNotification implements Notification { }
+    class WeChatChannelProvider implements ChannelProvider {}
+
+    package com.highzap.notification.wechat.message{
+         abstract class BaseMessage implements Message {}
+         class TextMessage implements BaseMessage {}
+         class Text{}
+         TextMessage --> Text:1:1
+    }
+}
+
+@enduml

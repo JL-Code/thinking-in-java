@@ -3,8 +3,6 @@ package org.example.mybatis.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.example.mybatis.model.User;
 
-import java.util.List;
-
 /**
  * <p>创建时间: 2021/2/26 </p>
  *
@@ -13,4 +11,8 @@ import java.util.List;
  */
 public interface UserService {
     IPage<User> listUser(long page, long size, String agentId);
+
+    default void unitTest() {
+        System.out.println("单元测试方法");
+    }
 }

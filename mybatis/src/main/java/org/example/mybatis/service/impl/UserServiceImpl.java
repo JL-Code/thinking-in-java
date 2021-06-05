@@ -23,7 +23,9 @@ public class UserServiceImpl extends ServiceImpl<UserRepository, User> implement
     public IPage<User> listUser(long page, long size, String agentId) {
         Page<User> pagination = new Page<>(page, size);
         List<User> users = this.baseMapper.selectUserPage(pagination, agentId);
+
         pagination.setRecords(users);
         return pagination;
+
     }
 }

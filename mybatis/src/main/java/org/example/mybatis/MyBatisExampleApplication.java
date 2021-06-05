@@ -1,6 +1,5 @@
 package org.example.mybatis;
 
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -17,5 +16,7 @@ public class MyBatisExampleApplication {
         // 参考：https://www.pianshen.com/article/84631659401/
         System.getProperties().put("jdk.proxy.ProxyGenerator.saveGeneratedFiles", "true");
         SpringApplication.run(MyBatisExampleApplication.class, args);
+
+
     }
 }

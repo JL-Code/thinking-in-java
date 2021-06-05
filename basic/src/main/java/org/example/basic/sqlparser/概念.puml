@@ -1,0 +1,15 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+interface Parser(解析器)
+interface AST（抽象语法树）
+interface Visitor(访问器)
+
+class SchemaStatVisitor implements Visitor{
+
+}
+
+Parser --> AST
+Visitor --> AST
+
+@enduml

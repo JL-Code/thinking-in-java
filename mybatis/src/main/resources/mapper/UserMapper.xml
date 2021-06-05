@@ -1,11 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.example.mybatis.model.User">
+<mapper namespace="org.example.mybatis.repository.UserRepository">
 
     <resultMap type="org.example.mybatis.model.User" id="UserMap">
         <result property="id" column="id" jdbcType="VARCHAR"/>
         <result property="name" column="name" jdbcType="VARCHAR"/>
         <result property="nickName" column="nick_name" jdbcType="VARCHAR"/>
     </resultMap>
+
+    <!--语法参考： https://mybatis.org/mybatis-3/zh/sqlmap-xml.html-->
+    <select id="defaultLimitPage" resultType="org.example.mybatis.model.User">
+        <bind name="offset" value="size*(page-1)"/>
+        -- SELECT ROW_NUMBER() OVER ( ORDER By t1.name) row_num, t1.name, t1.nick_name, t1.id, t2.create_time
+        -- FROM cloud_user t1
+        -- RIGHT JOIN cloud_invitation_user_agent t2
+        -- ON t1.id = t2.user_id
+        -- WHERE t2.agent_id = #{agentId}
+        -- ORDER BY t1.name LIMIT #{offset}, #{size};
+        SELECT t1.name, t1.nick_name, t1.id, t2.create_time
+        FROM cloud_user t1
+        RIGHT JOIN cloud_invitation_user_agent t2
+        ON t1.id = t2.user_id
+        WHERE t2.agent_id = #{agentId}
+        ORDER BY t1.name LIMIT #{offset}, #{size};
+    </select>
 
 </mapper>

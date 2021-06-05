@@ -1,0 +1,18 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+interface Validator {
+    boolean supports(Class clazz);
+    void validate(Object obj, Errors e);
+}
+interface DataBinder{}
+
+interface Errors
+
+class BeanWrapper
+class PropertyEditor
+
+
+class ValidationUtils
+
+@enduml
