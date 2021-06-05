@@ -1,8 +1,10 @@
-package org.example.springboot.cases.transational;
+package org.example.springboot.cases.transational.user;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.example.springboot.cases.transational.User;
+import org.example.springboot.cases.transational.UserService;
 import org.example.springboot.cases.transational.dao.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,10 +1,9 @@
-package org.example.springboot.cases.transational;
+package org.example.springboot.cases.transational.user;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import org.example.springboot.cases.transational.User;
 import org.example.springboot.cases.transational.dao.UserDao;
-import org.example.springboot.cases.transational.user.User;
-import org.example.springboot.cases.transational.user.UserService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -12,13 +11,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
 
 //@SpringBootTest
 @ExtendWith(MockitoExtension.class)
@@ -29,7 +26,7 @@ class UserServiceTest {
 //    @Autowired
 //    UserDao dao;
     @InjectMocks
-    UserServiceImpl userService;
+    org.example.springboot.cases.transational.user.UserServiceImpl userService;
     @Mock
     UserDao dao;
 

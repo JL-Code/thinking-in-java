@@ -46,9 +46,10 @@ public class SpringValidationController {
         return uesrVO;
     }
 
-    @ApiOperation("Bean Validation 基础验证")
-    @PutMapping("/spring/validation/basic")
-    public Object validationPut(@Validated(UserVO.Update.class) @RequestBody UserVO uesrVO, BindingResult bindingResult) {
+    @ApiOperation("Bean Validation 分组验证")
+    @PutMapping("/spring/group-validation")
+    public Object validationPut(@Validated(UserVO.Update.class) @RequestBody UserVO uesrVO,
+                                BindingResult bindingResult) {
 
         Map<String, String> erros = new HashMap<>(16);
 
