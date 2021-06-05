@@ -3,6 +3,8 @@ package org.example.springboot.cases.transational;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import org.example.springboot.cases.transational.dao.UserDao;
+import org.example.springboot.cases.transational.user.User;
+import org.example.springboot.cases.transational.user.UserService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -33,19 +35,12 @@ class UserServiceTest {
 
 
     @Test
-    void addUserIntegrationTest() {
-        User user = new User();
-        user.setId(UUID.randomUUID().toString());
-        user.setUsername("jiangy");
-
-        boolean result = userService.addUser(user);
-
-        assertTrue(result);
+    void addUser() {
     }
 
     @Test
     @DisplayName("AOP内嵌调用方法导致@Transactional失效")
-    void nestedCallTransactionMethod_ThrowException_Success() {
+    void nestedCallTransactionMethod_ThrowException_ThenSuccess() {
         User user = new User();
         user.setId(UUID.randomUUID().toString());
         user.setUsername("jiangy");
