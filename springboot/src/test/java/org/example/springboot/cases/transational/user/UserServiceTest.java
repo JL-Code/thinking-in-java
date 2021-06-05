@@ -2,7 +2,7 @@ package org.example.springboot.cases.transational.user;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import org.example.springboot.cases.transational.User;
+import org.example.springboot.cases.transational.user.User;
 import org.example.springboot.cases.transational.dao.UserDao;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

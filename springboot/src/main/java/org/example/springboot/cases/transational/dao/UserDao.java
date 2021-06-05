@@ -1,7 +1,7 @@
 package org.example.springboot.cases.transational.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.example.springboot.cases.transational.User;
+import org.example.springboot.cases.transational.user.User;
 import org.springframework.stereotype.Repository;
 
 /**

@@ -1,4 +1,4 @@
-package org.example.springboot.cases.transational;
+package org.example.springboot.cases.transational.user;
 
 public interface UserService {
     /**
