@@ -29,6 +29,10 @@ public class ApplicationConfig {
 
         JavaTimeModule javaTimeModule = new JavaTimeModule();
 
+        /**
+         * 不支持 2021-6-5 21:35:56
+         * 仅支持 2021-06-05 21:37:28
+         */
         javaTimeModule.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
         javaTimeModule.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
 

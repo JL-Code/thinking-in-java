@@ -119,52 +119,77 @@ public class SpringValidationController {
 
 ## 分组验证
 
+应用场景1：解决编辑与新增实体验证规则不一致
+
+> 对于实体 `User` 在编辑时需要强制提供 `id` 标识，但是新增时则不是必须的。
+
+解决思路：利用 `JSR380` 规范提供的 `group `属性，我们针对编辑、新增的验证规则进行分组，在验证时选择性的指定生效的分组，从而达到验证规则隔离。
+
+具体步骤：
+
+1. 声明验证分组
+2. 声明验证注解并指定验证分组
+3. 选择要进行验证的验证分组
+
 ```java
-public class UserVO {
-    /**
-     * TODO: 场景1：编辑与新增的入参都使用 UserVO ，在两种情况下验证规则可能会不同，例如：ID 字段在新增时可以不填写，但是在编辑时必须填写。
-     * 解决方案：采用 groups 分组验证策略，将新增与编辑的验证规则隔离开来，让验证规则独立生效互不影响。
-     */
-    @NotBlank(message = "不能为 Null", groups = Update.class)
-    private String id;
+package org.example.springboot.validation;
 
-    @Length(max = 50, message = "字符长度在 0-50 之间")
-    private String name;
+import io.swagger.annotations.Api;
+import io.swagger.v3.oas.annotations.Operation;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
-    // 邮箱
-    @Email(message = "邮箱格式错误")
-    @NotBlank
-    private String email;
+import javax.validation.groups.Default;
 
-    @Range(min = 0, max = 150, message = "年龄的范围必须是 0-150")
-    private Integer age;
+@Api(tags = "分组校验")
+@RestController
+public class GroupValidationController {
 
-    @Min(value = 0, message = "年龄最小0")
-    @Max(value = 150, message = "年龄最大150")
-    private Integer age1;
+    @Operation(operationId = "模拟新增验证")
+    @PostMapping("/bean/group-validation")
+    public Object postGroupValidation(@Validated({GroupValidationModel.Insert.class, Default.class})
+                                      @RequestBody GroupValidationModel model) {
+        return model;
+    }
 
-    private LocalDateTime created;
-
-    //    @Pattern(regexp = "^[1|2|3]$", message = "只能输入 1、2、3")
-    private SexEnum sex;
-
-    private String phoneNumber;
-
-    @Pattern(regexp = "^(\\d{6})(\\d{4})(\\d{2})(\\d{2})(\\d{3})([0-9]|X)$", message = "身份证格式非法")
-    private String card;
-
-    @NotNull
-    private Boolean enabled;
-
-    @Valid
-    private List<StationVO> stations;
-
-    // 分组更新的分组标识（以接口形式展示）。
-    public interface Update {  }
+    @Operation(operationId = "模拟更新验证")
+    @PutMapping("/bean/group-validation")
+    public Object putGroupValidation(@Validated({GroupValidationModel.Update.class, Default.class})
+                                     @RequestBody GroupValidationModel model) {
+        return model;
+    }
 }
 ```
 
 
+
+```java
+package org.example.springboot.validation;
+
+import lombok.Data;
+
+import javax.validation.constraints.*;
+
+@Data
+public class GroupValidationModel {
+    // 按照 新增、修改
+    @NotNull(groups = Update.class, message = "ID 不能为空")
+    private String id;
+    @NotBlank(message = "用户名不能为空")
+    private String name;
+
+    // 分组验证标识 Insert
+    public interface Insert {
+    }
+    // 分组验证标识 Update
+    public interface Update {
+    }
+}
+```
+
+
+
+> - 配置分组的时候，记得不要漏掉默认分组 `Default.class`，否则就只会校验 `groups = {Update.class}`的规则。
 
 ## 嵌套验证
 

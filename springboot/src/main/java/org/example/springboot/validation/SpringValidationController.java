@@ -20,7 +20,7 @@ import java.util.Map;
  * @version v1.0
  */
 @RestController
-@Api(tags = "SpringValidation")
+@Api(tags = "基础验证")
 @Validated
 public class SpringValidationController {
 

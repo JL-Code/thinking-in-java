@@ -51,7 +51,6 @@ public class UserVO {
 
     private LocalDateTime created;
 
-    //    @Pattern(regexp = "^[1|2|3]$", message = "只能输入 1、2、3")
     private SexEnum sex;
 
     private String phoneNumber;
