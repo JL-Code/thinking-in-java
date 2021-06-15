@@ -2,11 +2,15 @@ package org.example.basic.tree;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.Data;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * <p>创建时间: 2021/5/17 </p>
@@ -16,27 +20,37 @@ import java.util.List;
  */
 class TreeBuilderTest {
 
-    @Test
-    void build() throws JsonProcessingException {
-        //Given
-        List<ModuleViewDTO> dataSource = new ArrayList<>();
+    List<TestTreeNode> dataSource = new ArrayList<>();
 
-        ModuleViewDTO module1 = new ModuleViewDTO();
+    @Data
+    public class TestTreeNode extends AbstractTreeNode<String, TestTreeNode> {
+        private String parentId;
+        private String status;
+        private String category;
+        private Boolean defaulted;
+        private Integer level;
+        private String remark;
+    }
+
+    @BeforeEach
+    public void initData() {
+
+        TestTreeNode module1 = new TestTreeNode();
         module1.setId("A");
         module1.setParentId("");
         module1.setName("root");
 
-        ModuleViewDTO module_a_1 = new ModuleViewDTO();
+        TestTreeNode module_a_1 = new TestTreeNode();
         module_a_1.setId("A1");
         module_a_1.setParentId("A");
         module_a_1.setName("A1");
 
-        ModuleViewDTO module_a_1_1 = new ModuleViewDTO();
+        TestTreeNode module_a_1_1 = new TestTreeNode();
         module_a_1_1.setId("A1.1");
         module_a_1_1.setParentId("A1");
         module_a_1_1.setName("A1.1");
 
-        ModuleViewDTO module_a_2 = new ModuleViewDTO();
+        TestTreeNode module_a_2 = new TestTreeNode();
         module_a_2.setId("A2");
         module_a_2.setParentId("A");
         module_a_2.setName("A2");
@@ -45,8 +59,13 @@ class TreeBuilderTest {
         dataSource.add(module_a_1);
         dataSource.add(module_a_1_1);
         dataSource.add(module_a_2);
+    }
 
-        List<ModuleViewDTO> treeList = TreeUtils.build(dataSource,
+    @Test
+    void build() throws JsonProcessingException {
+
+
+        List<TestTreeNode> treeList = TreeUtils.build(dataSource,
                 node -> StringUtils.isEmpty(node.getParentId()),
                 (cnode, pnode) -> cnode.getParentId().equals(pnode.getId()), null,
                 (cnode, pnode) -> {
@@ -54,10 +73,6 @@ class TreeBuilderTest {
                         pnode.setLevel(0);
                     }
                     cnode.setLevel(pnode.getLevel() + 1);
-                    System.out.println("cnode:" + cnode.getName());
-                    System.out.println("cnode:" + cnode.getLevel());
-                    System.out.println("pnode:" + pnode.getName());
-                    System.out.println("pnode:" + pnode.getLevel());
                 });
 
         String json = new ObjectMapper().writeValueAsString(treeList);
@@ -65,5 +80,23 @@ class TreeBuilderTest {
         System.out.println(new ObjectMapper().writeValueAsString(dataSource));
 
         System.out.println(json);
+    }
+
+    @Test
+    void flatten() {
+        List<TestTreeNode> treeList = TreeUtils.build(dataSource,
+                node -> StringUtils.isEmpty(node.getParentId()),
+                (cnode, pnode) -> cnode.getParentId().equals(pnode.getId()),
+                null,
+                (cnode, pnode) -> {
+                    if (pnode.getLevel() == null) {
+                        pnode.setLevel(0);
+                    }
+                    cnode.setLevel(pnode.getLevel() + 1);
+                });
+
+        List<TestTreeNode> flatten = TreeUtils.flatten(treeList);
+
+        assertEquals(4, flatten.size());
     }
 }
