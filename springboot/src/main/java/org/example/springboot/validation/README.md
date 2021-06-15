@@ -103,8 +103,6 @@ public class SpringValidationController {
 }
 ```
 
-
-
 ## 常见的表单验证场景
 
 1. 必填
@@ -196,6 +194,8 @@ public class GroupValidationModel {
 ## 自定义验证
 
 ## 命令式验证
+
+## 结合代码生成工具
 
 
 
