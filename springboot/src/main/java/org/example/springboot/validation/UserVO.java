@@ -6,6 +6,7 @@ import org.hibernate.validator.constraints.Range;
 
 import javax.validation.Valid;
 import javax.validation.constraints.*;
+import javax.validation.groups.Default;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -64,5 +65,9 @@ public class UserVO {
     @Valid
     private List<StationVO> stations;
 
-    public interface Update {  }
+    @Size(max = 50)
+    private String remark;
+
+    public interface Update extends Default {
+    }
 }

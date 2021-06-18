@@ -12,7 +12,7 @@
 
 ## 3. 解决的问题
 
-## 4. 基础使用
+## 2.1 基础使用
 
 **常用注解**
 
@@ -103,7 +103,7 @@ public class SpringValidationController {
 }
 ```
 
-## 常见的表单验证场景
+## 2.2 常见的表单验证场景
 
 1. 必填
 2. 必须是数字
@@ -113,9 +113,9 @@ public class SpringValidationController {
 7. 手机号
 8. 身份证
 
-## 进阶
+## 3. 进阶
 
-## 分组验证
+## 3.1. 分组验证
 
 应用场景1：解决编辑与新增实体验证规则不一致
 
@@ -128,6 +128,8 @@ public class SpringValidationController {
 1. 声明验证分组
 2. 声明验证注解并指定验证分组
 3. 选择要进行验证的验证分组
+
+**GroupValidationController 代码：**
 
 ```java
 package org.example.springboot.validation;
@@ -152,7 +154,7 @@ public class GroupValidationController {
 
     @Operation(operationId = "模拟更新验证")
     @PutMapping("/bean/group-validation")
-    public Object putGroupValidation(@Validated({GroupValidationModel.Update.class, Default.class})
+    public Object putGroupValidation(@Validated({GroupValidationModel.Update.class})
                                      @RequestBody GroupValidationModel model) {
         return model;
     }
@@ -160,6 +162,16 @@ public class GroupValidationController {
 ```
 
 
+
+> 当 `GroupValidationModel.Update` 继承  `Default` 时：
+>
+> `@Validated({GroupValidationModel.Update.class}` 等价于
+>
+> `@Validated({GroupValidationModel.Update.class,Default.class}`
+
+
+
+**GroupValidationModel 代码**
 
 ```java
 package org.example.springboot.validation;
@@ -180,7 +192,7 @@ public class GroupValidationModel {
     public interface Insert {
     }
     // 分组验证标识 Update
-    public interface Update {
+    public interface Update extend Default{
     }
 }
 ```
@@ -189,13 +201,18 @@ public class GroupValidationModel {
 
 > - 配置分组的时候，记得不要漏掉默认分组 `Default.class`，否则就只会校验 `groups = {Update.class}`的规则。
 
-## 嵌套验证
+## 3.2. 嵌套验证
 
-## 自定义验证
+## 3.3. 自定义验证
 
-## 命令式验证
+## 3.4. 命令式验证
 
-## 结合代码生成工具
+## 3.5. 结合代码生成工具
 
 
+
+## 参考
+
+* https://segmentfault.com/a/1190000023471742
+* https://segmentfault.com/a/1190000023451809
 
