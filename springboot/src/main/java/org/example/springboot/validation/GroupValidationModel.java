@@ -43,6 +43,16 @@ public class GroupValidationModel {
     public interface Insert {
     }
 
+    /**
+     * constraints 属于 Default 分组
+     * validation 适用于 Default 分组
+     *
+     * 当分组继承 Default 分组时
+     *
+     * @code {@Validated(GroupValidationModel.Update.class)}
+     * 等价于
+     * @code {@Validated({GroupValidationModel.Update.class,Default.class})}
+     */
     public interface Update extends Default {
     }
 }

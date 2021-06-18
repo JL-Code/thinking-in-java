@@ -161,7 +161,8 @@ public class GroupValidationController {
 }
 ```
 
-
+> constraints 属于 Default 分组
+> validation 适用于 Default 分组
 
 > 当 `GroupValidationModel.Update` 继承  `Default` 时：
 >
