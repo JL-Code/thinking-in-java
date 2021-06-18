@@ -124,23 +124,6 @@ public class TreeUtils {
         return flatNodes;
     }
 
-    /**
-     * @param nodes
-     * @param <TKey>
-     * @param <TNode>
-     * @return
-     */
-    public static <TKey extends Serializable, TNode extends AbstractTreeNode<TKey, TNode>>
-    List<TNode> flatten(List<TNode> nodes, Class<TNode> clazz) {
-
-        List<TNode> result = new ArrayList<>();
-
-        for (TNode node : nodes) {
-
-        }
-
-        return result;
-    }
 
     // region 辅助方法
 
