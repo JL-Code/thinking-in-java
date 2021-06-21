@@ -1,4 +1,4 @@
-package org.example.basic.model.mapper;
+package org.example.basic.model.mapper.modelmapper;
 
 public class Post {
     private Long id;

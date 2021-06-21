@@ -17,9 +17,12 @@ import java.util.stream.Collectors;
  */
 public class TreeUtils {
 
+
     private TreeUtils() {
 
     }
+
+    // region 构建树
 
     /**
      * 构建一颗树
@@ -88,40 +91,39 @@ public class TreeUtils {
         return treeList;
     }
 
+    // endregion
+
     /**
+     * 将树节点从层级结构拍平为线性结构
+     *
      * @param nodes
      * @param <TKey>
      * @param <TNode>
      * @return
      */
-    public static <TKey extends Serializable, TNode extends AbstractTreeNode<TKey, TNode>>
-    List<TNode> flatten(List<TNode> nodes, Class<TNode> clazz) {
-
-        List<TNode> result = new ArrayList<>();
+    public static <TKey extends Serializable, TNode extends AbstractTreeNode<TKey, TNode>> List<TNode>
+    flatten(List<? extends TNode> nodes) {
+        List<TNode> flatNodes = new ArrayList<>();
 
         for (TNode node : nodes) {
+            flatNodes.add(node);
 
+            if (node.getChildren() == null) continue;
+
+            List<TNode> nexts = node.getChildren();
+
+            for (int i = 0; i < nexts.size(); i++) {
+                flatNodes.add(nexts.get(i));
+                if (nexts.get(i).getChildren() != null) {
+                    nexts.addAll(nexts.get(i).getChildren());
+                }
+            }
         }
 
-        return result;
+        return flatNodes;
     }
 
     // region 辅助方法
-
-    private static <TKey extends Serializable, TNode extends AbstractTreeNode<TKey, TNode>>
-    void recursion(TNode node,
-                   List<TNode> list,
-                   BiFunction<TNode, TNode, Boolean> filiationPredicate) {
-        recursion(node, list, filiationPredicate, null, null);
-    }
-
-    private static <TKey extends Serializable, TNode extends AbstractTreeNode<TKey, TNode>>
-    void recursion(TNode node,
-                   List<TNode> list,
-                   BiFunction<TNode, TNode, Boolean> filiationPredicate,
-                   Comparator<? super TNode> comparator) {
-        recursion(node, list, filiationPredicate, comparator, null);
-    }
 
     private static <TKey extends Serializable, TNode extends AbstractTreeNode<TKey, TNode>>
     void recursion(TNode node,
@@ -160,14 +162,6 @@ public class TreeUtils {
     private static <TKey extends Serializable, TNode extends AbstractTreeNode<TKey, TNode>>
     List<TNode> lookupChildren(TNode node,
                                List<TNode> list,
-                               BiFunction<TNode, TNode, Boolean> filiationPredicate) {
-
-        return lookupChildren(node, list, filiationPredicate, null);
-    }
-
-    private static <TKey extends Serializable, TNode extends AbstractTreeNode<TKey, TNode>>
-    List<TNode> lookupChildren(TNode node,
-                               List<TNode> list,
                                BiFunction<TNode, TNode, Boolean> filiationPredicate,
                                Comparator<? super TNode> comparator) {
 
@@ -185,4 +179,5 @@ public class TreeUtils {
                 .collect(Collectors.toList());
     }
     // endregion
+
 }

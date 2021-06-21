@@ -19,8 +19,17 @@
         <module name="jackson" />
         <module name="beautiful-restapi" />
         <module name="spring-annotation" />
-        <module name="basic" />
         <module name="mnc-poc" />
+      </profile>
+      <profile name="Annotation profile for java-example" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$USER_HOME$/.m2/repository/org/mapstruct/mapstruct-processor/1.4.2.Final/mapstruct-processor-1.4.2.Final.jar" />
+          <entry name="$USER_HOME$/.m2/repository/org/mapstruct/mapstruct/1.4.2.Final/mapstruct-1.4.2.Final.jar" />
+        </processorPath>
+        <module name="basic" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

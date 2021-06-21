@@ -9,7 +9,6 @@ package org.example.basic.泛型;
  */
 public class Message<T> {
 
-
     T content;
 
     public T getContent() {
@@ -23,5 +22,4 @@ public class Message<T> {
     public void func() {
 
     }
-
 }

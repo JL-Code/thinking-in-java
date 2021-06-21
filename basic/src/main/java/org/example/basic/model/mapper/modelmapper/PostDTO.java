@@ -1,10 +1,13 @@
-package org.example.basic.model.mapper;
+package org.example.basic.model.mapper.modelmapper;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
 
+/**
+ * TODO: modelmapper DTO Entity 类型转换
+ */
 public class PostDTO {
 
     private static final SimpleDateFormat dateFormat
