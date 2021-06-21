@@ -1,4 +1,4 @@
-package org.example.basic.model.mapper;
+package org.example.basic.model.mapper.modelmapper;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

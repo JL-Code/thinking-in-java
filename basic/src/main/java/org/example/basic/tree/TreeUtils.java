@@ -1,8 +1,5 @@
 package org.example.basic.tree;
 
-import com.fasterxml.jackson.databind.util.BeanUtil;
-import org.springframework.beans.BeanUtils;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -111,6 +108,8 @@ public class TreeUtils {
         for (TNode node : nodes) {
             flatNodes.add(node);
 
+            if (node.getChildren() == null) continue;
+
             List<TNode> nexts = node.getChildren();
 
             for (int i = 0; i < nexts.size(); i++) {
@@ -124,23 +123,7 @@ public class TreeUtils {
         return flatNodes;
     }
 
-
     // region 辅助方法
-
-    private static <TKey extends Serializable, TNode extends AbstractTreeNode<TKey, TNode>>
-    void recursion(TNode node,
-                   List<TNode> list,
-                   BiFunction<TNode, TNode, Boolean> filiationPredicate) {
-        recursion(node, list, filiationPredicate, null, null);
-    }
-
-    private static <TKey extends Serializable, TNode extends AbstractTreeNode<TKey, TNode>>
-    void recursion(TNode node,
-                   List<TNode> list,
-                   BiFunction<TNode, TNode, Boolean> filiationPredicate,
-                   Comparator<? super TNode> comparator) {
-        recursion(node, list, filiationPredicate, comparator, null);
-    }
 
     private static <TKey extends Serializable, TNode extends AbstractTreeNode<TKey, TNode>>
     void recursion(TNode node,
@@ -174,14 +157,6 @@ public class TreeUtils {
 
         //  为节点的 children 字段赋值
         node.setChildren(children);
-    }
-
-    private static <TKey extends Serializable, TNode extends AbstractTreeNode<TKey, TNode>>
-    List<TNode> lookupChildren(TNode node,
-                               List<TNode> list,
-                               BiFunction<TNode, TNode, Boolean> filiationPredicate) {
-
-        return lookupChildren(node, list, filiationPredicate, null);
     }
 
     private static <TKey extends Serializable, TNode extends AbstractTreeNode<TKey, TNode>>

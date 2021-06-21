@@ -1,7 +1,7 @@
 package org.example.basic.mapper;
 
-import org.example.basic.model.mapper.Post;
-import org.example.basic.model.mapper.PostDTO;
+import org.example.basic.model.mapper.modelmapper.Post;
+import org.example.basic.model.mapper.modelmapper.PostDTO;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;

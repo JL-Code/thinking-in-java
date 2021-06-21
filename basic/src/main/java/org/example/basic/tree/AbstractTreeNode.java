@@ -1,5 +1,6 @@
 package org.example.basic.tree;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -14,6 +15,8 @@ import java.util.List;
 @Data
 public abstract class AbstractTreeNode<TKey extends Serializable, T extends AbstractTreeNode> {
     private TKey id;
+    @JsonIgnore
+    private TKey innerParentId;
     private String name;
     private Integer level;
     private List<T> children;
