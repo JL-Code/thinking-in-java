@@ -1,8 +1,5 @@
 package org.example.basic.tree;
 
-import com.fasterxml.jackson.databind.util.BeanUtil;
-import org.springframework.beans.BeanUtils;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Comparator;
