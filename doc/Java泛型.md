@@ -13,25 +13,21 @@
 
 ```java
 public class Message<T> {
-
   T content;
-
   public T getContent() {
     return content;
   }
-
   public void setContent(T content) {
     this.content = content;
   }
-
   public void func() {}
 }
 ```
 
 * 编译器类型检查
   * 让类型检查尽可能的编译时期就发现。
-`Message<String> message = new Message<>();
- message.setContent(111);` 将编译不通过,`Integer` 与 `String` 不匹配。  
+  `Message<String> message = new Message<>();
+   message.setContent(111);` 将编译不通过,`Integer` 与 `String` 不匹配。  
 * 强制类型转换
   * 使用泛型类型将类型以参数的形式传递。`Message<String> message = new Message<>()` 这样编译器就知道了 `Message` 中 `content` 的类型为 `String` 。
 
@@ -99,19 +95,20 @@ class App{
 
 > ref: https://blog.csdn.net/justry_deng/article/details/82632090
 
-    `?` 为无界通配符 
-    `<? extends T>` 表示上界通配符
-    `<? super T>` 表示下届通配符。
+### 4.1 `<? super T>`  下界通配符
 
-注：`<? super T>` 之所以叫下界通配符，是因为 `T` 是所有 `?` 的子类，即到最下面就是 `T` 了。
+`<? super T>` 之所以叫下界通配符，是因为 `?` 是所有 `T` 的父类，即到最下面就是 `T` 了。
 
-注：我们一般可以往 `<? super T>` 中设置 `?` 的实例但是不获取值， 因为获得的对象只能以 `Object` 来接收,因为不知道
-获取的到底是 `T` 的哪一个父类，当使用 `Object` 来接时，会损失部分该对象的功能。
+> 我们一般可以往 `<? super T>` 中设置 `?` 的实例但是不获取值， 因为获得的对象只能以 `Object` 来接收,因为不知道
+> 获取的到底是 `T` 的哪一个父类，当使用 `Object` 来接时，会损失部分该对象的功能。
 
-### 4.1. 泛型占位符 T 与 通配符 ? 的区别
+应用场景
 
-* `<? extends T>` 是将左侧泛型的子类 `?` (或其本身)赋给左侧的泛型引用;
-* `<? super T>` 则是将左侧泛型的父类 `?` (或其本身)赋给左侧的泛型引用。
+### 4.2 `<? extends T>`  上届界配符
+
+`<? extends T>` 之所以叫上界通配符，是因为 `?` 是所有 `T` 的子类，即到最上面就是 `T` 了。
+
+### 4.3. 泛型占位符 T 与 通配符 ? 的区别
 
 用途：
 
@@ -119,6 +116,18 @@ class App{
 eg： `T content` 声明了变量 `content` 的类型是 `T`。
 * `?` 用于使用泛型。
 eg: `doSomething(Message<?> message)` 可以让 `doSomething` 能接受任意类型的泛型参数（避免了类型强制转换），并且方法内部无法修改 `message` 保证了数据安全。
+
+### 4.4 小结
+
+```java
+<? extends T> 等价于 ? extends T
+<? super T> 等价于 T extends ?
+```
+
+* `<? extends T>` 是将左侧泛型的子类 `?` (或其本身)赋给左侧的泛型引用;
+* `<? super T>` 则是将左侧泛型的父类 `?` (或其本身)赋给左侧的泛型引用。
+
+> https://stackoverflow.com/questions/1368166/what-is-a-difference-between-super-e-and-extends-e
 
 ## 5. 泛型的注意点
 
