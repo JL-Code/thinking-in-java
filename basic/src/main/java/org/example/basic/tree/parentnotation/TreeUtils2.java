@@ -1,68 +1,14 @@
-package org.example.basic.tree;
+package org.example.basic.tree.parentnotation;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import org.springframework.util.StringUtils;
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-/**
- * <p>创建时间: 2021/5/27 </p>
- *
- * @author <a href="mailto:jiangy@highzap.com" rel="nofollow">蒋勇</a>
- * @version v1.0
- */
-public interface TreeNode<TKey, T extends TreeNode> {
-
-    TKey getId();
-
-    void setId(TKey id);
-
-    String getName();
-
-    void setName(String name);
-
-    Integer getLevel();
-
-    void setLevel(Integer level);
-
-    List<T> getChildren();
-
-    void setChildren(List<T> nodes);
-}
-
-@Data
-class Node implements TreeNode<String, Node>, Comparator<Node> {
-    private String id;
-    private String name;
-    private Integer level;
-    private List<Node> children;
-
-    @Override
-    public int compare(Node o1, Node o2) {
-        return o1.getId().compareTo(o2.getId());
-    }
-}
-
-@EqualsAndHashCode(callSuper = true)
-@Data
-class SimpleNode extends Node {
-    private String simple;
-    private String parentId;
-    private String code;
-}
-
-@EqualsAndHashCode(callSuper = true)
-@Data
-class SimpleNode2 extends SimpleNode {
-    private Integer sn;
-}
-
-class TreeUtils2 {
+public class TreeUtils2 {
 
     public static <TNode extends TreeNode>
     List<TNode> build(List<TNode> list,
@@ -153,45 +99,4 @@ class TreeUtils2 {
                 .collect(Collectors.toList());
     }
 
-}
-
-class Main {
-
-    public static void main(String[] args) {
-        SimpleNode2 node1 = new SimpleNode2();
-        node1.setId(UUID.randomUUID().toString());
-        node1.setParentId("");
-        node1.setLevel(1);
-        node1.setCode("A");
-        node1.setSimple("A");
-        node1.setSn(1);
-
-        SimpleNode2 node2 = new SimpleNode2();
-        node2.setId(UUID.randomUUID().toString());
-        node2.setParentId(node1.getId());
-        node2.setLevel(1);
-        node2.setSn(3);
-        node2.setCode("B");
-        node2.setSimple("B");
-
-        SimpleNode2 node3 = new SimpleNode2();
-        node3.setId(UUID.randomUUID().toString());
-        node3.setParentId(node1.getId());
-        node3.setLevel(1);
-        node3.setSn(2);
-        node3.setCode("C");
-        node3.setSimple("C");
-
-        List<SimpleNode2> list = Arrays.asList(node1, node2, node3);
-
-        List<SimpleNode2> nodes = TreeUtils2.build(list,
-                n -> StringUtils.isEmpty(n.getParentId()),
-                (c, p) -> p.getId().equals(c.getParentId()),
-                Comparator.comparing(SimpleNode2::getSn),
-                (prev, next) -> {
-                    System.out.println(prev instanceof SimpleNode2);
-                });
-
-        System.out.println(nodes);
-    }
 }

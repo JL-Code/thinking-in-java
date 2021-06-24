@@ -1,9 +1,11 @@
 # MapStruct
 
 ## IDE 集成
+
 https://plugins.jetbrains.com/plugin/10036-mapstruct-support
 
 ## Maven 依赖
+
 ```xml
 ...
 <properties>
@@ -41,5 +43,9 @@ https://plugins.jetbrains.com/plugin/10036-mapstruct-support
         ...
 
 ```
+
+## 注意事项
+
+mapstrcut 与 lombok 有冲突。
 
 * https://github.com/mapstruct/mapstruct

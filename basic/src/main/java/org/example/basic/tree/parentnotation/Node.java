@@ -1,13 +1,19 @@
 package org.example.basic.tree.parentnotation;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+
+import java.util.Comparator;
+import java.util.List;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class Node<T> {
-    private T data;
-    private int parent;
+public class Node implements TreeNode<String, Node>, Comparator<Node> {
+    private String id;
+    private String name;
+    private Integer level;
+    private List<Node> children;
+
+    @Override
+    public int compare(Node o1, Node o2) {
+        return o1.getId().compareTo(o2.getId());
+    }
 }
