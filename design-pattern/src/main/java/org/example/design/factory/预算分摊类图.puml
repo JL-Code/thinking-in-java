@@ -1,0 +1,63 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+package com.highzap.jerp.ebs.dto {
+
+    abstract class BaseBudgetAllocationDTO {
+        -id:String,
+        -budgetOwnerId:String,
+        -budgetOwnerType:String,
+        -subjectId:String,
+        -budgetId:String,
+        -budgetDetailId:String,
+        -amount:BigDecimal,
+        -usedAmount:BigDecimal,
+        -unUsedAmount:BigDecimal,
+        -year:Integer,
+        -month:Integer
+    }
+
+    class CompositeBudgetAllocationDTO extends BaseBudgetAllocationDTO {
+        -businessId:String,
+        -businessType:String,
+        -matterId:String, // 立项明细、关联立项时填写
+        -matterDetailId:String, // 关联立项时填写
+        -contractId:String // 合同ID
+        -contractAllocationId:String // 当报销、领借款
+    }
+}
+
+package com.highzap.jerp.ebs.entity {
+
+    class PaymentBudgetAllocation
+    class ContractBudgetAllocation
+    class MatterDetail
+
+}
+
+
+package com.highzap.jerp.ebs.service {
+
+    interface BudgetAllocationService{
+        +saveOrUpdate(String id,String type,List<CompositeBudgetAllocationDTO> allocations) : void;// 保存或更新
+        +listBudgetAllocations(String id,String type) : List<CompositeBudgetAllocationDTO>;// 列出预算分摊信息
+    }
+
+    BudgetAllocationService "1" --> "*" CompositeBudgetAllocationDTO: 关联 >
+
+    interface OccurStageBudgetAllocationService extends BudgetAllocationService{}
+    interface PayStageBudgetAllocationService extends BudgetAllocationService{}
+
+    package com.highzap.jerp.ebs.service.impl{
+          class OccurStageBudgetAllocationServiceImpl implements OccurStageBudgetAllocationService{}
+          class PayStageBudgetAllocationServiceImpl implements PayStageBudgetAllocationService{}
+    }
+}
+
+
+
+
+
+
+
+@enduml
