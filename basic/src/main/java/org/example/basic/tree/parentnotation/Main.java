@@ -18,6 +18,22 @@ public class Main {
         node1.setSimple("A");
         node1.setSn(1);
 
+        SimpleNode2 nodeRoot1 = new SimpleNode2();
+        nodeRoot1.setId(UUID.randomUUID().toString());
+        nodeRoot1.setParentId("");
+        nodeRoot1.setLevel(1);
+        nodeRoot1.setCode("A1");
+        nodeRoot1.setSimple("A1");
+        nodeRoot1.setSn(1);
+
+        SimpleNode2 nodeRoot2 = new SimpleNode2();
+        nodeRoot2.setId(UUID.randomUUID().toString());
+        nodeRoot2.setParentId("");
+        nodeRoot2.setLevel(1);
+        nodeRoot2.setCode("A2");
+        nodeRoot2.setSimple("A2");
+        nodeRoot2.setSn(1);
+
         SimpleNode2 node2 = new SimpleNode2();
         node2.setId(UUID.randomUUID().toString());
         node2.setParentId(node1.getId());
@@ -36,7 +52,7 @@ public class Main {
 
         List<SimpleNode2> list = Arrays.asList(node1, node2, node3);
 
-        List<SimpleNode2> nodes = TreeUtils2.build(list,
+        List<SimpleNode2> nodes = TreeUtils.build(list,
                 n -> StringUtils.isEmpty(n.getParentId()),
                 (c, p) -> p.getId().equals(c.getParentId()),
                 Comparator.comparing(SimpleNode2::getSn),

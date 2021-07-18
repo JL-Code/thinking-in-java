@@ -1,16 +1,10 @@
 package org.example.basic.tree.parentnotation;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import org.springframework.util.StringUtils;
-
-import java.util.*;
-import java.util.function.BiConsumer;
-import java.util.function.BiFunction;
-import java.util.function.Function;
-import java.util.stream.Collectors;
+import java.util.List;
 
 /**
+ * 树节点接口
+ *
  * <p>创建时间: 2021/5/27 </p>
  *
  * @author <a href="mailto:jiangy@highzap.com" rel="nofollow">蒋勇</a>

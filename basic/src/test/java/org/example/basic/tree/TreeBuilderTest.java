@@ -65,7 +65,7 @@ class TreeBuilderTest {
     void build() throws JsonProcessingException {
 
 
-        List<TestTreeNode> treeList = TreeUtils.build(dataSource,
+        List<TestTreeNode> treeList = OldTreeUtils.build(dataSource,
                 node -> StringUtils.isEmpty(node.getParentId()),
                 (cnode, pnode) -> cnode.getParentId().equals(pnode.getId()), null,
                 (cnode, pnode) -> {
@@ -84,7 +84,7 @@ class TreeBuilderTest {
 
     @Test
     void flatten() {
-        List<TestTreeNode> treeList = TreeUtils.build(dataSource,
+        List<TestTreeNode> treeList = OldTreeUtils.build(dataSource,
                 node -> StringUtils.isEmpty(node.getParentId()),
                 (cnode, pnode) -> cnode.getParentId().equals(pnode.getId()),
                 null,
@@ -95,7 +95,7 @@ class TreeBuilderTest {
                     cnode.setLevel(pnode.getLevel() + 1);
                 });
 
-        List<TestTreeNode> flatten = TreeUtils.flatten(treeList);
+        List<TestTreeNode> flatten = OldTreeUtils.flatten(treeList);
 
         assertEquals(4, flatten.size());
     }
