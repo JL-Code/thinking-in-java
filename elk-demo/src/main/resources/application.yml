@@ -1,0 +1,11 @@
+logging:
+  config: classpath:logback-custom.xml
+logstash:
+  destination:
+    host: localhost
+    port: 5000
+spring:
+  application:
+    name: elk-demo
+server:
+  port: 8081
