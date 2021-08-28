@@ -9,3 +9,4 @@ spring:
     name: elk-demo
 server:
   port: 8081
+debug: true
