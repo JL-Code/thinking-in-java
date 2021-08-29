@@ -1,14 +1,19 @@
 package org.example.basic.excel;
 
 import com.alibaba.excel.EasyExcel;
+import com.alibaba.excel.write.metadata.style.WriteCellStyle;
+import com.alibaba.excel.write.metadata.style.WriteFont;
 import com.alibaba.excel.write.style.column.LongestMatchColumnWidthStyleStrategy;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.Assertions;
+import javafx.scene.paint.Color;
+import org.apache.poi.ss.usermodel.IndexedColors;
+import org.example.basic.excel.style.strategy.HeadStyleStrategy;
 import org.junit.jupiter.api.Test;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * <p>创建时间: 2021/8/28 </p>
@@ -51,8 +56,47 @@ public class DynamicHeadOfEasyExeclTest {
 
         List<List<String>> head = ExcelUtils.treeToEasyExcelHead(headTree);
 
+        // 头的策略
+        WriteCellStyle headWriteCellStyle = new WriteCellStyle();
+
+        // 背景设置为灰色
+        headWriteCellStyle.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.index);
+
+        WriteFont headWriteFont = new WriteFont();
+        // 字体大小
+        headWriteFont.setFontHeightInPoints((short) 14);
+        // 字体加粗
+        headWriteFont.setBold(false);
+        // 字体名
+        headWriteFont.setFontName("Microsoft YaHei Light");
+
+        headWriteCellStyle.setWriteFont(headWriteFont);
+
+        // 单元格边框样式
+//        headWriteCellStyle.setBorderTop(BorderStyle.NONE);
+//        headWriteCellStyle.setBorderRight(BorderStyle.NONE);
+//        headWriteCellStyle.setBorderBottom(BorderStyle.NONE);
+//        headWriteCellStyle.setBorderLeft(BorderStyle.NONE);
+
+//        Color color = Color.web("#f6f6f6");
+//
+//        int c = (int) (byte) color.getRed();
+//        c = (c << 8) | (byte) color.getGreen();
+//        c = (c << 8) | (byte) color.getBlue();
+//
+//        headWriteCellStyle.setTopBorderColor((short) c);
+//        headWriteCellStyle.setRightBorderColor((short) c);
+//        headWriteCellStyle.setBottomBorderColor((short) c);
+//        headWriteCellStyle.setLeftBorderColor((short) c);
+
+        // 这个策略是 头是头的样式 内容是内容的样式 其他的策略可以自己实现
+        HeadStyleStrategy headStyleStrategy =
+                new HeadStyleStrategy(headWriteCellStyle);
+
         EasyExcel.write(fileName)
+                .useDefaultStyle(false)
                 .registerWriteHandler(new LongestMatchColumnWidthStyleStrategy())
+                .registerWriteHandler(headStyleStrategy)
                 // 这里放入动态头
                 .head(head)
                 .sheet("模板")
