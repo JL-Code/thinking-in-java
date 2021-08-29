@@ -7,9 +7,13 @@ import com.alibaba.excel.write.style.column.LongestMatchColumnWidthStyleStrategy
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.scene.paint.Color;
+import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.example.basic.excel.style.strategy.HeadStyleStrategy;
 import org.junit.jupiter.api.Test;
+import org.openxmlformats.schemas.spreadsheetml.x2006.main.CTColor;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -59,8 +63,23 @@ public class DynamicHeadOfEasyExeclTest {
         // 头的策略
         WriteCellStyle headWriteCellStyle = new WriteCellStyle();
 
+        // https://blog.csdn.net/qq_38974638/article/details/117395831
+//        CellStyle cellStyle = new XSSFCellStyle()
+
+//        XSSFCellStyle cellStyle = workbook.createCellStyle();
+//        cellStyle.setFillForegroundColor(new XSSFColor());
+
+        //使用自定义RGB颜色
+        XSSFColor xssfColor = new XSSFColor(new java.awt.Color(238, 238, 238));
+
+
+        Color color = Color.web("#eee");
+
+
+//        Short index = (short) color.hashCode();
+
         // 背景设置为灰色
-        headWriteCellStyle.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.index);
+//        headWriteCellStyle.setFillForegroundColor(index);
 
         WriteFont headWriteFont = new WriteFont();
         // 字体大小
@@ -78,20 +97,14 @@ public class DynamicHeadOfEasyExeclTest {
 //        headWriteCellStyle.setBorderBottom(BorderStyle.NONE);
 //        headWriteCellStyle.setBorderLeft(BorderStyle.NONE);
 
-//        Color color = Color.web("#f6f6f6");
-//
-//        int c = (int) (byte) color.getRed();
-//        c = (c << 8) | (byte) color.getGreen();
-//        c = (c << 8) | (byte) color.getBlue();
-//
-//        headWriteCellStyle.setTopBorderColor((short) c);
-//        headWriteCellStyle.setRightBorderColor((short) c);
-//        headWriteCellStyle.setBottomBorderColor((short) c);
-//        headWriteCellStyle.setLeftBorderColor((short) c);
+//        headWriteCellStyle.setTopBorderColor(color);
+//        headWriteCellStyle.setRightBorderColor(color);
+//        headWriteCellStyle.setBottomBorderColor(color);
+//        headWriteCellStyle.setLeftBorderColor(color);
 
         // 这个策略是 头是头的样式 内容是内容的样式 其他的策略可以自己实现
         HeadStyleStrategy headStyleStrategy =
-                new HeadStyleStrategy(headWriteCellStyle);
+                new HeadStyleStrategy(headWriteCellStyle, xssfColor);
 
         EasyExcel.write(fileName)
                 .useDefaultStyle(false)
