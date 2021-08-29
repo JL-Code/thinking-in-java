@@ -44,22 +44,22 @@ public class DynamicHeadOfEasyExeclTest {
 
         String fileName = TestFileUtil.getPath() + "dynamicHeadOfInfiniteWrite.xlsx";
 
-        Integer degree = 3;
-        Integer depth = 2;
+        Integer degree = 2;
+        Integer depth = 4;
 
         HeadTree<HeadTreeNode> headTree = ExcelUtils.buildTree(degree, depth);
 
         List<List<String>> head = ExcelUtils.treeToEasyExcelHead(headTree);
 
-//        EasyExcel.write(fileName)
-//                .registerWriteHandler(new LongestMatchColumnWidthStyleStrategy())
-//                // 这里放入动态头
-//                .head(head)
-//                .sheet("模板")
-//                // 当然这里数据也可以用 List<List<String>> 去传入
-//                .doWrite(data());
+        EasyExcel.write(fileName)
+                .registerWriteHandler(new LongestMatchColumnWidthStyleStrategy())
+                // 这里放入动态头
+                .head(head)
+                .sheet("模板")
+                // 当然这里数据也可以用 List<List<String>> 去传入
+                .doWrite(data());
 
-        Assertions.assertEquals(Math.pow(degree, depth), head.size());
+//        Assertions.assertEquals(Math.pow(degree, depth), head.size());
     }
 
     private List<List<String>> head() {
