@@ -1,14 +1,23 @@
 package org.example.basic.excel;
 
 import com.alibaba.excel.EasyExcel;
+import com.alibaba.excel.write.metadata.style.WriteCellStyle;
+import com.alibaba.excel.write.metadata.style.WriteFont;
 import com.alibaba.excel.write.style.column.LongestMatchColumnWidthStyleStrategy;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.Assertions;
+import javafx.scene.paint.Color;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFColor;
+import org.example.basic.excel.style.strategy.HeadStyleStrategy;
 import org.junit.jupiter.api.Test;
+import org.openxmlformats.schemas.spreadsheetml.x2006.main.CTColor;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * <p>创建时间: 2021/8/28 </p>
@@ -44,22 +53,70 @@ public class DynamicHeadOfEasyExeclTest {
 
         String fileName = TestFileUtil.getPath() + "dynamicHeadOfInfiniteWrite.xlsx";
 
-        Integer degree = 3;
-        Integer depth = 2;
+        Integer degree = 2;
+        Integer depth = 4;
 
         HeadTree<HeadTreeNode> headTree = ExcelUtils.buildTree(degree, depth);
 
         List<List<String>> head = ExcelUtils.treeToEasyExcelHead(headTree);
 
-//        EasyExcel.write(fileName)
-//                .registerWriteHandler(new LongestMatchColumnWidthStyleStrategy())
-//                // 这里放入动态头
-//                .head(head)
-//                .sheet("模板")
-//                // 当然这里数据也可以用 List<List<String>> 去传入
-//                .doWrite(data());
+        // 头的策略
+        WriteCellStyle headWriteCellStyle = new WriteCellStyle();
 
-        Assertions.assertEquals(Math.pow(degree, depth), head.size());
+        // https://blog.csdn.net/qq_38974638/article/details/117395831
+//        CellStyle cellStyle = new XSSFCellStyle()
+
+//        XSSFCellStyle cellStyle = workbook.createCellStyle();
+//        cellStyle.setFillForegroundColor(new XSSFColor());
+
+        //使用自定义RGB颜色
+        XSSFColor xssfColor = new XSSFColor(new java.awt.Color(238, 238, 238));
+
+
+        Color color = Color.web("#eee");
+
+
+//        Short index = (short) color.hashCode();
+
+        // 背景设置为灰色
+//        headWriteCellStyle.setFillForegroundColor(index);
+
+        WriteFont headWriteFont = new WriteFont();
+        // 字体大小
+        headWriteFont.setFontHeightInPoints((short) 14);
+        // 字体加粗
+        headWriteFont.setBold(false);
+        // 字体名
+        headWriteFont.setFontName("Microsoft YaHei Light");
+
+        headWriteCellStyle.setWriteFont(headWriteFont);
+
+        // 单元格边框样式
+//        headWriteCellStyle.setBorderTop(BorderStyle.NONE);
+//        headWriteCellStyle.setBorderRight(BorderStyle.NONE);
+//        headWriteCellStyle.setBorderBottom(BorderStyle.NONE);
+//        headWriteCellStyle.setBorderLeft(BorderStyle.NONE);
+
+//        headWriteCellStyle.setTopBorderColor(color);
+//        headWriteCellStyle.setRightBorderColor(color);
+//        headWriteCellStyle.setBottomBorderColor(color);
+//        headWriteCellStyle.setLeftBorderColor(color);
+
+        // 这个策略是 头是头的样式 内容是内容的样式 其他的策略可以自己实现
+        HeadStyleStrategy headStyleStrategy =
+                new HeadStyleStrategy(headWriteCellStyle, xssfColor);
+
+        EasyExcel.write(fileName)
+                .useDefaultStyle(false)
+                .registerWriteHandler(new LongestMatchColumnWidthStyleStrategy())
+                .registerWriteHandler(headStyleStrategy)
+                // 这里放入动态头
+                .head(head)
+                .sheet("模板")
+                // 当然这里数据也可以用 List<List<String>> 去传入
+                .doWrite(data());
+
+//        Assertions.assertEquals(Math.pow(degree, depth), head.size());
     }
 
     private List<List<String>> head() {

@@ -22,20 +22,19 @@ public class ExcelUtils {
      */
 
     public static List<List<String>> treeToEasyExcelHead(HeadTree<HeadTreeNode> tree) throws JsonProcessingException {
-
         return depthFirstSearch(tree.getNodes());
     }
 
 
     public static HeadTree<HeadTreeNode> buildTree(Integer degree, Integer depth) throws JsonProcessingException {
 
-        Integer childrenDegree = degree;
+//        Integer childrenDegree = degree;
 
-//        Integer childrenDegree = new Random().nextInt(degree);
-//
-//        if (childrenDegree == 0) {
-//            childrenDegree = degree;
-//        }
+        Integer childrenDegree = new Random().nextInt(degree);
+
+        if (childrenDegree == 0) {
+            childrenDegree = degree;
+        }
 
         HeadTree<HeadTreeNode> tree = new HeadTree<>();
         tree.setDepth(depth);
@@ -102,59 +101,56 @@ public class ExcelUtils {
     private static List<List<String>> depthFirstSearch(List<HeadTreeNode> nodes) throws JsonProcessingException {
 
         List<List<String>> head = new ArrayList<>();
+        List<String> fragments = new ArrayList<>();
 
-        List<HeadTreeNode> main = new ArrayList<>();
-
-        List<String> path;
-
-        for (HeadTreeNode node : nodes) {
-
-            main.addAll(node.getChildren());
-
-            while (main.size() > 0) {
-
-                // 从集合中删除第一个元素并返回
-                HeadTreeNode removed = main.remove(0);
-                path = new ArrayList<>();
-                path.add(node.getName());
-                path.add(removed.getName());
-
-                List<HeadTreeNode> candidate = new ArrayList<>();
-
-                candidate.addAll(removed.getChildren() == null ? new ArrayList<>() : removed.getChildren());
-
-
-                if (removed.isLeaf()) {
-                    // 路径末尾时将该路径添加到路径集合中。
-                    head.add(new ArrayList<>(path));
-                    // 叶子节点时，清空最后一个节点为第二条路径准备前置路径数据。
-                    path.remove(path.size() - 1);
-                    continue;
-                }
-
-                while (candidate.size() > 0) {
-                    HeadTreeNode candidateRemoved = candidate.remove(0);
-                    path.add(candidateRemoved.getName());
-                    if (candidateRemoved.isLeaf()) {
-                        // 路径末尾时将该路径添加到路径集合中。
-                        head.add(new ArrayList<>(path));
-                        // 叶子节点时，清空最后一个节点为第二条路径准备前置路径数据。
-                        path.remove(path.size() - 1);
-                    }
-                    else{
-
-                    }
-                }
-
-            }
-
+        for (int i = 0; i < nodes.size(); i++) {
+            HeadTreeNode node = nodes.get(i);
+            listPathViaDfs(node, fragments, head);
         }
 
-        System.out.println(new ObjectMapper().writeValueAsString(nodes));
-        System.out.println(new ObjectMapper().writeValueAsString(head));
+        System.out.println(String.format("head: %s", new ObjectMapper().writeValueAsString(head)));
 
         return head;
     }
 
+    /**
+     * 通过深度优先搜索得到路径信息
+     *
+     * @param node          节点
+     * @param pathFragments 单个路径的片段集合
+     * @param paths         路径集合
+     */
+    public static void listPathViaDfs(HeadTreeNode node, List<String> pathFragments, List<List<String>> paths) {
 
+        boolean lastOne = false;
+
+        pathFragments.add(node.getName());
+
+        // 递归出口
+        if (node.getChildren() == null || node.getChildren().size() == 0) {
+            // 单条路径遍历完成
+            paths.add(new ArrayList<>(pathFragments));
+            System.out.println(String.format("node name: %s", node.getName()));
+            System.out.println(String.format("path remove before: %s", pathFragments));
+            pathFragments.remove(pathFragments.size() - 1);
+            System.out.println(String.format("lastOne: %s", lastOne));
+            if (lastOne) {
+                pathFragments.remove(pathFragments.size() - 1);
+            }
+            System.out.println(String.format("path remove after: %s", pathFragments));
+            System.out.println("============================分隔线============================");
+            return;
+        }
+
+        for (int i = 0; i < node.getChildren().size(); i++) {
+            HeadTreeNode child = node.getChildren().get(i);
+            // 方法入栈，继续递归遍历子集节点直到找到叶子节点
+            listPathViaDfs(child, pathFragments, paths);
+            lastOne = i == node.getChildren().size() - 1;
+            // 当节点是父节点中最后一个子节点时，从路径片段中移除父级路径片段
+            if (lastOne) {
+                pathFragments.remove(pathFragments.size() - 1);
+            }
+        }
+    }
 }
