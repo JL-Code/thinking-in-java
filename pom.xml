@@ -24,6 +24,7 @@
         <module>unit-test</module>
         <module>mnc-poc</module>
         <module>elk-demo</module>
+        <module>springboot-build-optimization</module>
     </modules>
     <properties>
         <junit.jupiter.version>5.6.2</junit.jupiter.version>
