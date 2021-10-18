@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * <p>创建时间: 2021/10/15 </p>
+ * 通过 Package packageInfo = ProjectVersionController.class.getPackage(); 输出应用版本信息
  *
  * @author <a href="mailto:jiangy@highzap.com" rel="nofollow">蒋勇</a>
  * @version v1.0
