@@ -20,6 +20,7 @@
         <module name="jackson" />
         <module name="beautiful-restapi" />
         <module name="spring-annotation" />
+        <module name="JUC" />
         <module name="elk-demo" />
         <module name="mnc-poc" />
         <module name="basic" />
@@ -32,7 +33,7 @@
       <module name="jackson" options="-parameters" />
       <module name="mybatis" options="-parameters" />
       <module name="springboot" options="-parameters" />
-      <module name="springboot-build-optimization" options="-parameters -verbose -bootclasspath /Library/Java/JavaVirtualMachines/jdk1.8.0_191.jdk/Contents/Home/jre/lib/rt.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_191.jdk/Contents/Home/jre/lib/jce.jar" />
+      <module name="springboot-build-optimization" options="-parameters -verbose -bootclasspath &quot;C:/Program Files/Java/jdk1.8.0_241/jre/lib/rt.jar:C:/Program Files/Java/jdk1.8.0_241/jre/lib/jce.jar&quot;" />
       <module name="unit-test" options="" />
       <module name="wechat" options="-parameters" />
     </option>
