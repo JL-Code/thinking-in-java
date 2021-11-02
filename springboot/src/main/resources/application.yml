@@ -71,10 +71,10 @@ management:
     web:
       exposure:
         include: "*"
-info:
-  app:
-    version: "@project.version@"
-    encoding: "@project.build.sourceEncoding@"
-    java:
-      source: "@java.version@"
-      target: "@java.version@"
+#info:
+#  app:
+#    version: "@project.version@"
+#    encoding: "@project.build.sourceEncoding@"
+#    java:
+#      source: "@java.version@"
+#      target: "@java.version@"
