@@ -7,4 +7,9 @@ package org.example.basic.collection;
  * @version v1.0
  */
 public class CollectionOperation {
+    /**
+     * 1. 并集
+     * 2. 交集
+     * 3. 补集
+     */
 }
