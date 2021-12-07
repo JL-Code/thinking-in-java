@@ -1,0 +1,28 @@
+# 变更日志
+
+{{#tags}}
+{{#ifReleaseTag .}}
+## [{{name}}](https://gitservice/{{name}}) ({{tagDate .}})
+
+{{#ifContainsType commits type='feat'}}
+### Features
+
+    {{#commits}}
+      {{#ifCommitType . type='feat'}}
+ - {{#eachCommitScope .}} **{{.}}** {{/eachCommitScope}} {{{commitDescription .}}} ([{{hash}}](https://gitservice/commit/{{hashFull}}))
+      {{/ifCommitType}}
+    {{/commits}}
+{{/ifContainsType}}
+
+{{#ifContainsType commits type='fix'}}
+### Bug Fixes
+
+    {{#commits}}
+      {{#ifCommitType . type='fix'}}
+ - {{#eachCommitScope .}} **{{.}}** {{/eachCommitScope}} {{{commitDescription .}}} ([{{hash}}](https://gitservice/commit/{{hashFull}}))
+      {{/ifCommitType}}
+    {{/commits}}
+{{/ifContainsType}}
+
+{{/ifReleaseTag}}
+{{/tags}}

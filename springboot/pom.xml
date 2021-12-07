@@ -14,6 +14,10 @@
     <groupId>org.example</groupId>
     <version>1.0.0-test</version>
 
+    <properties>
+        <gitchangelog.version>1.81</gitchangelog.version>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -98,7 +102,7 @@
             <plugin>
                 <groupId>se.bjurr.gitchangelog</groupId>
                 <artifactId>git-changelog-maven-plugin</artifactId>
-                <version>1.81</version>
+                <version>${gitchangelog.version}</version>
                 <executions>
                     <execution>
                         <configuration>
