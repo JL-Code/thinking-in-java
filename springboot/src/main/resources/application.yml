@@ -68,16 +68,16 @@ mybatis-plus:
 server:
   port: 8081
 
-# 应用信息
 # actuator info 信息（应用信息）
 info:
   app:
-    name: ${spring.application.name} # spring el 语法
-    description: "SpringBoot 实验应用"
-    # 在 maven 项目中你可以直接用下列方式引用 maven properties的值
-    # https://segmentfault.com/a/1190000021611510
+    # 在 maven 项目中你可以直接用下列方式引用 maven properties的值 ref: https://segmentfault.com/a/1190000021611510
+    name: "@project.artifactId@"
     version: "@project.version@"
+    description: "@project.description@"
     encoding: "@project.build.sourceEncoding@"
+    build:
+      timestamp: "@maven.build.timestamp@"
     java:
       source: "@java.version@"
       target: "@java.version@"

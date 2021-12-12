@@ -13,9 +13,11 @@
     <artifactId>springboot</artifactId>
     <groupId>org.example</groupId>
     <version>1.0.0-test</version>
+    <description>SpringBoot Test App</description>
 
     <properties>
         <gitchangelog.version>1.81</gitchangelog.version>
+        <maven.build.timestamp.format>yyyy-MM-dd HH:mm:ss</maven.build.timestamp.format>
     </properties>
 
     <dependencies>
@@ -68,13 +70,13 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-tx</artifactId>
-<!--            <version>5.3.13</version>-->
+            <!--            <version>5.3.13</version>-->
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.zaxxer</groupId>
             <artifactId>HikariCP</artifactId>
-<!--            <version>5.0.0</version>-->
+            <!--            <version>5.0.0</version>-->
             <scope>compile</scope>
         </dependency>
         <!-- 引入Swagger3依赖 -->
@@ -86,10 +88,34 @@
     </dependencies>
 
     <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <!--解决 maven.build.timestamp 在 maven 3.2.2 版本之后，取出来的是 UTC 时间，与中国时区相差8小时-->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>timestamp-property</id>
+                        <goals>
+                            <goal>timestamp-property</goal>
+                        </goals>
+                        <configuration>
+                            <name>maven.build.timestamp</name>
+                            <pattern>yyyy-MM-dd HH:mm:ss</pattern>
+                            <timeZone>GMT+8</timeZone>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
             <!-- Flyway -->
             <plugin>
@@ -97,6 +123,7 @@
                 <artifactId>flyway-maven-plugin</artifactId>
                 <version>8.2.0</version>
             </plugin>
+            <!-- CHANGLOG -->
             <plugin>
                 <groupId>se.bjurr.gitchangelog</groupId>
                 <artifactId>git-changelog-maven-plugin</artifactId>
@@ -113,4 +140,5 @@
             </plugin>
         </plugins>
     </build>
+
 </project>
