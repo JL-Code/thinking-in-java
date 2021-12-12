@@ -1,17 +1,7 @@
 package org.example.springboot.cases.transational;
 
-import com.zaxxer.hikari.HikariDataSource;
-import org.apache.ibatis.mapping.Environment;
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.apache.ibatis.session.SqlSessionFactoryBuilder;
-import org.apache.ibatis.transaction.TransactionFactory;
-import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
 import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-
-import javax.sql.DataSource;
 
 @Configuration
 @MapperScan("org.example.springboot.cases.transational.dao")

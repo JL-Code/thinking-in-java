@@ -40,6 +40,8 @@ dingtalk:
       appSecret: U0U-9P9FA1iXl-OljiVJkd_MKxnOLiF6LZ03KGccxdmrwGDevS-hKB3NrEfwgujr
 
 spring:
+  application:
+    name: "springboot-service"
   datasource:
     hikari:
       ## 最小空闲连接数
@@ -65,16 +67,23 @@ mybatis-plus:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 server:
   port: 8081
-#  开启所有的 actuator 端点
+
+# 应用信息
+# actuator info 信息（应用信息）
+info:
+  app:
+    name: ${spring.application.name} # spring el 语法
+    description: "SpringBoot 实验应用"
+    # 在 maven 项目中你可以直接用下列方式引用 maven properties的值
+    # https://segmentfault.com/a/1190000021611510
+    version: "@project.version@"
+    encoding: "@project.build.sourceEncoding@"
+    java:
+      source: "@java.version@"
+      target: "@java.version@"
+#  开启所有的 actuator 端点运行 API 访问。
 management:
   endpoints:
     web:
       exposure:
         include: "*"
-#info:
-#  app:
-#    version: "@project.version@"
-#    encoding: "@project.build.sourceEncoding@"
-#    java:
-#      source: "@java.version@"
-#      target: "@java.version@"
