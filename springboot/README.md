@@ -46,8 +46,6 @@ pom.xml
     
     <properties>
         <revision>1.0.0-SNAPSHOT</revision>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java.version>1.8</java.version>
         <maven.build.timestamp.format>yyyy-MM-dd HH:mm:ss</maven.build.timestamp.format>
     </properties>
    <resources>
@@ -69,7 +67,6 @@ pom.xml
             </goals>
             <configuration>
               <name>maven.build.timestamp</name>
-              <pattern>yyyy-MM-dd HH:mm:ss</pattern>
               <timeZone>GMT+8</timeZone>
             </configuration>
           </execution>

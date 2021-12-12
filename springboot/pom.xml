@@ -111,7 +111,6 @@
                         </goals>
                         <configuration>
                             <name>maven.build.timestamp</name>
-                            <pattern>yyyy-MM-dd HH:mm:ss</pattern>
                             <timeZone>GMT+8</timeZone>
                         </configuration>
                     </execution>
