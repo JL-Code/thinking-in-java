@@ -17,7 +17,6 @@
 
     <properties>
         <gitchangelog.version>1.81</gitchangelog.version>
-        <maven.build.timestamp.format>yyyy-MM-dd HH:mm:ss</maven.build.timestamp.format>
     </properties>
 
     <dependencies>

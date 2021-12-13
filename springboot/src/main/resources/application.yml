@@ -85,6 +85,6 @@ info:
 management:
   endpoints:
     web:
-      exposure:
-        include: "*"
+#      exposure:
+#        include: "*"
       base-path: /api/springboot/actuator # 自定义端点，将 /actuator 改为 /api/springboot/actuator
