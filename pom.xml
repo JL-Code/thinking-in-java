@@ -11,20 +11,10 @@
     <modules>
         <module>design-pattern</module>
         <module>basic</module>
-        <module>spring-annotation</module>
-        <module>spring</module>
-        <module>spring-data-redis</module>
         <module>tomcat</module>
-        <module>beautiful-restapi</module>
-        <module>springboot</module>
         <module>jackson</module>
         <module>logback</module>
-        <module>mybatis</module>
-        <module>wechat</module>
-        <module>unit-test</module>
         <module>mnc-poc</module>
-        <module>elk-demo</module>
-        <module>springboot-build-optimization</module>
         <module>JUC</module>
     </modules>
     <properties>

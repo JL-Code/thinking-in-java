@@ -12,8 +12,18 @@
     </option>
     <option name="ignoredFiles">
       <set>
+        <option value="$PROJECT_DIR$/beautiful-restapi/pom.xml" />
+        <option value="$PROJECT_DIR$/elk-demo/pom.xml" />
         <option value="$PROJECT_DIR$/io/pom.xml" />
+        <option value="$PROJECT_DIR$/mybatis/pom.xml" />
+        <option value="$PROJECT_DIR$/spring-annotation/pom.xml" />
+        <option value="$PROJECT_DIR$/spring-data-redis/pom.xml" />
+        <option value="$PROJECT_DIR$/spring/pom.xml" />
+        <option value="$PROJECT_DIR$/springboot-build-optimization/pom.xml" />
+        <option value="$PROJECT_DIR$/springboot/pom.xml" />
+        <option value="$PROJECT_DIR$/unit-test/pom.xml" />
         <option value="$PROJECT_DIR$/untitled/pom.xml" />
+        <option value="$PROJECT_DIR$/wechat/pom.xml" />
       </set>
     </option>
   </component>

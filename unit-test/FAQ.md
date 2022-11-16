@@ -1,1 +1,0 @@
-# Mockito FAQ

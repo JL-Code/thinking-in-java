@@ -7,10 +7,11 @@ package com.highzap.notification.wechat {
     class WeChatChannelProvider implements ChannelProvider {}
 
     package com.highzap.notification.wechat.message{
-         abstract class BaseMessage implements Message {}
-         class TextMessage implements BaseMessage {}
+         abstract class AbstractMessage implements Message {}
+         class TextMessage extends AbstractMessage {}
          class Text{}
-         TextMessage --> Text:1:1
+
+         TextMessage --> Text
     }
 }
 
