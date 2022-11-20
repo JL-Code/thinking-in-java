@@ -70,7 +70,7 @@ A: **RDB** 、**AOF**
 | sorted set | 2^32-1         | 1. 排行榜 2.带权重的消息队列         |
 | hash       | 2^32-1         | 1.复杂对象存储                       |
 
-<img src="/Users/codeme/IdeaProjects/java-example/doc/assets/redis-data-type-desc.png" alt="image-20200722131949019" style="zoom:50%;" />
+<img src="/Users/codeme/IdeaProjects/thinking-in-java/doc/assets/redis-data-type-desc.png" alt="image-20200722131949019" style="zoom:50%;" />
 
 参考：https://redis.io/topics/data-types
 

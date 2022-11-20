@@ -100,7 +100,7 @@ public void testLocalInnerClassParent() {
 }
 ```
 
-![image-20200720224605419](D:\Workspace\java-example\doc\assets\image-20200720224605419.png)
+![image-20200720224605419](D:\Workspace\thinking-in-java\doc\assets\image-20200720224605419.png)
 
 > 提示：this$0 是匿名内部类隐式持有的一个外部类对象，`LocalInnerClassParent@1599` 。 
 

@@ -1,6 +1,6 @@
 # Java 异常处理机制
 
-![Java Exception](/Users/codeme/IdeaProjects/java-example/doc/assets/JavaException.png)
+![Java Exception](/Users/codeme/IdeaProjects/thinking-in-java/doc/assets/JavaException.png)
 
 ## throws 声明异常
 

@@ -7,18 +7,18 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="tomcat" />
-        <module name="logback" />
         <module name="design-pattern" />
         <module name="jackson" />
-        <module name="JUC" />
+        <module name="tomcat" />
         <module name="mnc-poc" />
         <module name="basic" />
+        <module name="logback" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="beautiful-restapi" target="1.8" />
       <module name="elk-demo" target="1.8" />
+      <module name="JUC" target="1.8" />
       <module name="mybatis" target="1.8" />
       <module name="spring" target="1.8" />
       <module name="spring-annotation" target="1.8" />

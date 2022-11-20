@@ -12,6 +12,7 @@
     </option>
     <option name="ignoredFiles">
       <set>
+        <option value="$PROJECT_DIR$/JUC/pom.xml" />
         <option value="$PROJECT_DIR$/beautiful-restapi/pom.xml" />
         <option value="$PROJECT_DIR$/elk-demo/pom.xml" />
         <option value="$PROJECT_DIR$/io/pom.xml" />

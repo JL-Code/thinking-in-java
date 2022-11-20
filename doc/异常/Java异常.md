@@ -2,7 +2,7 @@
 
 ## Java 异常总览
 
-![Java Exception](/Users/codeme/IdeaProjects/java-example/doc/assets/Java Exception.png)
+![Java Exception](/Users/codeme/IdeaProjects/thinking-in-java/doc/assets/Java Exception.png)
 
 ## 相关资料
 

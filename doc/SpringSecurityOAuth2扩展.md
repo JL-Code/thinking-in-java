@@ -323,7 +323,7 @@ private TokenGranter tokenGranter() {
 
 TokenRequest 对象：
 
-![image-20200721150606149](/Users/codeme/IdeaProjects/java-example/doc/assets/tokenRequest.png)
+![image-20200721150606149](/Users/codeme/IdeaProjects/thinking-in-java/doc/assets/tokenRequest.png)
 
 
 
