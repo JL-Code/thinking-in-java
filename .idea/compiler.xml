@@ -10,6 +10,7 @@
         <module name="design-pattern" />
         <module name="jackson" />
         <module name="tomcat" />
+        <module name="java-thread" />
         <module name="mnc-poc" />
         <module name="basic" />
         <module name="logback" />
