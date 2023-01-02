@@ -15,13 +15,19 @@
         <option value="$PROJECT_DIR$/JUC/pom.xml" />
         <option value="$PROJECT_DIR$/beautiful-restapi/pom.xml" />
         <option value="$PROJECT_DIR$/elk-demo/pom.xml" />
+        <option value="$PROJECT_DIR$/interview/pom.xml" />
         <option value="$PROJECT_DIR$/io/pom.xml" />
+        <option value="$PROJECT_DIR$/jackson/pom.xml" />
+        <option value="$PROJECT_DIR$/java-thread/pom.xml" />
+        <option value="$PROJECT_DIR$/jvm/pom.xml" />
+        <option value="$PROJECT_DIR$/logback/pom.xml" />
         <option value="$PROJECT_DIR$/mybatis/pom.xml" />
         <option value="$PROJECT_DIR$/spring-annotation/pom.xml" />
         <option value="$PROJECT_DIR$/spring-data-redis/pom.xml" />
         <option value="$PROJECT_DIR$/spring/pom.xml" />
         <option value="$PROJECT_DIR$/springboot-build-optimization/pom.xml" />
         <option value="$PROJECT_DIR$/springboot/pom.xml" />
+        <option value="$PROJECT_DIR$/tomcat/pom.xml" />
         <option value="$PROJECT_DIR$/unit-test/pom.xml" />
         <option value="$PROJECT_DIR$/untitled/pom.xml" />
         <option value="$PROJECT_DIR$/wechat/pom.xml" />
@@ -31,7 +37,7 @@
   <component name="PWA">
     <option name="wasEnabledAtLeastOnce" value="true" />
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" project-jdk-name="openJDK-1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>
 </project>

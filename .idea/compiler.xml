@@ -8,24 +8,26 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="design-pattern" />
-        <module name="jackson" />
-        <module name="tomcat" />
-        <module name="java-thread" />
         <module name="mnc-poc" />
         <module name="basic" />
-        <module name="logback" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="beautiful-restapi" target="1.8" />
       <module name="elk-demo" target="1.8" />
+      <module name="interview" target="1.8" />
+      <module name="jackson" target="1.8" />
+      <module name="java-thread" target="1.8" />
       <module name="JUC" target="1.8" />
+      <module name="jvm" target="1.8" />
+      <module name="logback" target="1.8" />
       <module name="mybatis" target="1.8" />
       <module name="spring" target="1.8" />
       <module name="spring-annotation" target="1.8" />
       <module name="spring-data-redis" target="1.8" />
       <module name="springboot" target="1.8" />
       <module name="springboot-build-optimization" target="1.8" />
+      <module name="tomcat" target="1.5" />
       <module name="unit-test" target="1.8" />
       <module name="wechat" target="1.8" />
     </bytecodeTargetLevel>

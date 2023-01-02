@@ -12,11 +12,13 @@ import java.util.List;
 public class MemoryAllocationTest {
     public static void main(String[] args) {
 
-        List<Test> tests = new ArrayList<>();
-        Test test = new Test();
-        for (int i = 0; i < 5; i++) {
-            test.setName("name:" + i);
-            tests.add(test);
-        }
+        int i = 1;
+        i = i++;
+        int j = i++;
+        int k = i + ++i * i++;
+
+        System.out.println(i);
+        System.out.println(j);
+        System.out.println(k);
     }
 }

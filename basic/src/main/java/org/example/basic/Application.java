@@ -41,5 +41,11 @@ public class Application {
 //            }
 //        };
 //        System.out.println(address.getCity());
+
+        ClassLoader loader = Application.class.getClassLoader();
+        while (loader != null) {
+            System.out.println(loader);
+            loader = loader.getParent();
+        }
     }
 }
