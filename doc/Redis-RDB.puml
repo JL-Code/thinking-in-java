@@ -1,0 +1,18 @@
+@startuml
+'https://plantuml.com/activity-diagram-beta
+|客户端|
+start
+: 发送 BGSAVE 命令;
+|服务端|
+fork
+    :调用 fork() 创建子进程;
+    :复制父进程中的数据库数据到子进程内存中;
+    :将数据写到临时文件;
+    :临时文件替换上次的快照文件;
+    :子进程退出;
+    end
+fork again
+    :父进程继续接收其他命令;
+end fork
+stop
+@enduml
