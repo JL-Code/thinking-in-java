@@ -1,5 +1,7 @@
 package org.example.basic.thread;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 /**
  * 线程同步示例： 演示交替打印数字 1-10.
  * 思路：创建一把对象锁及两个线程，让两个线程循环10次交替获取对象锁，拿到锁的线程执行一次，
@@ -13,7 +15,6 @@ public class ThreadDemo {
     public static void main(String[] args) throws InterruptedException {
 
         Object o = new Object();
-
         Thread t1 = new Thread(() -> {
             synchronized (o) {
                 for (int i = 1; i <= 10; i++) {
