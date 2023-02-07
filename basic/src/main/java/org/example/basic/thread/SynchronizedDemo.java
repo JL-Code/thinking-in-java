@@ -14,4 +14,8 @@ public class SynchronizedDemo {
 
         }
     }
+
+    public synchronized void syncMethod() {
+
+    }
 }
