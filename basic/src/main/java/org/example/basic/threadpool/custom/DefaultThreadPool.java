@@ -25,7 +25,7 @@ public class DefaultThreadPool<Job extends Runnable> implements ThreadPool<Job> 
     private int workerNumbers = DEFAULT_WORKER_NUMBERS;
 
     // 线程编号生成
-    private AtomicLong threadNum = new AtomicLong();
+    private final AtomicLong threadNum = new AtomicLong();
 
     public DefaultThreadPool() {
         initializeWorkers(DEFAULT_WORKER_NUMBERS);
